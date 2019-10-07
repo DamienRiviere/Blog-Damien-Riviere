@@ -1,0 +1,11 @@
+{
+    "name": "damien/blog-damien-riviere",
+    "description": "Damien Riviere's professional blog",
+    "authors": [
+        {
+            "name": "DamienRiviere",
+            "email": "damien@d-riviere.fr"
+        }
+    ],
+    "require": {}
+}
