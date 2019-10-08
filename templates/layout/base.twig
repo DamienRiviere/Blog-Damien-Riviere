@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Blog - Damien Riviere</title>
+        <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Font Google -->
         <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
@@ -17,34 +17,27 @@
         <link href="img/favicon/favicon-32x32.png" type="img/png" rel="icon" />
         <link rel="icon" type="img/png" href="img/favicon/favicon-32x32.png" sizes="32x32">
         <link rel="icon" type="img/png" href="img/favicon/favicon-16x16.png" sizes="16x16">
+        <!-- Twitter Card data -->
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:title" content="Damien RIVIERE: Développeur PHP/Symfony"/>
+        <meta name="twitter:image:src" content="./img/accueil.png"/>
+        <meta name="twitter:description" content="PHP/Symfony"/>
+        <!-- Facebook Open Graph data -->
+        <meta property="og:title" content="Damien RIVIERE: Développeur PHP/Symfony"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="http://d-riviere.fr/"/>
+        <meta property="og:image" content="img/accueil.png"/>
+        <meta property="og:description" content="Damien RIVIERE: Développeur PHP/Symfony"/>
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light shadow fixed-top bg-white" id="nav">
-            <div class="container">
-                <a class="navbar-brand" href="#banner">
-                    <img src="img/logo.png" alt="Logo" width="200" height="30" class="d-inline-block align-top">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#banner">Accueil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about-me">Articles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        {% include 'navbar.twig' %}
 
+        {% block body %}{% endblock %}
 
+        {% include 'footer.twig' %}
+
+        <!-- Bootstrap -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

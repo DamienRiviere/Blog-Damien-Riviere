@@ -1,0 +1,10 @@
+# routes.yaml
+home_index:
+    path:       /
+    controller: HomeController::home
+    methods:    GET
+post_index:
+    path:       /posts
+    controller: PostController::posts
+    methods:    GET
+
