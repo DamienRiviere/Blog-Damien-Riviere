@@ -8,8 +8,71 @@ h2 {
     font-family: 'Permanent Marker', cursive;
 }
 
+
+body {
+    margin: 0;
+    font-family: 'Comfortaa', cursive;
+}
+
 .section-title {
     margin-top: 55px;
+}
+
+#txt-type > .txt {
+    border-right: 0.2rem solid #dc3545;
+}
+
+.navbar-brand {
+    font-family: 'Permanent Marker', cursive!important;
+}
+
+.nav-link:hover {
+    color: #dc3545!important;
+    font-weight: bold;
+}
+
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    color: #dc3545!important;
+    font-weight: bold;
+}
+
+.shadow-brand {
+    text-shadow: 0.5px 0.5px 2.5px #000000;
+}
+
+.shadow-title {
+    text-shadow: 1px 1px 3px #000000;
+}
+
+h1 {
+    font-size: 5em; 
+    font-family: 'Permanent Marker', cursive;
+}
+
+h2 {
+    font-size: 2.5em;
+    font-family: 'Permanent Marker', cursive;
+}
+
+.h2 {
+    font-size: 2.5em;
+    font-family: 'Permanent Marker', cursive;
+}
+
+.fa-code {
+    font-size: 3em;
+}
+
+.fa-wordpress {
+    font-size: 3em;
+}
+
+.fa-chart-line {
+    font-size: 3em;
+}
+
+.fa-mobile-alt {
+    font-size: 3em;
 }
 
 .fa-linkedin {
@@ -18,4 +81,36 @@ h2 {
 
 .fa-github-square {
     font-size: 2.5em;
+}
+
+.grey-lighten-1 {
+    background-color: #bdbdbd; 
+}
+
+.grey-lighten-2 {
+    background-color: #e0e0e0;
+}
+
+.red {
+    color: #dc3545;
+}
+
+.footer-link {
+    color: #343a40;
+}
+
+.footer-link:hover {
+    color: #dc3545!important;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 4em; 
+    }
+
+    .h2 {
+        font-size: 2em;
+    }
 }
