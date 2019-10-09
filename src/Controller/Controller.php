@@ -2,19 +2,22 @@
 
 namespace App\Controller;
 
-class Controller {    
-
+abstract class Controller
+{
+    
     public $twig;
 
     public $loader;
 
     public $templatePath = "..\\templates\\";
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->loadTwig();
     }
     
-    public function loadTwig() {
+    public function loadTwig(): void
+    {
         $this->loader = new \Twig\Loader\FilesystemLoader(
             [
                 $this->templatePath . '/home',

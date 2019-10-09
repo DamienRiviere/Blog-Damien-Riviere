@@ -2,10 +2,16 @@
 
 namespace App\Controller;
 
-class PostController extends Controller {
+use App\Repository\PostRepository;
 
-    public function posts() {
-        $this->twig->display('@post/index.twig');
+class PostController extends Controller
+{
+
+    public function posts(): void
+    {
+        $posts = new PostRepository();
+        $this->twig->display('@post/index.twig', [
+            'posts' => $posts->all() 
+        ]);
     }
-
 }
