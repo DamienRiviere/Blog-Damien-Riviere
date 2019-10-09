@@ -5,7 +5,7 @@ namespace App\Controller;
 class HomeController extends Controller {
 
     public function home() {
-        $this->twig->display('index.twig');
+        $this->twig->display('@home/index.twig');
     }
 
 }

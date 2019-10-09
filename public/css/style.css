@@ -95,9 +95,14 @@ h2 {
     color: #dc3545;
 }
 
-.footer-contact, .footer-nav, .footer-link {
-    font-family: 'Permanent Marker', cursive!important;
-    color: #dc3545;
+.footer-link {
+    color: #343a40;
+}
+
+.footer-link:hover {
+    color: #dc3545!important;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 @media screen and (max-width: 768px) {

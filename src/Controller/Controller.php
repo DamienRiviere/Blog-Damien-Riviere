@@ -11,36 +11,25 @@ class Controller {
     public $templatePath = "..\\templates\\";
 
     public function __construct() {
-        $this->loader = new \Twig\Loader\FilesystemLoader([
-            $this->templatePath . 'home',
-            $this->templatePath . 'post',
-            $this->templatePath . 'layout',
-        ]);
-        $this->twig = new \Twig\Environment($this->loader, [
-            'cache' => false, //dirname(__DIR__) . '/tmp',
-        ]);
+        $this->loadTwig();
     }
     
-    // public function loadTwig() {
-    //     $loader = new \Twig\Loader\FilesystemLoader(
-    //         [
-    //             $this->templatePath . '/home',
-    //             $this->templatePath . '/layout',
-    //             $this->templatePath . '/post',
-    //         ]
-    //     );
+    public function loadTwig() {
+        $this->loader = new \Twig\Loader\FilesystemLoader(
+            [
+                $this->templatePath . '/home',
+                $this->templatePath . '/layout',
+                $this->templatePath . '/post',
+            ]
+        );
 
-    //     $params = [
-    //         'cache' => false
-    //     ];
+        $this->loader->addPath($this->templatePath . '/home', 'home');
+        $this->loader->addPath($this->templatePath . '/post', 'post');
 
-    //     $this->twig = new Twig_Environment($loader, $params);
-    // }
+        $params = [
+            'cache' => false
+        ];
 
-    // public function render($view, $data = []) {
-    //     ob_start();
-    //     require '../templates/' . $view . '.php';
-    //     $content = ob_get_clean();
-    //     require '../templates/layout/default.php';
-    // }
+        $this->twig = new \Twig\Environment($this->loader, $params);
+    }
 }

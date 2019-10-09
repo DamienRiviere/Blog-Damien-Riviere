@@ -1,4 +1,4 @@
-{% extends 'base.twig' %}
+{% extends 'default.twig' %}
 
 {% block title %}Accueil - Blog Damien Riviere{% endblock %}
 
@@ -29,24 +29,24 @@
                         </li>
                     </ul>
 
-                    <p class="text-justify">
+                    <p>
                         <span class="font-weight-bold">Curieux</span> et <span class="font-weight-bold">passionné</span> par
                         l'informatique et plus particulièrement par le <span class="font-weight-bold">développement
                             Web</span>, j'ai pu acquérir de nombreuses compétences professionnelles en <span
                             class="font-weight-bold">autodidacte</span> et en suivant le parcours de <span
                             class="font-weight-bold">Développeur Web Junior (niveau III)</span> chez OpenClassrooms.
                     </p>
-                    <p class="text-justify">
+                    <p>
                         Le développement <span class="font-weight-bold">Back-End</span> m'ayant beaucoup plus durant ma
                         formation, je me suis spécialisé sur le langage <span class="font-weight-bold">PHP</span> avec le
                         framework <span class="font-weight-bold">Symfony</span>.
                     </p>
-                    <p class="text-justify">
+                    <p>
                         Actuellement, j'ai commencé un nouveau parcours de <span class="font-weight-bold">Développeur
                             d'application PHP / Symfony (niveau II)</span> pour continuer à me perfectionner sur ces 2
                         technologies que j'affectionne.
                     </p>
-                    <p class="text-justify">
+                    <p>
                         N'hésitez pas à me <a href="#contact" class="text-danger font-weight-bold">contacter</a> pour plus
                         de <span class="font-weight-bold">renseignements</span>.
                     </p>
@@ -125,4 +125,7 @@
             </div>
         </div>
     </section>
+
+    {% include 'contact.twig' %}
+
 {% endblock %}

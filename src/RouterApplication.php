@@ -6,6 +6,7 @@ use Exception;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 
@@ -43,7 +44,7 @@ class RouterApplication {
             $params = $this->cleanParams($params);
         
             return call_user_func_array([$controller, $method], $params);      
-        } catch(Exception $e) {
+        } catch(ResourceNotFoundException $e) {
             echo $e->getMessage();
         }
     }  
