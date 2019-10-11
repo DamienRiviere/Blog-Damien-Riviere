@@ -1,4 +1,4 @@
-{% extends 'default.twig' %}
+{% extends 'layout/default.html.twig' %}
 
 {% block title %}Tous les articles - Blog Damien Riviere{% endblock %}
 
@@ -22,7 +22,7 @@
                         <div class="card-body">
                             <h2 class="card-title">{{ post.title }}</h2>
                             <p class="card-text">{{ post.introduction }}</p>
-                            <a href="#" class="btn btn-primary">Lire la suite &rarr;</a>
+                            <a href="/post/{{ post.id }}/{{ post.slug }}" class="btn btn-primary">Lire la suite &rarr;</a>
                         </div>
                         <div class="card-footer text-muted">
                             Le {{ post.created_at }} par

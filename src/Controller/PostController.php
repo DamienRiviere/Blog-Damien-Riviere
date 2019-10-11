@@ -10,8 +10,21 @@ class PostController extends Controller
     public function posts(): void
     {
         $posts = new PostRepository();
-        $this->twig->display('@post/index.twig', [
-            'posts' => $posts->all() 
-        ]);
+        $this->twig->display(
+            'post/index.html.twig', [
+                'posts' => $posts->all()
+            ]
+        );
+    }
+
+    public function show($id): void
+    {
+        $post = new PostRepository();
+        $this->twig->display(
+            'post/show.html.twig', [
+                'post' => $post->find($id)
+            ]
+        );
+
     }
 }

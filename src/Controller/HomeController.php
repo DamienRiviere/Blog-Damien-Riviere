@@ -7,6 +7,6 @@ class HomeController extends Controller
 
     public function home(): void
     {
-        $this->twig->display('@home/index.twig');
+        $this->twig->display('home/index.html.twig');
     }
 }

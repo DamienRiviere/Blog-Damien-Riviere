@@ -5,11 +5,11 @@ namespace App\Controller;
 abstract class Controller
 {
     
-    public $twig;
+    protected $twig;
 
-    public $loader;
+    protected $loader;
 
-    public $templatePath = "..\\templates\\";
+    private $templatePath = "..\\templates\\";
 
     public function __construct()
     {
@@ -20,14 +20,9 @@ abstract class Controller
     {
         $this->loader = new \Twig\Loader\FilesystemLoader(
             [
-                $this->templatePath . '/home',
-                $this->templatePath . '/layout',
-                $this->templatePath . '/post',
+                $this->templatePath
             ]
         );
-
-        $this->loader->addPath($this->templatePath . '/home', 'home');
-        $this->loader->addPath($this->templatePath . '/post', 'post');
 
         $params = [
             'cache' => false

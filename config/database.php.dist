@@ -1,0 +1,8 @@
+<?php
+
+return [
+    "dsn" => null
+    "dbname" => null
+    "user" => null
+    "password" => null
+];
