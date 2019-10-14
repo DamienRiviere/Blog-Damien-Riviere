@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use App\Helpers\Text;
+
 class Post
 {
 
@@ -56,7 +58,7 @@ class Post
      */
     public function setTitle(string $title): self
     {
-        $this->title = $title;
+        $this->title = htmlspecialchars($title);
 
         return $this;
     }
@@ -76,9 +78,17 @@ class Post
      */
     public function setIntroduction(string $introduction): self
     {
-        $this->introduction = $introduction;
+        $this->introduction = htmlspecialchars($introduction);
 
         return $this;
+    }
+
+    public function getExcerpt(): ?string
+    {
+        if ($this->introduction === null) {
+            return null;
+        }
+        return nl2br(htmlentities(Text::excerpt($this->introduction, 400)));
     }
 
     /**
@@ -96,7 +106,7 @@ class Post
      */
     public function setContent(string $content): self
     {
-        $this->content = $content;
+        $this->content = htmlspecialchars($content);
 
         return $this;
     }

@@ -26,7 +26,7 @@ abstract class Repository
 
     public static function getDb()
     {
-        if(is_null(self::$db)) {
+        if (is_null(self::$db)) {
             self::$db = self::configureDatabase();
         }
 
@@ -40,7 +40,8 @@ abstract class Repository
         $database = new PDO(
             sprintf("%s;dbname=%s", $confDb['dsn'], $confDb['dbname']),
             $confDb['user'],
-            $confDb['password'], [
+            $confDb['password'],
+            [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
             ]
         );
@@ -48,16 +49,16 @@ abstract class Repository
         return $database;
     }
 
-    public function all(): array
+    public function all($options = []): array
     {
-        $query = self::getDb()->prepare("SELECT * FROM {$this->repository}");
+        $query = self::getDb()->prepare("SELECT * FROM {$this->repository} " . implode('', $options));
         $query->execute();
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $result = $query->fetchAll();
         return $result;
     }
 
-    public function find(int $id) 
+    public function find(int $id)
     {
         $query = self::getDb()->prepare('SELECT * FROM ' . $this->repository . ' WHERE id = :id');
         $query->execute(['id' => $id]);
@@ -66,18 +67,17 @@ abstract class Repository
         return $result;
     }
 
-    public function create(array $data): int 
+    public function create(array $data): int
     {
         $sqlFields = [];
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             $sqlFields[] = "$key = :$key";
         }
         $query = self::getDb()->prepare("INSERT INTO {$this->repository} SET " . implode(', ', $sqlFields));
         $status = $query->execute($data);
-        if($status === false) {
+        if ($status === false) {
             throw new Exception("Impossible de créer l'enregistrement dans la base de données");
         }
         return (int)self::getDb()->lastInsertId();
     }
-
 }

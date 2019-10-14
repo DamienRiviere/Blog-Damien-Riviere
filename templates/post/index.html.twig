@@ -21,11 +21,11 @@
                         <img class="card-img-top" src="{{ post.cover_image }}" alt="Card image cap">
                         <div class="card-body">
                             <h2 class="card-title">{{ post.title }}</h2>
-                            <p class="card-text">{{ post.introduction }}</p>
+                            <p class="card-text">{{ post.getExcerpt() }}</p>
                             <a href="/post/{{ post.id }}/{{ post.slug }}" class="btn btn-primary">Lire la suite &rarr;</a>
                         </div>
                         <div class="card-footer text-muted">
-                            Le {{ post.created_at }} par
+                            Le {{ post.created_at |date("d/m/Y") }} par
                             <a href="#">Damien Riviere</a>
                         </div>
                     </div>

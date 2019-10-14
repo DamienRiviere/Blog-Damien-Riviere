@@ -11,8 +11,9 @@ class PostController extends Controller
     {
         $posts = new PostRepository();
         $this->twig->display(
-            'post/index.html.twig', [
-                'posts' => $posts->all()
+            'post/index.html.twig',
+            [
+                'posts' => $posts->all(["ORDER BY created_at DESC"])
             ]
         );
     }
@@ -21,10 +22,10 @@ class PostController extends Controller
     {
         $post = new PostRepository();
         $this->twig->display(
-            'post/show.html.twig', [
+            'post/show.html.twig',
+            [
                 'post' => $post->find($id)
             ]
         );
-
     }
 }

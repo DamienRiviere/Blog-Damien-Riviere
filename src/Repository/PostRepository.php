@@ -11,7 +11,7 @@ class PostRepository extends Repository
 
     protected $class = Post::class;
 
-    public function createPost(Post $post): void 
+    public function createPost(Post $post): void
     {
         $post = $this->create([
             'title' => $post->getTitle(),

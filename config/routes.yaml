@@ -11,3 +11,18 @@ post_show:
     controller: PostController::show
     methods:    GET
 
+admin_dashboard:
+    path:       /admin
+    controller: AdminDashboardController::dashboard
+    methods:    GET
+
+# Admin Post
+admin_post_create:
+    path:       /admin/post/create
+    controller: AdminPostController::create
+    methods:    GET
+admin_post_new:
+    path:       /admin/post/new
+    controller: AdminPostController::new
+    methods:    POST
+
