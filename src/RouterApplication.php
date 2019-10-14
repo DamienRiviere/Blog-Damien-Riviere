@@ -10,21 +10,22 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 
-class RouterApplication {
+class RouterApplication
+{
 
-    /** @var Request */
     protected $request;
 
-    /** @var Router */
     protected $router;
     
-    const CONTROLLER_PATH = "App\\Controller\\"; 
+    protected const CONTROLLER_PATH = "App\\Controller\\";
 
-    public function __construct(Request $request) {
+    public function __construct(Request $request)
+    {
         $this->request = $request;
     }
 
-    public function init() {
+    public function init()
+    {
         $filelocator = new FileLocator([dirname(__DIR__) . DIRECTORY_SEPARATOR . "config"]);
         $context = new RequestContext();
         $context->fromRequest($this->request);
@@ -33,7 +34,8 @@ class RouterApplication {
         $this->router = new Router($loader, 'routes.yaml', [], $context);
     }
 
-    public function run() { 
+    public function run()
+    {
         try {
             $params = $this->router->match($this->request->getPathInfo());
             $controllerName = explode('::', $params['_controller']);
@@ -43,17 +45,19 @@ class RouterApplication {
             $controller = $this->instanciateController($controller);
             $params = $this->cleanParams($params);
         
-            return call_user_func_array([$controller, $method], $params);      
-        } catch(ResourceNotFoundException $e) {
+            return call_user_func_array([$controller, $method], $params);
+        } catch (ResourceNotFoundException $e) {
             echo $e->getMessage();
         }
-    }  
+    }
     
-    private function instanciateController(string $controller) {
+    private function instanciateController(string $controller)
+    {
         return new $controller();
     }
 
-    public function cleanParams(array $params) {
+    public function cleanParams(array $params)
+    {
         unset($params['_route']);
         unset($params['_controller']);
 

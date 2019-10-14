@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
 
-    public function home() {
-        $this->twig->display('@home/index.twig');
+    public function home(): void
+    {
+        $this->twig->display('home/index.html.twig');
     }
-
 }

@@ -2,29 +2,27 @@
 
 namespace App\Controller;
 
-class Controller {    
+abstract class Controller
+{
+    
+    protected $twig;
 
-    public $twig;
+    protected $loader;
 
-    public $loader;
+    private $templatePath = "..\\templates\\";
 
-    public $templatePath = "..\\templates\\";
-
-    public function __construct() {
+    public function __construct()
+    {
         $this->loadTwig();
     }
     
-    public function loadTwig() {
+    public function loadTwig(): void
+    {
         $this->loader = new \Twig\Loader\FilesystemLoader(
             [
-                $this->templatePath . '/home',
-                $this->templatePath . '/layout',
-                $this->templatePath . '/post',
+                $this->templatePath
             ]
         );
-
-        $this->loader->addPath($this->templatePath . '/home', 'home');
-        $this->loader->addPath($this->templatePath . '/post', 'post');
 
         $params = [
             'cache' => false
