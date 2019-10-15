@@ -80,4 +80,20 @@ abstract class Repository
         }
         return (int)self::getDb()->lastInsertId();
     }
+
+    public function update(array $data, int $id)
+    {
+        $sqlFields = [];
+        foreach ($data as $key => $value) {
+            $sqlFields[] = "$key = :$key";
+        }
+        $query = self::getDb()->prepare("
+            UPDATE {$this->repository} 
+            SET " . implode(', ', $sqlFields) . " 
+            WHERE id = :id");
+        $status = $query->execute(array_merge($data, ['id' => $id]));
+        if ($status === false) {
+            throw new Exception("Impossible de modifier l'enregistrement dans la base de données");
+        }
+    }
 }

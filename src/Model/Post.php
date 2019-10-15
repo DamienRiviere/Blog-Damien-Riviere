@@ -83,6 +83,11 @@ class Post
         return $this;
     }
 
+    /**
+     * Get the summary of introduction
+     *
+     * @return string|null
+     */
     public function getExcerpt(): ?string
     {
         if ($this->introduction === null) {
@@ -134,7 +139,7 @@ class Post
     /**
      * Get the value of modifyAt
      */
-    public function getModifyAt(): DateTime
+    public function getModifyAt()
     {
         return $this->modifyAt;
     }
@@ -144,7 +149,7 @@ class Post
      *
      * @return self
      */
-    public function setModifyAt(DateTime $modifyAt)
+    public function setModifyAt($modifyAt)
     {
         $this->modifyAt = $modifyAt;
 

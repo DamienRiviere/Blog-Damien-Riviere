@@ -17,12 +17,24 @@ admin_dashboard:
     methods:    GET
 
 # Admin Post
-admin_post_create:
-    path:       /admin/post/create
-    controller: AdminPostController::create
+admin_post_index:
+    path:       /admin/posts
+    controller: AdminPostController::posts
+    methods:    GET
+admin_post_show_new:
+    path:       /admin/post/new
+    controller: AdminPostController::showNew
     methods:    GET
 admin_post_new:
     path:       /admin/post/new
     controller: AdminPostController::new
+    methods:    POST
+admin_post_show_edit:
+    path:       /admin/post/edit/{id}
+    controller: AdminPostController::showEdit
+    methods:    GET
+admin_post_edit:
+    path:       /admin/post/edit/{id}
+    controller: AdminPostController::edit
     methods:    POST
 
