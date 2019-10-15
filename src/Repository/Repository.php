@@ -95,5 +95,14 @@ abstract class Repository
         if ($status === false) {
             throw new Exception("Impossible de modifier l'enregistrement dans la base de données");
         }
+    }  
+
+    public function delete(int $id)
+    {
+        $query = self::getDb()->prepare("DELETE FROM {$this->repository} WHERE id = ?");
+        $status = $query->execute([$id]);
+        if($status === false) {
+            throw new Exception("Impossible de supprimer l'enregistrement $id dans la table {$this->repository}");
+        }
     }
 }
