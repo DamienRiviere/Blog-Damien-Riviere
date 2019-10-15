@@ -10,13 +10,15 @@
         <li class="breadcrumb-item active">Gestion des articles</li>
     </ol>
     
-    {% if get['created'] or get['edit'] %}
-        <div class="alert alert-success">
+    {% if get['created'] or get['edit'] or get['delete'] %}
+        <div class="alert {% if get['delete'] %} alert-danger {% else %} alert-success {% endif %}">
             L'article a bien été 
             {% if get['created'] %}
                 créé
             {% elseif get['edit'] %} 
                 modifié
+            {% elseif get['delete']%}
+                supprimé
             {% endif %} 
         </div>
     {% endif %}
@@ -65,7 +67,7 @@
                                 <a href="/admin/post/edit/{{ post.id }}" class="btn btn-md btn-secondary" title="Modifier l'article">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="" class="btn btn-md btn-danger" title="Supprimer l'article">
+                                <a href="#" class="btn btn-md btn-danger delete-article" title="Supprimer l'article" data-toggle="modal" data-target="#delArticleModal" data-id={{ post.id }}>
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>
@@ -78,5 +80,31 @@
         <div class="card-footer small text-muted">Mis à jour le {{ post.created_at| date("d/m/Y") }} à {{ post.created_at | date("H:i") }}</div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="delArticleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Supprimer un article</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Êtes-vous sur de vouloir supprimer l'article ?
+                </div>
+                <div class="modal-footer text-white">
+                    <a href="#" class="btn btn-danger modal-delete-article" data-id="">Supprimer</a>
+                    <a class="btn btn-secondary" data-dismiss="modal">Annuler</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block javascripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="/js/modal.js"></script>
+    {% endblock %}
 
 {% endblock %}

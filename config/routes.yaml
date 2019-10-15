@@ -37,4 +37,6 @@ admin_post_edit:
     path:       /admin/post/edit/{id}
     controller: AdminPostController::edit
     methods:    POST
-
+admin_post_delete:
+    path:       /admin/post/delete/{id}
+    controller: AdminPostController::delete

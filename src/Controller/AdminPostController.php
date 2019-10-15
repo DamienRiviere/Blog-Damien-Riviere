@@ -50,14 +50,14 @@ class AdminPostController extends Controller
         }
     }
 
-    public function showEdit($id)
+    public function showEdit(int $id)
     {
         $this->twig->display('admin/post/edit.html.twig', [
             'post' => $this->repo->find($id)
         ]);
     }
 
-    public function edit($id)
+    public function edit(int $id)
     {
         if (!in_array("", $_POST)) {
             $post = $this->repo->find($id);
@@ -76,5 +76,11 @@ class AdminPostController extends Controller
         } else {
             throw new \Exception("Veuillez remplir tous les champs !");
         }
+    }
+
+    public function delete(int $id)
+    {
+        $this->repo->delete($id);
+        header('Location: /admin/posts?delete=1');
     }
 }
