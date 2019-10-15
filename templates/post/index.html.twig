@@ -25,8 +25,7 @@
                             <a href="/post/{{ post.id }}/{{ post.slug }}" class="btn btn-primary">Lire la suite &rarr;</a>
                         </div>
                         <div class="card-footer text-muted">
-                            Le {{ post.created_at |date("d/m/Y") }} par
-                            <a href="#">Damien Riviere</a>
+                            Publié le {{ post.created_at | date("d/m/Y") }}
                         </div>
                     </div>
                 {% endfor %}

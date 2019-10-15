@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container-fluid bg-light py-5 text-center section-title">
         <h1 class="text-danger h2">{{ post.title }}</h1>
-        <p class="font-weight-bold mb-0">Par <a href="#">Damien RIVIERE</a> posté le {{ post.created_at}}</p>
+        <p class="font-weight-bold mb-0">Publié le {{ post.created_at | date("d/m/Y") }} à {{ post.created_at | date("H:i") }}</p>
     </div>
     
     <div class="container">
@@ -24,6 +24,10 @@
                 <p class="lead">{{ post.introduction }}</p>
 
                 <p>{{ post.content }}</p>
+
+                {% if post.modify_at != null %}
+                    <p class="small text-muted">Modifié le {{ post.modify_at | date("d/m/Y") }} à {{ post.modify_at | date("H:i") }}</p>
+                {% endif %}
 
                 <hr>
 

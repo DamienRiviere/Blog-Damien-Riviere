@@ -25,9 +25,13 @@ abstract class Controller
         );
 
         $params = [
-            'cache' => false
+            'cache' => false,
+            'debug' => true
         ];
 
         $this->twig = new \Twig\Environment($this->loader, $params);
+
+        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+        $this->twig->addGlobal('get', $_GET);
     }
 }
