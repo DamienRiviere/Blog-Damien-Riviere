@@ -21,11 +21,14 @@
                         <img class="card-img-top" src="{{ post.cover_image }}" alt="Card image cap">
                         <div class="card-body">
                             <h2 class="card-title">{{ post.title }}</h2>
-                            <p class="card-text">{{ post.getExcerpt() }}</p>
+                            <p class="card-text">{{ post.introduction }}</p>
                             <a href="/post/{{ post.id }}/{{ post.slug }}" class="btn btn-primary">Lire la suite &rarr;</a>
                         </div>
                         <div class="card-footer text-muted">
-                            Publié le {{ post.created_at | date("d/m/Y") }}
+                            {% for category in post.getCategories() %}
+                                <a href="/post/category/{{ category.id }}/{{ category.slug }}" class="badge badge-danger text-white">{{ category.name }}</a>
+                            {% endfor %}
+                            <span class="float-right">Publié le {{ post.created_at | date("d/m/Y") }}</span>
                         </div>
                     </div>
                 {% endfor %}
@@ -58,40 +61,7 @@
                     </div>
                 </div>
 
-                <!-- Categories Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">Categories</h5>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li>
-                                        <a href="#">Web Design</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">HTML</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Freebies</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li>
-                                        <a href="#">JavaScript</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">CSS</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Tutorials</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% include 'layout/categories.html.twig' %}
 
                 <!-- Side Widget -->
                 <div class="card my-4">

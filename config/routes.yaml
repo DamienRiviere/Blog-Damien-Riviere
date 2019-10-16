@@ -1,7 +1,10 @@
+# Home
 home_index:
     path:       /
     controller: HomeController::home
     methods:    GET
+
+# Post
 post_index:
     path:       /posts
     controller: PostController::posts
@@ -10,7 +13,12 @@ post_show:
     path:       /post/{id}/{slug}
     controller: PostController::show
     methods:    GET
+post_category:
+    path:       /post/category/{id}/{slug}
+    controller: PostController::category
+    methods:    GET
 
+# Admin Dashboard
 admin_dashboard:
     path:       /admin
     controller: AdminDashboardController::dashboard
