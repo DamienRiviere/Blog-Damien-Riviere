@@ -1,7 +1,10 @@
+# Home
 home_index:
     path:       /
     controller: HomeController::home
     methods:    GET
+
+# Post
 post_index:
     path:       /posts
     controller: PostController::posts
@@ -10,7 +13,12 @@ post_show:
     path:       /post/{id}/{slug}
     controller: PostController::show
     methods:    GET
+post_category:
+    path:       /post/category/{id}/{slug}
+    controller: PostController::category
+    methods:    GET
 
+# Admin Dashboard
 admin_dashboard:
     path:       /admin
     controller: AdminDashboardController::dashboard
@@ -40,3 +48,28 @@ admin_post_edit:
 admin_post_delete:
     path:       /admin/post/delete/{id}
     controller: AdminPostController::delete
+
+# Admin Categories
+admin_category_index:
+    path:       /admin/categories
+    controller: AdminCategoryController::categories
+    methods:    GET
+admin_category_show_new:
+    path:       /admin/category/new
+    controller: AdminCategoryController::showNew
+    methods:    GET
+admin_category_new:
+    path:       /admin/category/new
+    controller: AdminCategoryController::new
+    methods:    POST
+admin_category_show_edit:
+    path:       /admin/category/edit/{id}
+    controller: AdminCategoryController::showEdit
+    methods:    GET
+admin_category_edit:
+    path:       /admin/category/edit/{id}
+    controller: AdminCategoryController::edit
+    methods:    POST
+admin_category_delete:
+    path:       /admin/category/delete/{id}
+    controller: AdminCategoryController::delete

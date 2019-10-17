@@ -1,22 +1,22 @@
 {% extends 'admin/layout/default.html.twig' %}
 
-{% block title %}Liste des articles - Administration{% endblock %}
+{% block title %}Liste des catégories - Administration{% endblock %}
 
 {% block body %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="/admin">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Liste des articles</li>
+        <li class="breadcrumb-item active">Liste des catégories</li>
     </ol>
-    
+
     {% include 'admin/layout/alert.html.twig' %}
 
     <!-- Table Posts -->
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Tous les articles
+            Toutes les catégories
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -24,44 +24,37 @@
                     <thead class="text-center">
                         <tr>
                             <th>#</th>
-                            <th>Titre</th>
-                            <th>Catégorie</th>
-                            <th>Auteur</th>
-                            <th>Date</th>
+                            <th>Nom</th>
+                            <th>Style</th>
+                            <th>Slug</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot class="text-center">
                         <tr>
                             <th>#</th>
-                            <th>Titre</th>
-                            <th>Catégorie</th>
-                            <th>Auteur</th>
-                            <th>Date</th>
+                            <th>Nom</th>
+                            <th>Style</th>
+                            <th>Slug</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
                     <tbody class="text-center">
-                        {% for post in posts %}
+                        {% for category in categories %}
                         <tr>
-                            <td>{{ post.id }}</td>
-                            <td>{{ post.title }}</td>
-                            <td>
-                                {% for category in post.getCategories() %}
-                                    <span class="{{ category.style }} text-white">{{ category.name }}</span>
-                                {% endfor %}
-                            </td>
-                            <td>Damien</td>
-                            <td>{{ post.created_at| date("d/m/Y") }} à {{ post.created_at | date("H:i") }}</td>
+                            <td>{{ category.id }}</td>
+                            <td><span class="{{ category.style }} text-white">{{ category.name }}</span></td>
+                            <td>{{ category.style }}</td>
+                            <td>{{ category.slug }}</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="/post/{{ post.id }}/{{ post.slug }}" class="btn btn-md btn-primary" title="Voir l'article" target="_blank">
+                                    <a href="/post/category/{{ category.id }}/{{ category.slug }}" class="btn btn-md btn-primary" title="Voir l'article" target="_blank">
                                         <i class="fas fa-search"></i>
                                     </a>
-                                    <a href="/admin/post/edit/{{ post.id }}" class="btn btn-md btn-secondary" title="Modifier l'article">
+                                    <a href="" class="btn btn-md btn-secondary" title="Modifier l'article">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-md btn-danger delete-article" title="Supprimer l'article" data-toggle="modal" data-target="#delModal" data-id={{ post.id }}>
+                                    <a href="#" class="btn btn-md btn-danger delete-article" title="Supprimer la catégorie" data-toggle="modal" data-target="#delModal" data-id={{ category.id }}>
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </div>
@@ -74,12 +67,4 @@
         </div>
         <div class="card-footer small text-muted">Mis à jour le {{ post.created_at| date("d/m/Y") }} à {{ post.created_at | date("H:i") }}</div>
     </div>
-
-    {% include 'admin/layout/modal_delete.html.twig' %}
-
-    {% block javascripts %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="/js/modal.js"></script>
-    {% endblock %}
-
 {% endblock %}
