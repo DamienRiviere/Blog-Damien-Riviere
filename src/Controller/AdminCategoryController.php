@@ -49,4 +49,29 @@ class AdminCategoryController extends Controller
             throw new \Exception("Veuillez remplir tous les champs");
         }
     }
+
+    public function showEdit(int $id)
+    {
+        $this->twig->display('admin/category/edit.html.twig', [
+            'category' => $this->categories->find($id)
+        ]);
+    }
+
+    public function edit(int $id)
+    {
+        if(!in_array("", $_POST)) {
+            $category = $this->categories->find($id);
+
+            $category
+                ->setName($_POST['name'])
+                ->setStyle($_POST['style'])
+                ->setSlug($this->slugify->slugify($_POST['name']));
+
+            $this->categories->updateCategory($category);
+
+            header('Location: /admin/categories?edit=1');
+        } else {
+            throw new \Exception("Veuillez remplir tous les champs !");
+        }
+    }
 }

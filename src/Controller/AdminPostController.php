@@ -30,7 +30,7 @@ class AdminPostController extends Controller
     
     public function showNew()
     {
-        $this->twig->display('admin/post/create.html.twig', [
+        $this->twig->display('admin/post/new.html.twig', [
             'categories' => $this->categories->all()
         ]);
     }

@@ -23,6 +23,15 @@ class CategoryRepository extends Repository
         $category->setId($id);
     }
 
+    public function updateCategory(Category $category): void
+    {
+        $this->update([
+            'name' => $category->getName(),
+            'slug' => $category->getSlug(),
+            'style' => $category->getStyle()
+        ], $category->getId());
+    }
+
     /**
      * Method to hydrate a post with his categories
      *
