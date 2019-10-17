@@ -61,4 +61,15 @@ class CategoryRepository extends Repository
             $postsById[$category->getPostId()]->addCategory($category);
         }
     }
+
+    public function deleteCategory(int $id)
+    {
+        $query = self::getDb()->prepare("
+            DELETE category, post_category
+            FROM category
+            LEFT JOIN post_category ON category.id = post_category.category_id
+            WHERE category.id = ?
+        ");
+        $query->execute([$id]);
+    }
 }
