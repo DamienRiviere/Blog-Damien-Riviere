@@ -124,17 +124,20 @@ class Post
     /**
      * @return Category[]
      */
-    public function getCategories(): array {
+    public function getCategories(): array
+    {
         return $this->categories;
     }
 
-    public function setCategories(array $categories): self {
+    public function setCategories(array $categories): self
+    {
         $this->categories = $categories;
 
         return $this;
     }
 
-    public function addCategory(Category $category): void {
+    public function addCategory(Category $category): void
+    {
         $this->categories[] = $category;
         
         $category->setPost($this);

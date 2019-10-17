@@ -4,8 +4,10 @@ namespace App\Repository;
 
 use PDO;
 use App\Model\Category;
+use Exception;
 
-class CategoryRepository extends Repository {
+class CategoryRepository extends Repository
+{
     
     protected $repository = 'category';
 
@@ -30,20 +32,23 @@ class CategoryRepository extends Repository {
     public function hydratePosts(?array $posts): void
     {
         $postsById = [];
-        foreach($posts as $post) {
-            $postsById[$post->getId()] = $post;   
+        foreach ($posts as $post) {
+            $postsById[$post->getId()] = $post;
         }
 
         // Get post's categories with $postsById's key
-        $categories = self::getDb()
-            ->query('SELECT c.*, pc.post_id
+        $query = self::getDb()->prepare('
+                    SELECT c.*, pc.post_id
                     FROM post_category pc
                     JOIN category c ON c.id = pc.category_id
-                    WHERE pc.post_id IN ('. implode(',', array_keys($postsById)) . ')'
-            )->fetchAll(PDO::FETCH_CLASS, $this->class);
+                    WHERE pc.post_id 
+                    IN (' . implode(',', array_keys($postsById)) . ')');
+        $query->execute();
+        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
+        $categories = $query->fetchAll();
 
         // Add all categories in $postsById
-        foreach($categories as $category) {
+        foreach ($categories as $category) {
             $postsById[$category->getPostId()]->addCategory($category);
         }
     }

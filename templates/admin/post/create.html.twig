@@ -5,9 +5,9 @@
 {% block body %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Articles</a>
+            <a href="#">Liste des articles</a>
         </li>
-        <li class="breadcrumb-item active">Création d'un article</li>
+        <li class="breadcrumb-item active">Nouvel article</li>
     </ol>
 
     <form action="/admin/post/new" method="post">
@@ -25,12 +25,21 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-lg-6">
                 <div class="alert bg-light">
                     <h2 class="h5 mb-3">Autres informations</h2>
                     <div class="form-group">
                         <label for="image">Image de l'article</label>
                         <input type="text" class="form-control" name="image" id="image" placeholder="URL de l'image" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categories">Choix des catégories</label>
+                        <select name="categories[]" id="categories" class="form-control" required multiple size="{{ categories | length }}">
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
             </div>

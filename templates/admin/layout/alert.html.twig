@@ -1,0 +1,12 @@
+{% if get['created'] or get['edit'] or get['delete'] %}
+<div class="alert {% if get['delete'] %} alert-danger {% else %} alert-success {% endif %}">
+    L'élement a bien été
+    {% if get['created'] %}
+    créé
+    {% elseif get['edit'] %}
+    modifié
+    {% elseif get['delete']%}
+    supprimé
+    {% endif %}
+</div>
+{% endif %}

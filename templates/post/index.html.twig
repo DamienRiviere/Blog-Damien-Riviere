@@ -26,7 +26,7 @@
                         </div>
                         <div class="card-footer text-muted">
                             {% for category in post.getCategories() %}
-                                <a href="/post/category/{{ category.id }}/{{ category.slug }}" class="badge badge-danger text-white">{{ category.name }}</a>
+                                <a href="/post/category/{{ category.id }}/{{ category.slug }}" class="{{ category.style }} text-white">{{ category.name }}</a>
                             {% endfor %}
                             <span class="float-right">Publié le {{ post.created_at | date("d/m/Y") }}</span>
                         </div>
@@ -45,10 +45,8 @@
 
             </div>
 
-            <!-- Sidebar Widgets Column -->
+            <!-- Right section of the page  -->
             <div class="col-md-4">
-
-                <!-- Search Widget -->
                 <div class="card my-4">
                     <h5 class="card-header">Search</h5>
                     <div class="card-body">
@@ -62,16 +60,6 @@
                 </div>
 
                 {% include 'layout/categories.html.twig' %}
-
-                <!-- Side Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">Side Widget</h5>
-                    <div class="card-body">
-                        You can put anything you want inside of these side widgets. They are easy to use, and feature the
-                        new Bootstrap 4 card containers!
-                    </div>
-                </div>
-
             </div>
 
         </div>

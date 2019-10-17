@@ -3,30 +3,36 @@
 namespace App\Controller;
 
 use App\Model\Post;
+use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use Cocur\Slugify\Slugify;
 
 class AdminPostController extends Controller
 {
-    private $repo;
+    private $posts;
+
+    private $categories;
 
     public function __construct()
     {
         parent::__construct();
-        $this->repo = new PostRepository();
+        $this->posts = new PostRepository();
         $this->slugify = new Slugify();
+        $this->categories = new CategoryRepository();
     }
 
     public function posts()
     {
         $this->twig->display('admin/post/index.html.twig', [
-            'posts' => $this->repo->all(["ORDER BY created_at DESC"])
+            'posts' => $this->posts->findAllPosts()
         ]);
     }
     
     public function showNew()
     {
-        $this->twig->display('admin/post/create.html.twig');
+        $this->twig->display('admin/post/create.html.twig', [
+            'categories' => $this->categories->all()
+        ]);
     }
 
     public function new()
@@ -42,7 +48,8 @@ class AdminPostController extends Controller
                 ->setCoverImage($_POST['image'])
                 ->setSlug($this->slugify->slugify($_POST['title']));
 
-            $this->repo->createPost($post);
+            $this->posts->createPost($post);
+            $this->posts->attachCategoriesToPost($post->getId(), $_POST['categories']);
 
             header('Location: /admin/posts?created=1');
         } else {
@@ -53,14 +60,15 @@ class AdminPostController extends Controller
     public function showEdit(int $id)
     {
         $this->twig->display('admin/post/edit.html.twig', [
-            'post' => $this->repo->find($id)
+            'post' => $this->posts->findPost($id),
+            'categories' => $this->categories->all()
         ]);
     }
 
     public function edit(int $id)
     {
         if (!in_array("", $_POST)) {
-            $post = $this->repo->find($id);
+            $post = $this->posts->find($id);
 
             $post
                 ->setTitle($_POST['title'])
@@ -70,7 +78,8 @@ class AdminPostController extends Controller
                 ->setCoverImage($_POST['image'])
                 ->setSlug($this->slugify->slugify($_POST['title']));
 
-            $this->repo->updatePost($post);
+            $this->posts->updatePost($post);
+            $this->posts->attachCategoriesToPost($post->getId(), $_POST['categories']);
 
             header('Location: /admin/posts?edit=1');
         } else {
@@ -80,7 +89,7 @@ class AdminPostController extends Controller
 
     public function delete(int $id)
     {
-        $this->repo->delete($id);
+        $this->posts->delete($id);
         header('Location: /admin/posts?delete=1');
     }
 }

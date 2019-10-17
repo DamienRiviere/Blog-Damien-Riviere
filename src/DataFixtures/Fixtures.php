@@ -48,7 +48,7 @@ class Fixtures
         // Insert categories
         $categories = [];
 
-        for($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $category = new Category();
 
             $category
@@ -63,11 +63,11 @@ class Fixtures
         }
         // End categories
 
-        // Attach a post to one or more categories 
-        foreach($posts as $post) {
+        // Attach a post to one or more categories
+        foreach ($posts as $post) {
             $randCategories = $faker->randomElements($categories, rand(0, count($categories)));
 
-            foreach($randCategories as $category) {
+            foreach ($randCategories as $category) {
                 $db->exec("INSERT INTO post_category SET post_id=$post, category_id=$category");
             }
         }

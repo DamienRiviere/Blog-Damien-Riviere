@@ -2,7 +2,8 @@
 
 namespace App\Model;
 
-class Category {
+class Category
+{
 
     private $id;
 
@@ -62,11 +63,13 @@ class Category {
         return $this;
     }
 
-    public function getPostId(): int {
+    public function getPostId(): int
+    {
         return $this->post_id;
     }
 
-    public function setPost(Post $post) {
+    public function setPost(Post $post)
+    {
         $this->post = $post;
     }
 }

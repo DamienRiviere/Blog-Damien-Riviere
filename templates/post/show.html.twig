@@ -7,7 +7,7 @@
         <h1 class="text-danger h2">{{ post.title }}</h1>
         <p class="font-weight-bold mb-0">Publié le {{ post.created_at | date("d/m/Y") }} à {{ post.created_at | date("H:i") }}</p>
         {% for category in post.getCategories()  %}
-            <a href="/post/category/{{ category.id }}/{{ category.slug }}" class="{{ category.style }}">{{ category.name }}</a>
+            <a href="/post/category/{{ category.id }}/{{ category.slug }}" class="{{ category.style }} text-white">{{ category.name }}</a>
         {% endfor %}
     </div>
     

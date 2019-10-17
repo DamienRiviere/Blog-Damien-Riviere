@@ -59,11 +59,24 @@ class PostRepository extends Repository
 
     public function findPostByCategory(int $id)
     {
-        $query = self::getDb()->prepare("SELECT * FROM {$this->repository} JOIN post_category pc ON pc.post_id = {$this->repository}.id WHERE pc.category_id = :id");
+        $query = self::getDb()->prepare("
+            SELECT * FROM {$this->repository} 
+            JOIN post_category pc ON pc.post_id = {$this->repository}.id 
+            WHERE pc.category_id = :id ORDER BY created_at DESC
+        ");
         $query->execute(['id' => $id]);
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $posts = $query->fetchAll();
         (new CategoryRepository())->hydratePosts($posts);
         return $posts;
+    }
+
+    public function attachCategoriesToPost(int $id, array $categories)
+    {
+        self::getDb()->exec('DELETE FROM post_category WHERE post_id = ' . $id);
+        $query = self::getDb()->prepare('INSERT INTO post_category SET post_id = ?, category_id = ?');
+        foreach ($categories as $category) {
+            $query->execute([$id, $category]);
+        }
     }
 }

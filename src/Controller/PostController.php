@@ -23,7 +23,7 @@ class PostController extends Controller
         $this->twig->display(
             'post/index.html.twig',
             [
-                'posts' => $this->posts->findAllPosts(["ORDER BY created_at DESC"]),
+                'posts' => $this->posts->findAllPosts(),
                 'categories' => $this->categories->all()
             ]
         );

@@ -5,7 +5,7 @@
 {% block body %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Articles</a>
+            <a href="/admin/posts">Liste des articles</a>
         </li>
         <li class="breadcrumb-item active">Modification de l'article "<span class="font-weight-bold">{{ post.title }}</span>"</li>
     </ol>
@@ -27,12 +27,27 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-lg-6">
                 <div class="alert bg-light">
                     <h2 class="h5 mb-3">Autres informations</h2>
                     <div class="form-group">
                         <label for="image">Image de l'article</label>
                         <input type="text" class="form-control" name="image" id="image" placeholder="URL de l'image" required value="{{ post.cover_image }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="categories">Choix des catégories</label>
+                        <select name="categories[]" id="categories" class="form-control" required multiple size="{{ categories | length }}">
+                            {% for category in categories %}
+                                <option value="{{ category.id }}" 
+                                {% for postCategory in post.getCategories %}
+                                    {% if postCategory.id == category.id %} selected {% endif %}
+                                {% endfor %}
+                        >
+                                    {{ category.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
             </div>
