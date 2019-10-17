@@ -59,7 +59,7 @@ class AdminCategoryController extends Controller
 
     public function edit(int $id)
     {
-        if(!in_array("", $_POST)) {
+        if (!in_array("", $_POST)) {
             $category = $this->categories->find($id);
 
             $category
@@ -73,5 +73,11 @@ class AdminCategoryController extends Controller
         } else {
             throw new \Exception("Veuillez remplir tous les champs !");
         }
+    }
+
+    public function delete(int $id)
+    {
+        $this->categories->deleteCategory($id);
+        header('Location: /admin/categories?delete=1');
     }
 }
