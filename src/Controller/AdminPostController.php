@@ -92,4 +92,11 @@ class AdminPostController extends Controller
         $this->posts->delete($id);
         header('Location: /admin/posts?delete=1');
     }
+
+    public function comments(int $id)
+    {
+        $this->twig->display('admin/post/comments.html.twig', [
+            'post' => $this->posts->findPost($id)
+        ]);
+    }
 }

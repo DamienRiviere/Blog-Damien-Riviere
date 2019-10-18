@@ -33,12 +33,12 @@ class CategoryRepository extends Repository
     }
 
     /**
-     * Method to hydrate a post with his categories
+     * Hydrate a post with his categories
      *
      * @param array $posts
      * @return void
      */
-    public function hydratePosts(?array $posts): void
+    public function hydratePostsWithCategories(?array $posts): void
     {
         $postsById = [];
         foreach ($posts as $post) {
@@ -47,16 +47,18 @@ class CategoryRepository extends Repository
 
         // Get post's categories with $postsById's key
         $query = self::getDb()->prepare('
-                    SELECT c.*, pc.post_id
-                    FROM post_category pc
-                    JOIN category c ON c.id = pc.category_id
-                    WHERE pc.post_id 
-                    IN (' . implode(',', array_keys($postsById)) . ')');
+            SELECT c.*, pc.post_id
+            FROM post_category pc
+            JOIN category c ON c.id = pc.category_id
+            WHERE pc.post_id 
+            IN (' . implode(',', array_keys($postsById)) . ')
+        ');
+
         $query->execute();
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $categories = $query->fetchAll();
 
-        // Add all categories in $postsById
+        // Add all categories with his post
         foreach ($categories as $category) {
             $postsById[$category->getPostId()]->addCategory($category);
         }
