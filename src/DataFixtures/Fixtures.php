@@ -37,7 +37,7 @@ class Fixtures
         $damien
             ->setName("Damien")
             ->setEmail("damien@d-riviere.fr")
-            ->setPassword("password")
+            ->setPassword(password_hash("password", PASSWORD_BCRYPT))
             ->setSlug($slugify->slugify($damien->getName()))
             ->setCreatedAt(new DateTime())
             ->setPicture("https://www.manga-news.com/public/images/pix/serie/9164/the-arms-peddler-visual-8.jpg");
@@ -50,7 +50,7 @@ class Fixtures
             $user
                 ->setName($faker->name())
                 ->setEmail($faker->email())
-                ->setPassword($faker->password())
+                ->setPassword(password_hash($faker->password(), PASSWORD_BCRYPT))
                 ->setSlug($slugify->slugify($user->getName()))
                 ->setCreatedAt(new DateTime())
                 ->setPicture("http://image.jeuxvideo.com/avatar-md/default.jpg");

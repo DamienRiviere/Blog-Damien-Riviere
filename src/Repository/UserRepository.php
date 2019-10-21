@@ -6,6 +6,7 @@ use PDO;
 use App\Model\Post;
 use App\Model\User;
 use App\Model\Comment;
+use Exception;
 
 class UserRepository extends Repository {
 
@@ -90,5 +91,17 @@ class UserRepository extends Repository {
         foreach ($posts as $post) {
             $post->addUser($user);       
         }
+    }
+
+    public function findEmail(string $email)
+    {
+        $query = self::getDb()->prepare('SELECT * FROM user WHERE email = :email');
+        $query->execute(['email' => $email]);
+        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
+        $user = $query->fetch();
+        if($user === false) {
+            throw new Exception("Utilisateur introuvable");
+        }
+        return $user;
     }
 }

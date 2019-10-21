@@ -33,5 +33,6 @@ abstract class Controller
 
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
         $this->twig->addGlobal('get', $_GET);
+        $this->twig->addGlobal('session', $_SESSION);
     }
 }

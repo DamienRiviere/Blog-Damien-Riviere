@@ -81,3 +81,17 @@ admin_category_edit:
 admin_category_delete:
     path:       /admin/category/delete/{id}
     controller: AdminCategoryController::delete
+
+# Authentication
+authentication_index:
+    path:       /login
+    controller: AuthenticationController::showLogin
+    methods:    GET
+authentication_login:
+    path:       /login
+    controller: AuthenticationController::login
+    methods:    POST
+authentication_logout:
+    path:       /logout
+    controller: AuthenticationController::logout
+    

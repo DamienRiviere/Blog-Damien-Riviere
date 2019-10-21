@@ -16,7 +16,7 @@ class User {
 
     private $picture;
 
-    private $createdAt;
+    private $created_at;
     
     public function getId(): int
     {
@@ -92,12 +92,12 @@ class User {
 
     public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($created_at)
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
 
         return $this;
     }
