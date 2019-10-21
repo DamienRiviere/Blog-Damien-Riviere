@@ -13,6 +13,10 @@ post_show:
     path:       /post/{id}/{slug}
     controller: PostController::show
     methods:    GET
+post_comment:
+    path:       /post/{id}/{slug}/new-comment
+    controller: PostController::newComment
+    methods:    POST
 post_category:
     path:       /post/category/{id}/{slug}
     controller: PostController::category
@@ -48,6 +52,10 @@ admin_post_edit:
 admin_post_delete:
     path:       /admin/post/delete/{id}
     controller: AdminPostController::delete
+admin_post_comments:
+    path:       /admin/post/{id}/comments
+    controller: AdminPostController::comments
+    methods:    GET
 
 # Admin Categories
 admin_category_index:

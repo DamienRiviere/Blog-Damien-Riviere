@@ -15,15 +15,21 @@ class Post
 
     private $content;
 
-    private $createdAt;
+    private $created_at;
 
-    private $modifyAt;
+    private $modify_at;
 
     private $coverImage;
 
     private $slug;
 
     private $categories = [];
+
+    private $comments;
+
+    private $user_id;
+
+    private $user;
 
     public function getId(): int
     {
@@ -75,24 +81,24 @@ class Post
 
     public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($created_at)
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
 
         return $this;
     }
 
     public function getModifyAt()
     {
-        return $this->modifyAt;
+        return $this->modify_at;
     }
 
-    public function setModifyAt($modifyAt)
+    public function setModifyAt($modify_at)
     {
-        $this->modifyAt = $modifyAt;
+        $this->modify_at = $modify_at;
 
         return $this;
     }
@@ -141,5 +147,50 @@ class Post
         $this->categories[] = $category;
         
         $category->setPost($this);
+    }
+
+    /**
+     * @return Comment[]
+     */
+    public function getComments(): ?array
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Add a comment in his post
+     *
+     * @param Comment $comment
+     * @return void
+     */
+    public function addComment(Comment $comment): void
+    {
+        $this->comments[] = $comment;
+
+        $comment->setPost($this);
+    }
+
+    public function getUserId(): int
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(int $user_id): self
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): void
+    {
+        $this->user = $user;
+
+        $user->setPost($this);
     }
 }

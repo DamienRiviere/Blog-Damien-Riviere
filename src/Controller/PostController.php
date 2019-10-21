@@ -2,20 +2,24 @@
 
 namespace App\Controller;
 
-use App\Repository\CategoryRepository;
+use App\Model\Comment;
 use App\Repository\PostRepository;
+use App\Repository\CommentRepository;
+use App\Repository\CategoryRepository;
+
 
 class PostController extends Controller
 {
-    private $posts;
+    private $post;
 
-    private $categories;
+    private $category;
 
     public function __construct()
     {
         parent::__construct();
-        $this->posts = new PostRepository();
-        $this->categories = new CategoryRepository();
+        $this->post = new PostRepository();
+        $this->category = new CategoryRepository();
+        $this->comment = new CommentRepository();
     }
 
     public function posts(): void
@@ -23,8 +27,8 @@ class PostController extends Controller
         $this->twig->display(
             'post/index.html.twig',
             [
-                'posts' => $this->posts->findAllPosts(),
-                'categories' => $this->categories->all()
+                'posts' => $this->post->findAllPosts(),
+                'categories' => $this->category->all()
             ]
         );
     }
@@ -34,8 +38,8 @@ class PostController extends Controller
         $this->twig->display(
             'post/show.html.twig',
             [
-                'post' => $this->posts->findPost($id),
-                'categories' => $this->categories->all()
+                'post' => $this->post->findPost($id),
+                'categories' => $this->category->all()
             ]
         );
     }
@@ -45,9 +49,28 @@ class PostController extends Controller
         $this->twig->display(
             'post/category.html.twig',
             [
-                'category' => $this->categories->find($id),
-                'posts' => $this->posts->findPostByCategory($id)
+                'category' => $this->category->find($id),
+                'posts' => $this->post->findPostByCategory($id)
             ]
         );
+    }
+
+    public function newComment($id, $slug): void
+    {
+        if(!in_array("", $_POST)) {
+            $comment = new Comment();
+
+            $comment
+                ->setContent($_POST['content'])
+                ->setPostId($id)
+                ->setUserId(1)
+                ->setCreatedAt(new \DateTime());
+                
+            $this->comment->createComment($comment);
+
+            header('Location: /post/' . $id . '/' . $slug . '?created=1');
+        } else {
+            throw new \Exception("Veuillez remplir le champ des commentaires");
+        }
     }
 }

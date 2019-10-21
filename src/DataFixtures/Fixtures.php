@@ -2,18 +2,22 @@
 
 namespace App\DataFixtures;
 
-use App\Model\Category;
-use App\Model\Post;
-use App\Repository\CategoryRepository;
-use App\Repository\PostRepository;
-use App\Repository\Repository;
-use Cocur\Slugify\Slugify;
 use DateTime;
+use App\Model\Post;
+use App\Model\User;
+use App\Model\Comment;
+use App\Model\Category;
+use Cocur\Slugify\Slugify;
+use App\Repository\Repository;
+use App\Repository\PostRepository;
+use App\Repository\UserRepository;
+use App\Repository\CommentRepository;
+use App\Repository\CategoryRepository;
 
 class Fixtures
 {
 
-    public function setPosts()
+    public function setData()
     {
         $db = Repository::getDb();
         $faker = \Faker\Factory::create('fr_FR');
@@ -22,7 +26,37 @@ class Fixtures
         $db->exec('SET FOREIGN_KEY_CHECKS = 0');
         $db->exec('TRUNCATE TABLE post');
         $db->exec('TRUNCATE TABLE category');
+        $db->exec('TRUNCATE TABLE post_category');
+        $db->exec('TRUNCATE TABLE user');
+        $db->exec('TRUNCATE TABLE comment');
         $db->exec('SET FOREIGN_KEY_CHECKS = 1');
+
+        $repoUser = new UserRepository();
+
+        $damien = new User();
+        $damien
+            ->setName("Damien")
+            ->setEmail("damien@d-riviere.fr")
+            ->setPassword("password")
+            ->setSlug($slugify->slugify($damien->getName()))
+            ->setCreatedAt(new DateTime())
+            ->setPicture("https://www.manga-news.com/public/images/pix/serie/9164/the-arms-peddler-visual-8.jpg");
+
+        $repoUser->createUser($damien);
+
+        for($i = 0; $i < 10; $i++) {
+            $user = new User();
+
+            $user
+                ->setName($faker->name())
+                ->setEmail($faker->email())
+                ->setPassword($faker->password())
+                ->setSlug($slugify->slugify($user->getName()))
+                ->setCreatedAt(new DateTime())
+                ->setPicture("http://image.jeuxvideo.com/avatar-md/default.jpg");
+
+            $repoUser->createUser($user);
+        }
 
         // Insert Post
         $posts = [];
@@ -36,12 +70,26 @@ class Fixtures
                 ->setContent($faker->paragraph(8))
                 ->setCreatedAt(new DateTime())
                 ->setCoverImage($faker->imageUrl(750, 300))
-                ->setSlug($slugify->slugify($post->getTitle()));
+                ->setSlug($slugify->slugify($post->getTitle()))
+                ->setUserId($damien->getId());
 
             $repoPost = new PostRepository();
             $repoPost->createPost($post);
 
             $posts[] = $post->getId();
+
+            for($c = 0; $c < 10; $c++) {
+                $comment = new Comment();
+
+                $comment
+                    ->setContent($faker->sentence(10))
+                    ->setPostId($post->getId())
+                    ->setUserId(mt_rand(1 , 10))
+                    ->setCreatedAt(new DateTime());
+
+                $repoComment = new CommentRepository();
+                $repoComment->createComment($comment);
+            }
         }
         // End Post
 

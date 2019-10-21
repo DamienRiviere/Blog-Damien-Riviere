@@ -13,6 +13,8 @@
     
     <div class="container">
 
+        {% include 'layout/alert.html.twig' %}
+
         <div class="row">
 
             <!-- Post Content Column -->
@@ -28,68 +30,57 @@
 
                 <p>{{ post.content }}</p>
 
-                {% if post.modify_at != null %}
-                    <p class="small text-muted">Modifié le {{ post.modify_at | date("d/m/Y") }} à {{ post.modify_at | date("H:i") }}</p>
-                {% endif %}
-
                 <hr>
+
+                <div class="row">
+                {% set user = post.getUser() %}
+                    <div class="col-1 img-author-article">
+                        <img src="{{ user.picture }}" class="avatar avatar-medium" alt="Avatar de Damien">
+                    </div>
+                    <div class="col-lg col-md col-sm-12 article-author">
+                        <h5 class="mb-0"> 
+                            <a href="#" class="text-danger"><strong>{{ user.name }}</strong></a>
+                        </h5>
+                        {% if post.modify_at != null %}
+                            <p class="small text-muted mb-0">Modifié le {{ post.modify_at | date("d/m/Y") }} à {{ post.modify_at | date("H:i") }}</p>
+                        {% endif %}
+                        <span class="badge badge-primary">80 articles</span>
+                        <span class="badge badge-warning text-white">390 messages</span>
+                    </div>
+                </div>
 
                 <!-- Comments Form -->
                 <div class="card my-4">
-                    <h5 class="card-header">Laisser un commentaire :</h5>
+                    <h5 class="card-header"><i class="fas fa-comment"></i> Laisser un commentaire :</h5>
                     <div class="card-body">
-                        <form>
+                        <form action="/post/{{ post.id }}/{{ post.slug }}/new-comment" method="post">
                             <div class="form-group">
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="5" name="content"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Envoyer</button>
                         </form>
                     </div>
                 </div>
 
-                <!-- Single Comment -->
-                <div class="media mb-4">
-                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                    <div class="media-body">
-                        <h5 class="mt-0">Commenter Name</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
-                        purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-                        vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </div>
+                <br>
 
-                <!-- Comment with nested comments -->
-                <div class="media mb-4">
-                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                    <div class="media-body">
-                        <h5 class="mt-0">Commenter Name</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
-                        purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-                        vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-                        <div class="media mt-4">
-                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                {% if post.getComments() == null %}
+                        <div class="alert alert-secondary">
+                            Aucun commentaire sur cette article
+                        </div>
+                {% else %}
+                    <!-- Comment -->
+                    {% for comment in post.getComments() %}
+                        {% set user = comment.getUser() %}
+                        <div class="media mb-4">
+                            <img class="d-flex mr-3 rounded-circle avatar avatar-medium" src="{{ user.picture }}" alt="">
                             <div class="media-body">
-                                <h5 class="mt-0">Commenter Name</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-                                Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-                                ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                                <h5 class="mt-0 font-weight-bold"><a href="#" class="name-style">{{ user.name }}</a></h5>
+                                {{ comment.content }}
                             </div>
                         </div>
-
-                        <div class="media mt-4">
-                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                            <div class="media-body">
-                                <h5 class="mt-0">Commenter Name</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-                                Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-                                ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
+                    {% endfor %}
+                {% endif %}
             </div>
 
             <!-- Sidebar Widgets Column -->

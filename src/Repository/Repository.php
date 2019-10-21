@@ -105,4 +105,14 @@ abstract class Repository
             throw new Exception("Impossible de supprimer l'enregistrement $id dans la table {$this->repository}");
         }
     }
+
+    public function hydrateOneObject($sql, $item, $id, $class, $add): void
+    {
+        $query = self::getDb()->prepare($sql);
+        $query->execute([$id]);
+        $query->setFetchMode(PDO::FETCH_CLASS, $class);
+        $hydrate = $query->fetch();
+
+        $item->$add($hydrate);
+    }
 }
