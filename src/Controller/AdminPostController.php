@@ -9,29 +9,29 @@ use Cocur\Slugify\Slugify;
 
 class AdminPostController extends Controller
 {
-    private $posts;
+    private $post;
 
-    private $categories;
+    private $category;
 
     public function __construct()
     {
         parent::__construct();
-        $this->posts = new PostRepository();
+        $this->post = new PostRepository();
         $this->slugify = new Slugify();
-        $this->categories = new CategoryRepository();
+        $this->category = new CategoryRepository();
     }
 
     public function posts()
     {
         $this->twig->display('admin/post/index.html.twig', [
-            'posts' => $this->posts->findAllPosts()
+            'posts' => $this->post->findAllPosts()
         ]);
     }
     
     public function showNew()
     {
         $this->twig->display('admin/post/new.html.twig', [
-            'categories' => $this->categories->all()
+            'categories' => $this->category->all()
         ]);
     }
 
@@ -46,10 +46,11 @@ class AdminPostController extends Controller
                 ->setContent($_POST['content'])
                 ->setCreatedAt(new \DateTime())
                 ->setCoverImage($_POST['image'])
-                ->setSlug($this->slugify->slugify($_POST['title']));
+                ->setSlug($this->slugify->slugify($_POST['title']))
+                ->setUserId(1);
 
-            $this->posts->createPost($post);
-            $this->posts->attachCategoriesToPost($post->getId(), $_POST['categories']);
+            $this->post->createPost($post);
+            $this->post->attachCategoriesToPost($post->getId(), $_POST['categories']);
 
             header('Location: /admin/posts?created=1');
         } else {
@@ -60,15 +61,15 @@ class AdminPostController extends Controller
     public function showEdit(int $id)
     {
         $this->twig->display('admin/post/edit.html.twig', [
-            'post' => $this->posts->findPost($id),
-            'categories' => $this->categories->all()
+            'post' => $this->post->findPost($id),
+            'categories' => $this->category->all()
         ]);
     }
 
     public function edit(int $id)
     {
         if (!in_array("", $_POST)) {
-            $post = $this->posts->find($id);
+            $post = $this->post->find($id);
 
             $post
                 ->setTitle($_POST['title'])
@@ -78,8 +79,8 @@ class AdminPostController extends Controller
                 ->setCoverImage($_POST['image'])
                 ->setSlug($this->slugify->slugify($_POST['title']));
 
-            $this->posts->updatePost($post);
-            $this->posts->attachCategoriesToPost($post->getId(), $_POST['categories']);
+            $this->post->updatePost($post);
+            $this->post->attachCategoriesToPost($post->getId(), $_POST['categories']);
 
             header('Location: /admin/posts?edit=1');
         } else {
@@ -89,14 +90,14 @@ class AdminPostController extends Controller
 
     public function delete(int $id)
     {
-        $this->posts->delete($id);
+        $this->post->delete($id);
         header('Location: /admin/posts?delete=1');
     }
 
     public function comments(int $id)
     {
         $this->twig->display('admin/post/comments.html.twig', [
-            'post' => $this->posts->findPost($id)
+            'post' => $this->post->findPost($id)
         ]);
     }
 }

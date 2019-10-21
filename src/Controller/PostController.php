@@ -10,9 +10,9 @@ use App\Repository\CategoryRepository;
 
 class PostController extends Controller
 {
-    private $posts;
+    private $post;
 
-    private $categories;
+    private $category;
 
     public function __construct()
     {

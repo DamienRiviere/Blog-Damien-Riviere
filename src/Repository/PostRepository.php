@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use PDO;
 use App\Model\Post;
+use App\Repository\UserRepository;
 
 class PostRepository extends Repository
 {
@@ -20,7 +21,8 @@ class PostRepository extends Repository
             'content' => $post->getContent(),
             'created_at' => $post->getCreatedAt()->format('Y-m-d H:i:s'),
             'cover_image' => $post->getCoverImage(),
-            'slug' => $post->getSlug()
+            'slug' => $post->getSlug(),
+            'user_id' => $post->getUserId()
         ]);
         $post->setId($id);
     }
@@ -44,6 +46,7 @@ class PostRepository extends Repository
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $posts = $query->fetchAll();
         (new CategoryRepository())->hydratePostsWithCategories($posts);
+        (new UserRepository())->hydratePostsWithUser($posts);
         return $posts;
     }
 
@@ -55,6 +58,7 @@ class PostRepository extends Repository
         $post = $query->fetch();
         (new CategoryRepository())->hydratePostsWithCategories([$post]);
         (new CommentRepository())->hydratePostWithComments($post);
+        (new UserRepository())->hydratePostWithUser($post);
         return $post;
     }
 

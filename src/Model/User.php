@@ -106,4 +106,9 @@ class User {
     {
         $this->comment = $comment;
     }
+
+    public function setPost(Post $post)
+    {
+        $this->post = $post;
+    }
 }

@@ -9,21 +9,21 @@ use Cocur\Slugify\Slugify;
 class AdminCategoryController extends Controller
 {
 
-    private $categories;
+    private $category;
 
     private $slugify;
 
     public function __construct()
     {
         parent::__construct();
-        $this->categories = new CategoryRepository();
+        $this->category = new CategoryRepository();
         $this->slugify = new Slugify();
     }
 
     public function categories()
     {
         $this->twig->display('admin/category/index.html.twig', [
-            'categories'    => $this->categories->all()
+            'categories'    => $this->category->all()
         ]);
     }
 
@@ -42,7 +42,7 @@ class AdminCategoryController extends Controller
                 ->setStyle($_POST['style'])
                 ->setSlug($this->slugify->slugify($_POST['name']));
 
-            $this->categories->createCategory($category);
+            $this->category->createCategory($category);
 
             header('Location: /admin/categories?created=1');
         } else {
@@ -53,21 +53,21 @@ class AdminCategoryController extends Controller
     public function showEdit(int $id)
     {
         $this->twig->display('admin/category/edit.html.twig', [
-            'category' => $this->categories->find($id)
+            'category' => $this->category->find($id)
         ]);
     }
 
     public function edit(int $id)
     {
         if (!in_array("", $_POST)) {
-            $category = $this->categories->find($id);
+            $category = $this->category->find($id);
 
             $category
                 ->setName($_POST['name'])
                 ->setStyle($_POST['style'])
                 ->setSlug($this->slugify->slugify($_POST['name']));
 
-            $this->categories->updateCategory($category);
+            $this->category->updateCategory($category);
 
             header('Location: /admin/categories?edit=1');
         } else {
@@ -77,7 +77,7 @@ class AdminCategoryController extends Controller
 
     public function delete(int $id)
     {
-        $this->categories->deleteCategory($id);
+        $this->category->deleteCategory($id);
         header('Location: /admin/categories?delete=1');
     }
 }

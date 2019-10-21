@@ -27,6 +27,10 @@ class Post
 
     private $comments;
 
+    private $user_id;
+
+    private $user;
+
     public function getId(): int
     {
         return $this->id;
@@ -148,7 +152,7 @@ class Post
     /**
      * @return Comment[]
      */
-    public function getComments(): array
+    public function getComments(): ?array
     {
         return $this->comments;
     }
@@ -164,5 +168,29 @@ class Post
         $this->comments[] = $comment;
 
         $comment->setPost($this);
+    }
+
+    public function getUserId(): int
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(int $user_id): self
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): void
+    {
+        $this->user = $user;
+
+        $user->setPost($this);
     }
 }

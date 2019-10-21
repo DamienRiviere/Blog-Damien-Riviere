@@ -7,8 +7,13 @@ CREATE TABLE post (
     modify_at DATETIME,
     cover_image VARCHAR(255) NOT NULL,
     slug VARCHAR(255) NOT NULL,
-    user_id INT UNSIGNED NOT NULL
-    PRIMARY KEY (id)
+    user_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_user_post
+        FOREIGN KEY (user_id)
+        REFERENCES user (id)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT
 )
 
 CREATE TABLE category (

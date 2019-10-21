@@ -17,7 +17,7 @@ use App\Repository\CategoryRepository;
 class Fixtures
 {
 
-    public function setPosts()
+    public function setData()
     {
         $db = Repository::getDb();
         $faker = \Faker\Factory::create('fr_FR');
@@ -31,6 +31,19 @@ class Fixtures
         $db->exec('TRUNCATE TABLE comment');
         $db->exec('SET FOREIGN_KEY_CHECKS = 1');
 
+        $repoUser = new UserRepository();
+
+        $damien = new User();
+        $damien
+            ->setName("Damien")
+            ->setEmail("damien@d-riviere.fr")
+            ->setPassword("password")
+            ->setSlug($slugify->slugify($damien->getName()))
+            ->setCreatedAt(new DateTime())
+            ->setPicture("https://www.manga-news.com/public/images/pix/serie/9164/the-arms-peddler-visual-8.jpg");
+
+        $repoUser->createUser($damien);
+
         for($i = 0; $i < 10; $i++) {
             $user = new User();
 
@@ -42,7 +55,6 @@ class Fixtures
                 ->setCreatedAt(new DateTime())
                 ->setPicture("http://image.jeuxvideo.com/avatar-md/default.jpg");
 
-            $repoUser = new UserRepository();
             $repoUser->createUser($user);
         }
 
@@ -58,7 +70,8 @@ class Fixtures
                 ->setContent($faker->paragraph(8))
                 ->setCreatedAt(new DateTime())
                 ->setCoverImage($faker->imageUrl(750, 300))
-                ->setSlug($slugify->slugify($post->getTitle()));
+                ->setSlug($slugify->slugify($post->getTitle()))
+                ->setUserId($damien->getId());
 
             $repoPost = new PostRepository();
             $repoPost->createPost($post);

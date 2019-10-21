@@ -43,6 +43,7 @@
                     </tfoot>
                     <tbody class="text-center">
                         {% for post in posts %}
+                        {% set user = post.getUser() %}
                         <tr>
                             <td>{{ post.id }}</td>
                             <td>{{ post.title }}</td>
@@ -51,7 +52,7 @@
                                     <span class="{{ category.style }} text-white">{{ category.name }}</span>
                                 {% endfor %}
                             </td>
-                            <td>Damien</td>
+                            <td>{{ user.name }}</td>
                             <td>{{ post.created_at| date("d/m/Y") }} à {{ post.created_at | date("H:i") }}</td>
                             <td>
                                 <div class="btn-group" role="group">

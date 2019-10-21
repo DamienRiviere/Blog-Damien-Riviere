@@ -33,12 +33,13 @@
                 <hr>
 
                 <div class="row">
+                {% set user = post.getUser() %}
                     <div class="col-1 img-author-article">
-                        <img src="https://www.manga-news.com/public/images/pix/serie/9164/the-arms-peddler-visual-8.jpg" class="avatar avatar-medium" alt="Avatar de Damien">
+                        <img src="{{ user.picture }}" class="avatar avatar-medium" alt="Avatar de Damien">
                     </div>
                     <div class="col-lg col-md col-sm-12 article-author">
                         <h5 class="mb-0"> 
-                            <a href="#" class="text-danger"><strong>Damien RIVIERE</strong></a>
+                            <a href="#" class="text-danger"><strong>{{ user.name }}</strong></a>
                         </h5>
                         {% if post.modify_at != null %}
                             <p class="small text-muted mb-0">Modifié le {{ post.modify_at | date("d/m/Y") }} à {{ post.modify_at | date("H:i") }}</p>
@@ -63,17 +64,23 @@
 
                 <br>
 
-                <!-- Comment -->
-                {% for comment in post.getComments() %}
-                    {% set user = comment.getUser() %}
-                    <div class="media mb-4">
-                        <img class="d-flex mr-3 rounded-circle avatar avatar-medium" src="{{ user.picture }}" alt="">
-                        <div class="media-body">
-                            <h5 class="mt-0 font-weight-bold"><a href="#" class="name-style">{{ user.name }}</a></h5>
-                            {{ comment.content }}
+                {% if post.getComments() == null %}
+                        <div class="alert alert-secondary">
+                            Aucun commentaire sur cette article
                         </div>
-                    </div>
-                {% endfor %}
+                {% else %}
+                    <!-- Comment -->
+                    {% for comment in post.getComments() %}
+                        {% set user = comment.getUser() %}
+                        <div class="media mb-4">
+                            <img class="d-flex mr-3 rounded-circle avatar avatar-medium" src="{{ user.picture }}" alt="">
+                            <div class="media-body">
+                                <h5 class="mt-0 font-weight-bold"><a href="#" class="name-style">{{ user.name }}</a></h5>
+                                {{ comment.content }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
 
             <!-- Sidebar Widgets Column -->

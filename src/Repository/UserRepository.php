@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use PDO;
+use App\Model\Post;
 use App\Model\User;
 use App\Model\Comment;
 
@@ -33,17 +34,61 @@ class UserRepository extends Repository {
      */
     public function hydrateCommentWithUser(Comment $comment): void
     {
-        $query = self::getDb()->prepare('
+        $sql = '
             SELECT u.*
             FROM user u
             JOIN comment c ON u.id = c.user_id
             WHERE c.user_id = ?
+        ';       
+
+        $this->hydrateOneObject($sql, $comment, $comment->getUserId(), $this->class, "addUser");
+    }
+
+    /**
+     * Hydrate a post with his user
+     *
+     * @param Post $post
+     * @return void
+     */
+    public function hydratePostWithUser($post): void
+    {
+        $sql = '
+            SELECT u.*
+            FROM user u
+            JOIN post p ON u.id = p.user_id
+            WHERE p.user_id = ?
+        ';
+
+        $this->hydrateOneObject($sql, $post, $post->getUserId(), $this->class, "addUser");
+    }
+
+    /**
+     * Hydrate several posts with his user
+     *
+     * @param array|null $posts
+     * @return void
+     */
+    public function hydratePostsWithUser(?array $posts): void
+    {
+        $postsById = [];
+        foreach ($posts as $post) {
+            $postsById[$post->getId()] = $post;
+        }
+
+        $query = self::getDb()->prepare('
+            SELECT u.*
+            FROM user u
+            JOIN post p ON u.id = p.user_id
+            WHERE p.user_id 
+            IN (' . implode(',', array_keys($postsById)) . ')
         ');
-        
-        $query->execute([$comment->getUserId()]);
+
+        $query->execute();
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $user = $query->fetch();
 
-        $comment->addUser($user);
+        foreach ($posts as $post) {
+            $post->addUser($user);       
+        }
     }
 }

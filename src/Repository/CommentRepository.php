@@ -50,6 +50,12 @@ class CommentRepository extends Repository {
         }
     }
 
+    /**
+     * Find all comments of a post
+     *
+     * @param integer $id
+     * @return void
+     */
     public function findComments(int $id)
     {
         $query = self::getDb()->prepare("SELECT * FROM {$this->repository} WHERE post_id = ?");
