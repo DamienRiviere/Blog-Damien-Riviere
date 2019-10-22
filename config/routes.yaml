@@ -94,4 +94,14 @@ authentication_login:
 authentication_logout:
     path:       /logout
     controller: AuthenticationController::logout
+
+# Register
+register_index:
+    path:       /register
+    controller: RegisterController::showRegister
+    methods:    GET
+register:
+    path:       /register
+    controller: RegisterController::register
+    methods:    POST
     

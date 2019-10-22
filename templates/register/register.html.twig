@@ -1,0 +1,53 @@
+{% extends 'layout/auth-register/default.html.twig' %}
+
+{% block title %}S'inscrire - Blog Damien Riviere{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row no-gutter">
+            <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+            <div class="col-md-8 col-lg-6">
+                <div class="login d-flex align-items-center py-5">
+                    <div class="container">
+                        {% include 'layout/auth-register/alert.html.twig' %}
+                        <div class="row">
+                            <div class="col-md-9 col-lg-8 mx-auto">
+                                <h2 class="login-heading mb-4 text-danger">
+                                    <a href="/"><i class="fas fa-arrow-circle-left"></i></a>
+                                    S'inscrire
+                                </h2>
+                                <form action="/register" method="POST">
+                                    <div class="form-label-group">
+                                        <input type="text" id="name" class="form-control {% if session['check_name'] %}is-invalid{% endif %}" placeholder="Pseudo" required autofocus name="name">
+                                        <label for="name">Pseudo</label>
+                                        <div class="invalid-feedback">
+                                            {{ session['check_name'] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-label-group">
+                                        <input type="email" id="email" class="form-control {% if session['check_email'] %}is-invalid{% endif %}" placeholder="Adresse email" required autofocus name="email">
+                                        <label for="email">Adresse email</label>
+                                         <div class="invalid-feedback">
+                                            {{ session['check_email'] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-label-group">
+                                        <input type="password" id="password" class="form-control {% if session['check_email'] %}is-invalid{% endif %}" placeholder="Mot de passe" required name="password">
+                                        <label for="password">Mot de passe</label>
+                                        <div class="invalid-feedback">
+                                            {{ session['check_password'] }}
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-lg btn-danger btn-block btn-login font-weight-bold mb-2" type="submit">Connexion</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
