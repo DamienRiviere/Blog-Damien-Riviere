@@ -1,0 +1,11 @@
+{% if get['forbidden'] %}
+<div class="alert alert-danger col-md-9 col-lg-8 mx-auto">
+    Page introuvable
+</div>
+{% endif %}
+
+{% if get['created'] %}
+<div class="alert alert-success col-md-9 col-lg-8 mx-auto">
+    Vous pouvez utiliser vos identifiants pour vous connecter !
+</div>
+{% endif %}

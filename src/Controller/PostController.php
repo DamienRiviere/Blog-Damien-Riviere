@@ -62,7 +62,7 @@ class PostController extends Controller
             $comment
                 ->setContent($_POST['content'])
                 ->setPostId($id)
-                ->setUserId(1)
+                ->setUserId($_SESSION['id'])
                 ->setCreatedAt(new \DateTime());
                 
             $this->comment->createComment($comment);

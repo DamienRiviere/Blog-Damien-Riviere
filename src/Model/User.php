@@ -39,7 +39,7 @@ class User {
 
     public function setName(string $name): self
     {
-        $this->name = $name;
+        $this->name = htmlspecialchars($name);
 
         return $this;
     }

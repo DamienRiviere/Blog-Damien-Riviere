@@ -52,7 +52,7 @@ class UserRepository extends Repository {
      * @param Post $post
      * @return void
      */
-    public function hydratePostWithUser($post): void
+    public function hydratePostWithUser(Post $post): void
     {
         $sql = '
             SELECT u.*
@@ -100,9 +100,15 @@ class UserRepository extends Repository {
         $query->execute(['email' => $email]);
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $user = $query->fetch();
-        if($user === false) {
-            throw new Exception("Utilisateur introuvable");
-        }
+        return $user;
+    }
+
+    public function findName(string $name)
+    {
+        $query = self::getDb()->prepare('SELECT * FROM user WHERE name = :name');
+        $query->execute(['name' => $name]);
+        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
+        $user = $query->fetch();
         return $user;
     }
 }
