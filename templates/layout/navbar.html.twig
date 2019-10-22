@@ -18,6 +18,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#contact">Contact</a>
                 </li>
+                {% if session %}
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle text-danger" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ session.picture }}" alt="Avatar de {{ session.name }}" class="avatar avatar-mini">
+                                {{ session.name }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#">Mon profil</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout">Déconnexion</a>
+                            </div>
+                        </div>
+                    </li>
+                {% elseif session == null %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Se connecter</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

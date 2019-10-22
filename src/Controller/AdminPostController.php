@@ -16,6 +16,7 @@ class AdminPostController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->checkRole();
         $this->post = new PostRepository();
         $this->slugify = new Slugify();
         $this->category = new CategoryRepository();

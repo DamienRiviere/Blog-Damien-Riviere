@@ -7,7 +7,6 @@ use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
 use App\Repository\CategoryRepository;
 
-
 class PostController extends Controller
 {
     private $post;

@@ -16,6 +16,7 @@ class AdminCategoryController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->checkRole();
         $this->category = new CategoryRepository();
         $this->slugify = new Slugify();
     }

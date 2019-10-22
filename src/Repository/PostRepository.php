@@ -5,6 +5,7 @@ namespace App\Repository;
 use PDO;
 use App\Model\Post;
 use App\Repository\UserRepository;
+use Exception;
 
 class PostRepository extends Repository
 {
@@ -56,6 +57,9 @@ class PostRepository extends Repository
         $query->execute(['id' => $id]);
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $post = $query->fetch();
+        if($post === false) {
+            throw new Exception("Article introuvable");
+        }
         (new CategoryRepository())->hydratePostsWithCategories([$post]);
         (new CommentRepository())->hydratePostWithComments($post);
         (new UserRepository())->hydratePostWithUser($post);
