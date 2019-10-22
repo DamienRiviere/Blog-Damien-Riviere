@@ -18,19 +18,13 @@ class Authentication {
 
     public function authentication($email, $password)
     {
-        $validator = Validation::createValidator();
-        $violations = $validator->validate($password, [
-            new NotBlank()
-        ]);
-
         $user = $this->checkEmail($email);
 
         if($this->checkPassword($password, $user)) {
             $this->setSession($user);
             header('Location: /');
         } else {
-            $errors = "Identifiant ou mot de passe incorrect";
-            (new AuthenticationController)->showLogin($errors);
+            header('Location: /login?access-denied=1');
         }
     }
 
@@ -38,6 +32,8 @@ class Authentication {
     {
         if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $user = $this->userRepo->findEmail($email);
+        } else {
+            header('Location: /login?access-denied=1');
         }
 
         return $user;
@@ -58,6 +54,7 @@ class Authentication {
         $_SESSION['slug'] = $user->getSlug();
         $_SESSION['picture'] = $user->getPicture();
         $_SESSION['created_at'] = $user->getCreatedAt();
+        $_SESSION['role_id'] = $user->getRoleId();
     }
 
     public function logout()

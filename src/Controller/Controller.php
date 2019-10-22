@@ -35,4 +35,16 @@ abstract class Controller
         $this->twig->addGlobal('get', $_GET);
         $this->twig->addGlobal('session', $_SESSION);
     }
+
+    /**
+     * Check if the user in session is an admin
+     *
+     * @return void
+     */
+    public function checkRole(): void
+    {
+        if(empty($_SESSION) OR $_SESSION['role_id'] != 1) {
+            header('Location: /login?forbidden=1');
+        }
+    }
 }

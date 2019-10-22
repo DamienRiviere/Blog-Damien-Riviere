@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use DateTime;
 use App\Model\Post;
+use App\Model\Role;
 use App\Model\User;
 use App\Model\Comment;
 use App\Model\Category;
@@ -13,6 +14,7 @@ use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\RoleRepository;
 
 class Fixtures
 {
@@ -29,7 +31,20 @@ class Fixtures
         $db->exec('TRUNCATE TABLE post_category');
         $db->exec('TRUNCATE TABLE user');
         $db->exec('TRUNCATE TABLE comment');
+        $db->exec('TRUNCATE TABLE role');
         $db->exec('SET FOREIGN_KEY_CHECKS = 1');
+
+        $repoRole = new RoleRepository();
+
+        $admin = new Role();
+        $admin->setName('Admin');
+
+        $repoRole->createRole($admin);
+
+        $membre = new Role();
+        $membre->setName('Membre');
+
+        $repoRole->createRole($membre);
 
         $repoUser = new UserRepository();
 
@@ -40,7 +55,8 @@ class Fixtures
             ->setPassword(password_hash("password", PASSWORD_BCRYPT))
             ->setSlug($slugify->slugify($damien->getName()))
             ->setCreatedAt(new DateTime())
-            ->setPicture("https://www.manga-news.com/public/images/pix/serie/9164/the-arms-peddler-visual-8.jpg");
+            ->setPicture("https://www.manga-news.com/public/images/pix/serie/9164/the-arms-peddler-visual-8.jpg")
+            ->setRoleId($admin->getId());
 
         $repoUser->createUser($damien);
 
@@ -53,7 +69,8 @@ class Fixtures
                 ->setPassword(password_hash($faker->password(), PASSWORD_BCRYPT))
                 ->setSlug($slugify->slugify($user->getName()))
                 ->setCreatedAt(new DateTime())
-                ->setPicture("http://image.jeuxvideo.com/avatar-md/default.jpg");
+                ->setPicture("http://image.jeuxvideo.com/avatar-md/default.jpg")
+                ->setRoleId($membre->getId());
 
             $repoUser->createUser($user);
         }

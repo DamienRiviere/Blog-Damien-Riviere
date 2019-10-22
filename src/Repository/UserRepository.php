@@ -22,7 +22,8 @@ class UserRepository extends Repository {
             'password' => $user->getPassword(),
             'slug' => $user->getSlug(),
             'picture' => $user->getPicture(),
-            'created_at' => $user->getCreatedAt()->format('Y-m-d H:i:s')
+            'created_at' => $user->getCreatedAt()->format('Y-m-d H:i:s'),
+            'role_id' => $user->getRoleId()
         ]);
         $user->setId($id);
     }

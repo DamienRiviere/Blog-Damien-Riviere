@@ -48,6 +48,18 @@ CREATE TABLE user (
     slug VARCHAR(255) NOT NULL,
     picture VARCHAR(255) NOT NULL,
     created_at DATETIME NOT NULL,
+    role_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_role
+        FOREIGN KEY (role_id)
+        REFERENCES  role (id)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT
+)
+
+CREATE TABLE role (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 )
 

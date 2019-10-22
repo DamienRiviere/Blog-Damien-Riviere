@@ -17,6 +17,8 @@ class User {
     private $picture;
 
     private $created_at;
+
+    private $role_id;
     
     public function getId(): int
     {
@@ -102,6 +104,18 @@ class User {
         return $this;
     }
 
+    public function getRoleId()
+    {
+        return $this->role_id;
+    }
+
+    public function setRoleId($role_id)
+    {
+        $this->role_id = $role_id;
+
+        return $this;
+    }
+    
     public function setComment(Comment $comment)
     {
         $this->comment = $comment;
@@ -111,4 +125,5 @@ class User {
     {
         $this->post = $post;
     }
+
 }

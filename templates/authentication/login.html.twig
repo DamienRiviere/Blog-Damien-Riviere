@@ -39,6 +39,7 @@
                 <div class="col-md-8 col-lg-6">
                     <div class="login d-flex align-items-center py-5">
                         <div class="container">
+                            {% include 'authentication/layout/alert.html.twig' %}
                             <div class="row">
                                 <div class="col-md-9 col-lg-8 mx-auto">
                                     <h2 class="login-heading mb-4 text-danger"><a href="/"><i class="fas fa-arrow-circle-left"></a></i> Se connecter</h2>
@@ -49,20 +50,18 @@
                                         </div>
 
                                         <div class="form-label-group">
-                                            <input type="password" id="password" class="form-control {% if errors != null %}is-invalid{% endif %}" placeholder="Mot de passe" required name="password">
+                                            <input type="password" id="password" class="form-control {% if get['access-denied'] %}is-invalid{% endif %}" placeholder="Mot de passe" required name="password">
                                             <label for="password">Mot de passe</label>
                                             <div class="invalid-feedback">
-                                               {{ errors }}
+                                                Email ou mot de passe incorrect
                                             </div>
                                         </div>
 
-                                        <div class="custom-control custom-checkbox mb-3">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                            <label class="custom-control-label" for="customCheck1">Se souvenir du mot de passe</label>
-                                        </div>
                                         <button class="btn btn-lg btn-danger btn-block btn-login font-weight-bold mb-2"type="submit">Connexion</button>
+                                        
                                         <div class="text-center">
-                                            <a class="small" href="#">Mot de passe oublié ?</a></div>
+                                            <a class="small" href="#">Mot de passe oublié ?</a>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
