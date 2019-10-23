@@ -13,5 +13,7 @@ $(document).on("click", ".modal-delete", function () {
         $('.modal-delete').attr('href','/admin/category/delete/'+id);
     } else if (path.includes("roles")) {
         $('.modal-delete').attr('href','/admin/role/delete/'+id);
+    } else if (path.includes("users")) {
+        $('.modal-delete').attr('href','/admin/user/delete/'+id);
     }
 });

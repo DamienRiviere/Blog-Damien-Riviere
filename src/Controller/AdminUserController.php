@@ -21,4 +21,10 @@ class AdminUserController extends Controller
             'users' => $this->userRepo->findAllUsers()
         ]);
     }
+
+    public function delete(int $id)
+    {
+        $this->userRepo->delete($id);
+        header('Location: /admin/users?delete=1');
+    }
 }
