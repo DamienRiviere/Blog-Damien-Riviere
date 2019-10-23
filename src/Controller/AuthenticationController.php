@@ -7,7 +7,8 @@ use App\Services\Authentication;
 use App\Repository\UserRepository;
 use Cocur\Slugify\Slugify;
 
-class AuthenticationController extends Controller {
+class AuthenticationController extends Controller
+{
 
     private $auth;
 
@@ -25,7 +26,7 @@ class AuthenticationController extends Controller {
     {
         $this->twig->display('authentication/login.html.twig', [
             'errors' => $errors
-        ]);           
+        ]);
     }
 
     public function login()

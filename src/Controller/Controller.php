@@ -43,7 +43,7 @@ abstract class Controller
      */
     public function checkRole(): void
     {
-        if(empty($_SESSION) OR $_SESSION['role_id'] != 1) {
+        if (empty($_SESSION) or $_SESSION['role_id'] != 1) {
             header('Location: /login?forbidden=1');
         }
     }

@@ -5,7 +5,7 @@ namespace App\Controller;
 class AdminDashboardController extends Controller
 {
     public function __construct()
-    {   
+    {
         parent::__construct();
         $this->checkRole();
     }

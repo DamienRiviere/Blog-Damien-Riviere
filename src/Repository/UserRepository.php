@@ -8,7 +8,8 @@ use App\Model\User;
 use App\Model\Comment;
 use Exception;
 
-class UserRepository extends Repository {
+class UserRepository extends Repository
+{
 
     protected $repository = "user";
 
@@ -41,7 +42,7 @@ class UserRepository extends Repository {
             FROM user u
             JOIN comment c ON u.id = c.user_id
             WHERE c.user_id = ?
-        ';       
+        ';
 
         $this->hydrateOneObject($sql, $comment, $comment->getUserId(), $this->class, "addUser");
     }
@@ -90,7 +91,7 @@ class UserRepository extends Repository {
         $user = $query->fetch();
 
         foreach ($posts as $post) {
-            $post->addUser($user);       
+            $post->addUser($user);
         }
     }
 
@@ -110,5 +111,20 @@ class UserRepository extends Repository {
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $user = $query->fetch();
         return $user;
+    }
+
+    /**
+     * Find all users with each role
+     *
+     * @return void
+     */
+    public function findAllUsers()
+    {
+        $query = self::getDb()->prepare('SELECT * FROM user ORDER BY created_at DESC');
+        $query->execute();
+        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
+        $users = $query->fetchAll();
+        (new RoleRepository())->hydrateUsersWithRole($users);
+        return $users;
     }
 }

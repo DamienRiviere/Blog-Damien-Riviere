@@ -7,7 +7,8 @@ use App\Repository\UserRepository;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class Authentication {
+class Authentication
+{
     
     private $userRepo;
 
@@ -20,7 +21,7 @@ class Authentication {
     {
         $user = $this->checkEmail($email);
 
-        if($this->checkPassword($password, $user)) {
+        if ($this->checkPassword($password, $user)) {
             $this->setSession($user);
             header('Location: /');
         } else {
@@ -30,7 +31,7 @@ class Authentication {
 
     private function checkEmail($email)
     {
-        if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $user = $this->userRepo->findEmail($email);
         } else {
             header('Location: /login?access-denied=1');

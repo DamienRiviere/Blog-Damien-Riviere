@@ -2,7 +2,8 @@
 
 namespace App\Model;
 
-class Role {
+class Role
+{
 
     private $id;
 
@@ -27,7 +28,7 @@ class Role {
 
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = htmlspecialchars($name);
 
         return $this;
     }
