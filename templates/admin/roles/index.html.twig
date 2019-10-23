@@ -24,14 +24,14 @@
                     <thead class="text-center">
                         <tr>
                             <th>#</th>
-                            <th>Pseudo</th>
+                            <th>Nom</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot class="text-center">
                         <tr>
                             <th>#</th>
-                            <th>Pseudo</th>
+                            <th>Nom</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -42,7 +42,7 @@
                             <td>{{ role.name }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="#" class="btn btn-md btn-secondary" title="Modifier le rôle">
+                                    <a href="/admin/role/edit/{{ role.id }}" class="btn btn-md btn-secondary" title="Modifier le rôle">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn btn-md btn-danger delete-link" title="Supprimer le rôle" data-toggle="modal" data-target="#delModal" data-id={{ role.id }}>
