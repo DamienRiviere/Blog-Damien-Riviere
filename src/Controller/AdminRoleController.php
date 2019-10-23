@@ -41,4 +41,26 @@ class AdminRoleController extends Controller
             throw new \Exception("Veuillez remplir tous les champs !");
         }
     }
+
+    public function showEdit($id)
+    {
+        $this->twig->display('admin/roles/edit.html.twig', [
+            'role'  => $this->roleRepo->find($id)
+        ]);
+    }
+
+    public function edit($id)
+    {
+        if (!in_array("", $_POST)) {
+            $role = $this->roleRepo->find($id);
+
+            $role->setName($_POST['name']);
+
+            $this->roleRepo->updateRole($role);
+
+            header('Location: /admin/roles?edit=1');
+        } else {
+            throw new \Exception("Veuillez remplir tous les champs");
+        }
+    }
 }

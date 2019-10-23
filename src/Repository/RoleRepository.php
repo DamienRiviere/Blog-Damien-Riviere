@@ -20,6 +20,13 @@ class RoleRepository extends Repository
         $role->setId($id);
     }
 
+    public function updateRole(Role $role): void
+    {
+        $this->update([
+            'name' => $role->getName()
+        ], $role->getId());
+    }
+
     /**
      * Method to hydrate a user with his role
      *
