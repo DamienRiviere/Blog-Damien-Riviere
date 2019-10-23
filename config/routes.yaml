@@ -87,6 +87,9 @@ admin_users_index:
     path:       /admin/users
     controller: AdminUserController::users
     methods:    GET
+admin_users_delete:
+    path:       /admin/user/delete/{id}
+    controller: AdminUserController::delete
 
 # Admin roles
 admin_roles_index:
