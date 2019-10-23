@@ -2,7 +2,8 @@
 
 namespace App\Model;
 
-class User {
+class User
+{
 
     private $id;
 
@@ -19,6 +20,8 @@ class User {
     private $created_at;
 
     private $role_id;
+
+    private $role;
     
     public function getId(): int
     {
@@ -51,7 +54,7 @@ class User {
 
     public function setEmail(string $email): self
     {
-        $this->email = $email;
+        $this->email = htmlspecialchars($email);
 
         return $this;
     }
@@ -80,7 +83,7 @@ class User {
         return $this;
     }
 
-    public function getPicture(): String
+    public function getPicture(): string
     {
         return $this->picture;
     }
@@ -126,4 +129,20 @@ class User {
         $this->post = $post;
     }
 
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    public function addRole(Role $role): void
+    {
+        $this->role = $role;
+    }
 }

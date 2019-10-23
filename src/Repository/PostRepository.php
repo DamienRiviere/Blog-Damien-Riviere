@@ -57,7 +57,7 @@ class PostRepository extends Repository
         $query->execute(['id' => $id]);
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $post = $query->fetch();
-        if($post === false) {
+        if ($post === false) {
             throw new Exception("Article introuvable");
         }
         (new CategoryRepository())->hydratePostsWithCategories([$post]);

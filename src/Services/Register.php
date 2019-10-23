@@ -6,7 +6,8 @@ use App\Model\User;
 use Cocur\Slugify\Slugify;
 use App\Repository\UserRepository;
 
-class Register {
+class Register
+{
 
     private $userRepo;
 
@@ -37,7 +38,7 @@ class Register {
         $this->checkEmail($_POST['email']);
         $this->checkPasswordLength($_POST['password']);
 
-        if($this->checkName && $this->checkEmail && $this->checkPassword != false) {
+        if ($this->checkName && $this->checkEmail && $this->checkPassword != false) {
             $this->setUser($user);
         }
     }
@@ -92,7 +93,7 @@ class Register {
      */
     public function checkNameExist(string $name)
     {
-        if($this->userRepo->findName($name) == true) {
+        if ($this->userRepo->findName($name) == true) {
             $this->checkName = false;
             $_SESSION['check_name'] = "Ce pseudo est déjà utilisé, veuillez en choisir un autre !";
             header('Location: /register');
@@ -109,7 +110,7 @@ class Register {
      */
     public function checkNameLength(string $name)
     {
-        if(strlen($name) < 3) {
+        if (strlen($name) < 3) {
             $this->checkName = false;
             $_SESSION['check_name'] = "Votre pseudo doit comporter au minimum 3 caractères";
             header('Location: /register');
@@ -138,7 +139,7 @@ class Register {
      */
     public function checkEmailFormat(string $email)
     {
-        if(filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
             $this->checkEmail = false;
             $_SESSION['check_email'] = "Veuillez entrer un bon format d'email !";
             header('Location: /register');
@@ -155,7 +156,7 @@ class Register {
      */
     public function checkEmailExist(string $email)
     {
-        if($this->userRepo->findEmail($email) == true) {
+        if ($this->userRepo->findEmail($email) == true) {
             $this->checkEmail = false;
             $_SESSION['check_email'] = "Cet email est déjà utilisé, veuillez en choisir un autre !";
             header('Location: /register');
@@ -172,7 +173,7 @@ class Register {
      */
     public function checkPasswordLength(string $password)
     {
-        if(strlen($password) < 4) {
+        if (strlen($password) < 4) {
             $this->checkPassword = false;
             $_SESSION['check_password'] = "Votre mot de passe doit comporter au minimum 4 caractères";
             header('Location: /register');

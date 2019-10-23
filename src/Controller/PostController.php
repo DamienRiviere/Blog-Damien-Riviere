@@ -56,7 +56,7 @@ class PostController extends Controller
 
     public function newComment($id, $slug): void
     {
-        if(!in_array("", $_POST)) {
+        if (!in_array("", $_POST)) {
             $comment = new Comment();
 
             $comment

@@ -6,7 +6,8 @@ use PDO;
 use App\Model\Post;
 use App\Model\Comment;
 
-class CommentRepository extends Repository {
+class CommentRepository extends Repository
+{
 
     protected $repository = "comment";
 

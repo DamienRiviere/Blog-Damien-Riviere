@@ -60,7 +60,7 @@ class Fixtures
 
         $repoUser->createUser($damien);
 
-        for($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $user = new User();
 
             $user
@@ -95,13 +95,13 @@ class Fixtures
 
             $posts[] = $post->getId();
 
-            for($c = 0; $c < 10; $c++) {
+            for ($c = 0; $c < 10; $c++) {
                 $comment = new Comment();
 
                 $comment
                     ->setContent($faker->sentence(10))
                     ->setPostId($post->getId())
-                    ->setUserId(mt_rand(1 , 10))
+                    ->setUserId(mt_rand(1, 10))
                     ->setCreatedAt(new DateTime());
 
                 $repoComment = new CommentRepository();

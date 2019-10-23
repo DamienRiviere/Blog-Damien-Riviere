@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use App\Services\Register;
 
-class RegisterController extends Controller {
+class RegisterController extends Controller
+{
 
     private $register;
 

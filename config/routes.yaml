@@ -82,6 +82,26 @@ admin_category_delete:
     path:       /admin/category/delete/{id}
     controller: AdminCategoryController::delete
 
+# Admin users
+admin_users_index:
+    path:       /admin/users
+    controller: AdminUserController::users
+    methods:    GET
+
+# Admin roles
+admin_roles_index:
+    path:       /admin/roles
+    controller: AdminRoleController::roles
+    methods:    GET
+admin_roles_show_new:
+    path:       /admin/role/new
+    controller: AdminRoleController::showNew
+    methods:    GET
+admin_roles_new:
+    path:       /admin/role/new
+    controller: AdminRoleController::new
+    methods:    POST
+
 # Authentication
 authentication_index:
     path:       /login
