@@ -42,14 +42,14 @@ class AdminRoleController extends Controller
         }
     }
 
-    public function showEdit($id)
+    public function showEdit(int $id)
     {
         $this->twig->display('admin/roles/edit.html.twig', [
             'role'  => $this->roleRepo->find($id)
         ]);
     }
 
-    public function edit($id)
+    public function edit(int $id)
     {
         if (!in_array("", $_POST)) {
             $role = $this->roleRepo->find($id);
@@ -62,5 +62,11 @@ class AdminRoleController extends Controller
         } else {
             throw new \Exception("Veuillez remplir tous les champs");
         }
+    }
+
+    public function delete(int $id)
+    {
+        $this->roleRepo->delete($id);
+        header('Location: /admin/roles?delete=1');
     }
 }

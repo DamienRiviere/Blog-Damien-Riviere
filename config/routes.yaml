@@ -109,6 +109,9 @@ admin_roles_edit:
     path:       /admin/role/edit/{id}
     controller: AdminRoleController::edit
     methods:    POST
+admin_roles_delete:
+    path:       /admin/role/delete/{id}
+    controller: AdminRoleController::delete
 
 # Authentication
 authentication_index:
