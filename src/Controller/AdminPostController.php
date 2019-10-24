@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\Post;
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use Cocur\Slugify\Slugify;
 
@@ -13,6 +14,8 @@ class AdminPostController extends Controller
 
     private $category;
 
+    private $comment;
+
     public function __construct()
     {
         parent::__construct();
@@ -20,6 +23,7 @@ class AdminPostController extends Controller
         $this->post = new PostRepository();
         $this->slugify = new Slugify();
         $this->category = new CategoryRepository();
+        $this->comment = new CommentRepository();
     }
 
     public function posts()
@@ -100,5 +104,11 @@ class AdminPostController extends Controller
         $this->twig->display('admin/post/comments.html.twig', [
             'post' => $this->post->findPost($id)
         ]);
+    }
+
+    public function deleteComment(int $id, int $idComment)
+    {
+        $this->comment->delete($idComment);
+        header('Location: /admin/post/' . $id . '/comments?delete=1');
     }
 }

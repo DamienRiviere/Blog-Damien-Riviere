@@ -1,10 +1,13 @@
 $(document).on("click", ".delete-link", function () {
     let id = $(this).data('id');
+    let idPost = $(this).data('idPost');
     $('.modal-delete').attr('data-id', +id);
+    $('.modal-delete').attr('data-id-post', +idPost);
 });
 
 $(document).on("click", ".modal-delete", function () {
     let id = $(this).data('id');
+    let idPost = $(this).data('id-post');
     let path = window.location.pathname;
 
     if(path.includes("posts")) {
@@ -15,5 +18,7 @@ $(document).on("click", ".modal-delete", function () {
         $('.modal-delete').attr('href','/admin/role/delete/'+id);
     } else if (path.includes("users")) {
         $('.modal-delete').attr('href','/admin/user/delete/'+id);
+    } else if (path.includes("comments")) {
+        $('.modal-delete').attr('href','/admin/post/'+idPost+'/comment/delete/'+id);
     }
 });
