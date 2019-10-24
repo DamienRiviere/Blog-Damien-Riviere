@@ -43,4 +43,23 @@ class UserController extends Controller
             throw new \Exception("Veuillez remplir tous les champs !");
         }
     }
+
+    public function showEditPassword($id)
+    {
+        $this->twig->display('user/edit_password.html.twig');
+    }
+
+    public function editPassword($id)
+    {
+        if (!in_array("", $_POST)) {
+            $password = $this->userRepo->find($id);
+
+            $password->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
+
+            $this->userRepo->updatePassword($password, $id);
+            header('Location: /account?edit-password=1');
+        } else {
+            throw new \Exception("Veuillez remplir tous les champs !");
+        }
+    }
 }

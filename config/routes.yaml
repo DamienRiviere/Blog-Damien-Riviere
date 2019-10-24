@@ -35,6 +35,14 @@ user_edit_email:
     path:       /account/email/edit/{id}
     controller: UserController::editEmail
     methods:    POST
+user_show_edit_password:
+    path:       /account/password/edit/{id}
+    controller: UserController::showEditPassword
+    methods:    GET
+user_edit_password:
+    path:       /account/password/edit/{id}
+    controller: UserController::editPassword
+    methods:    POST
 
 # Admin Dashboard
 admin_dashboard:
