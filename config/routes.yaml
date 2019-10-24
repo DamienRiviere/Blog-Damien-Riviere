@@ -105,36 +105,44 @@ admin_category_delete:
     controller: AdminCategoryController::delete
 
 # Admin users
-admin_users_index:
+admin_user_index:
     path:       /admin/users
     controller: AdminUserController::users
     methods:    GET
+admin_user_show_edit:
+    path:       /admin/user/edit/{id}
+    controller: AdminUserController::showEdit
+    methods:    GET
+admin_user_edit:
+    path:       /admin/user/edit/{id}
+    controller: AdminUserController::edit
+    methods:    POST
 admin_users_delete:
     path:       /admin/user/delete/{id}
     controller: AdminUserController::delete
 
 # Admin roles
-admin_roles_index:
+admin_role_index:
     path:       /admin/roles
     controller: AdminRoleController::roles
     methods:    GET
-admin_roles_show_new:
+admin_role_show_new:
     path:       /admin/role/new
     controller: AdminRoleController::showNew
     methods:    GET
-admin_roles_new:
+admin_role_new:
     path:       /admin/role/new
     controller: AdminRoleController::new
     methods:    POST
-admin_roles_show_edit:
+admin_role_show_edit:
     path:       /admin/role/edit/{id}
     controller: AdminRoleController::showEdit
     methods:    GET
-admin_roles_edit:
+admin_role_edit:
     path:       /admin/role/edit/{id}
     controller: AdminRoleController::edit
     methods:    POST
-admin_roles_delete:
+admin_role_delete:
     path:       /admin/role/delete/{id}
     controller: AdminRoleController::delete
 
