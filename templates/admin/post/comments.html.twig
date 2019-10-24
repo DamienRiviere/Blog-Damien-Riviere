@@ -46,8 +46,12 @@
                                 <td>{{ comment.id }}</td>
                                 <td>{{ comment.content }}</td>
                                 <td>{{ user.name }}</td>
-                                <td>{{ comment.created_at | date("d/m/Y") }} à {{ comment.created_at | date("H:i") }}</td>
-                                <td></td>
+                                <td>{{ comment.createdAt | date("d/m/Y") }} à {{ comment.createdAt | date("H:i") }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-md btn-danger delete-link" title="Supprimer le commentaire" data-toggle="modal" data-target="#delModal" data-id={{ comment.id }} data-id-post={{ post.id }}>
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>

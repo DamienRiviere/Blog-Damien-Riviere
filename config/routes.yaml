@@ -82,10 +82,13 @@ admin_post_edit:
 admin_post_delete:
     path:       /admin/post/delete/{id}
     controller: AdminPostController::delete
-admin_post_comments:
+admin_post_comment:
     path:       /admin/post/{id}/comments
     controller: AdminPostController::comments
     methods:    GET
+admin_post_comment_delete:
+    path:       /admin/post/{id}/comment/delete/{idcomment}
+    controller: AdminPostController::deleteComment
 
 # Admin Categories
 admin_category_index:
