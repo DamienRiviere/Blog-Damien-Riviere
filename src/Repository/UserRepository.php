@@ -133,20 +133,20 @@ class UserRepository extends Repository
     {
         $this->update([
             'email' => $email->getEmail()
-        ], $id);
+        ], (int)$id);
     }
 
     public function updatePassword(User $password, int $id): void
     {
         $this->update([
             'password' => $password->getPassword()
-        ], $id);
+        ], (int)$id);
     }
 
     public function updateRole(User $roleId, int $id): void
     {
         $this->update([
             'role_id' => $roleId->getRoleId()
-        ], $id);
+        ], (int)$id);
     }
 }

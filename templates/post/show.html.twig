@@ -20,12 +20,12 @@
             <!-- Post Content Column -->
             <div class="col-lg-8">
 
-                <!-- Preview Image -->
+                <!-- Post Image -->
                 <img class="img-fluid rounded mt-4" src="{{ post.cover_image }}" alt="">
 
                 <hr>
 
-                <!-- Post Content -->
+                <!-- Post Introduction -->
                 <p class="lead">{{ post.introduction }}</p>
 
                 <p>{{ post.content }}</p>
@@ -54,30 +54,28 @@
                         <a href="/login">Connectez-vous</a> pour écrire un commentaire !
                     </div>
                 {% else %}
-                    <!-- Comments Form -->
-                    <div class="card my-4">
-                        <h5 class="card-header"><i class="fas fa-comment"></i> Laisser un commentaire :</h5>
-                        <div class="card-body">
-                            <form action="/post/{{ post.id }}/{{ post.slug }}/new-comment" method="post">
-                                <div class="form-group">
-                                    <textarea class="form-control" rows="5" name="content"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Envoyer</button>
-                            </form>
-                        </div>
-                    </div>
+                    {# Comment form #}
+                    {% include '/post/new_comment.html.twig' %}
                 {% endif %}
 
                 {% if post.getComments() == null %}
                     <h3 class="text-center my-4">Aucun commentaire</h3>
                 {% else %}
-                    <!-- Comment -->
+                    <!-- Comments list -->
                     {% for comment in post.getComments() %}
                         {% set user = comment.getUser() %}
                         <div class="media mb-4 mt-4">
                             <img class="d-flex mr-3 rounded-circle avatar avatar-medium" src="{{ user.picture }}" alt="">
                             <div class="media-body">
-                                <h5 class="mt-0 font-weight-bold"><a href="#" class="name-style">{{ user.name }}</a></h5>
+                                <h5 class="mt-0 font-weight-bold">
+                                    <a href="#" class="name-style">{{ user.name }}</a>
+                                    {# Link to edit comment if user is connected #}
+                                    {% if session.id == comment.userId %}
+                                        <a href="/post/{{ post.id }}/{{ post.slug }}/edit-comment/{{ comment.id }}">
+                                            <i class="fas fa-pen-square"></i>
+                                        </a>
+                                    {% endif %}
+                                </h5>
                                 {{ comment.content }}
                             </div>
                         </div>
@@ -85,24 +83,9 @@
                 {% endif %}
             </div>
 
-            <!-- Sidebar Widgets Column -->
+            <!-- Categories -->
             <div class="col-md-4">
-
-                <!-- Search Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">Search</h5>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-secondary" type="button">Go!</button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
                 {% include 'layout/categories.html.twig' %}
-
             </div>
 
         </div>

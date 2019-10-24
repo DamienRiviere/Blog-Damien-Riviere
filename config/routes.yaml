@@ -17,6 +17,14 @@ post_comment:
     path:       /post/{id}/{slug}/new-comment
     controller: PostController::newComment
     methods:    POST
+post_comment_show_edit:
+    path:       /post/{id}/{slug}/edit-comment/{idcomment}
+    controller: PostController::showEditComment
+    methods:    GET
+post_comment_edit:
+    path:       /post/{id}/{slug}/edit-comment/{idcomment}
+    controller: PostController::editComment
+    methods:    POST
 post_category:
     path:       /post/category/{id}/{slug}
     controller: PostController::category

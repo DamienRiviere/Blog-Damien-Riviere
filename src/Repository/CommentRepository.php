@@ -23,11 +23,20 @@ class CommentRepository extends Repository
         ]);
     }
 
+    public function updateComment(Comment $comment, int $id): void
+    {
+        $comment = $this->update([
+            'content' => $comment->getContent(),
+            'modify_at' => $comment->getModifyAt()->format('Y-m-d H:i:s')
+        ], $id);
+    }
+
     /**
      * Hydrate a post with his comments
      *
      * @param Post $post
      * @return void
+     * @throws \Exception
      */
     public function hydratePostWithComments(Post $post): void
     {
@@ -55,9 +64,10 @@ class CommentRepository extends Repository
      * Find all comments of a post
      *
      * @param integer $id
-     * @return void
+     * @return array
+     * @throws \Exception
      */
-    public function findComments(int $id)
+    public function findComments(int $id): array
     {
         $query = self::getDb()->prepare("SELECT * FROM {$this->repository} WHERE post_id = ?");
         $query->execute([$id]);
