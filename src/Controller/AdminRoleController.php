@@ -18,14 +18,14 @@ class AdminRoleController extends Controller
 
     public function roles()
     {
-        $this->twig->display('admin/roles/index.html.twig', [
+        $this->twig->display('admin/role/index.html.twig', [
             'roles' => $this->roleRepo->all()
         ]);
     }
 
     public function showNew()
     {
-        $this->twig->display('admin/roles/new.html.twig');
+        $this->twig->display('admin/role/new.html.twig');
     }
 
     public function new()
@@ -44,7 +44,7 @@ class AdminRoleController extends Controller
 
     public function showEdit(int $id)
     {
-        $this->twig->display('admin/roles/edit.html.twig', [
+        $this->twig->display('admin/role/edit.html.twig', [
             'role'  => $this->roleRepo->find($id)
         ]);
     }

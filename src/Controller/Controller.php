@@ -47,4 +47,11 @@ abstract class Controller
             header('Location: /login?forbidden=1');
         }
     }
+
+    public function checkSession(): void
+    {
+        if (empty($_SESSION)) {
+            header('Location: /login?forbidden=1');
+        }
+    }
 }

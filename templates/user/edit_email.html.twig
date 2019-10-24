@@ -1,0 +1,23 @@
+{% extends 'layout/default.html.twig' %}
+
+{% block title %}Modification du mot de passe de {{ session.name }}{% endblock %}
+
+{% block body %}
+    {% include 'user/layout/default.html.twig' %}
+
+    <div class="container">
+        <!-- Email Form -->
+        <div class="card my-4">
+            <h5 class="card-header"><i class="fas fa-envelope-square"></i> Entrez votre nouvel email :</h5>
+            <div class="card-body">
+                <form action="/account/email/edit/{{ session.id }}" method="post">
+                    <div class="form-group">
+                        <label for="email">Nouvel email</label>
+                        <input class="form-control" type="email" name="email" id="email" value="{{ session.email }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
