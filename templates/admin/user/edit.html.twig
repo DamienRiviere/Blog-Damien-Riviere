@@ -1,0 +1,39 @@
+{% extends 'admin/layout/default.html.twig' %}
+
+{% block title %}Modification du rôle de {{ user.name }} - Administration{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin/users">Liste des utilisateurs</a>
+        </li>
+        <li class="breadcrumb-item active">Modification du rôle de {{ user.name }}</li>
+    </ol>
+
+    {% include 'admin/layout/alert.html.twig' %}
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Rôle de {{ user.name }}
+        </div>
+        <div class="card-body">
+            <form action="/admin/user/edit/{{ user.id }}" method="post">
+                <div class="form-group">
+                    <label for="role">Choix du rôle</label>
+                    <select name="role" id="role" class="form-control" required
+                        size="{{ roles | length }}">
+                        {% for role in roles %}
+                        <option value="{{ role.id }}" {% if user.roleid == role.id %} selected {% endif %}>
+                            {{ role.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-block">Envoyer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
