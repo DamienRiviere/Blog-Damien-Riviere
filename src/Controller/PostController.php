@@ -72,4 +72,34 @@ class PostController extends Controller
             throw new \Exception("Veuillez remplir le champ des commentaires");
         }
     }
+
+    public function showEditComment($id, $slug, $idComment)
+    {
+        $this->checkSession();
+
+        $this->twig->display('post/edit_comment.html.twig', [
+            'post' => $this->post->findPost($id),
+            'comment' => $this->comment->find($idComment),
+            'categories' => $this->category->all()
+        ]);
+    }
+
+    public function editComment($id, $slug, $idComment)
+    {
+        $this->checkSession();
+
+        if (!in_array("", $_POST)) {
+            $comment = $this->comment->find($idComment);
+
+            $comment
+                ->setContent($_POST['content'])
+                ->setModifyAt(new \DateTime());
+
+            $this->comment->updateComment($comment, $idComment);
+
+            header('Location: /post/' . $id . '/' . $slug . '?edit=1');
+        } else {
+            throw new \Exception("Veuillez remplir le champ des commentaires");
+        }
+    }
 }

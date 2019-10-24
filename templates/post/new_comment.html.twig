@@ -1,0 +1,12 @@
+<!-- Comments Form -->
+<div class="card my-4">
+    <h5 class="card-header"><i class="fas fa-comment"></i> Laisser un commentaire :</h5>
+    <div class="card-body">
+        <form action="/post/{{ post.id }}/{{ post.slug }}/new-comment" method="post">
+            <div class="form-group">
+                <textarea class="form-control" rows="5" name="content"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
+</div>
