@@ -134,4 +134,11 @@ class UserRepository extends Repository
             'email' => $email->getEmail()
         ], $id);
     }
+
+    public function updatePassword(User $password, int $id): void
+    {
+        $this->update([
+            'password' => $password->getPassword()
+        ], $id);
+    }
 }
