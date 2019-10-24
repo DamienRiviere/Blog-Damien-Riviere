@@ -113,12 +113,12 @@ class UserRepository extends Repository
         return $user;
     }
 
-	/**
-	 * Find all users with each role
-	 *
-	 * @return array
-	 * @throws Exception
-	 */
+    /**
+     * Find all users with each role
+     *
+     * @return array
+     * @throws Exception
+     */
     public function findAllUsers()
     {
         $query = self::getDb()->prepare('SELECT * FROM user ORDER BY created_at DESC');
@@ -144,9 +144,9 @@ class UserRepository extends Repository
     }
 
     public function updateRole(User $roleId, int $id): void
-	{
-		$this->update([
-			'role_id' => $roleId->getRoleId()
-		], $id);
-	}
+    {
+        $this->update([
+            'role_id' => $roleId->getRoleId()
+        ], $id);
+    }
 }

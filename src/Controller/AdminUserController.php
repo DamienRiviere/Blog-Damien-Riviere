@@ -35,23 +35,22 @@ class AdminUserController extends Controller
     }
 
     public function edit(int $id)
-	{
-		if (!in_array("", $_POST)) {
-			$user = $this->userRepo->find($id);
-			$user->setRoleId($_POST['role']);
+    {
+        if (!in_array("", $_POST)) {
+            $user = $this->userRepo->find($id);
+            $user->setRoleId($_POST['role']);
 
-			$this->userRepo->updateRole($user, $user->getId());
+            $this->userRepo->updateRole($user, $user->getId());
 
-			header('Location: /admin/users?edit=1');
-		} else {
-			throw new \Exception("Veuillez remplir tous les champs");
-		}
-	}
+            header('Location: /admin/users?edit=1');
+        } else {
+            throw new \Exception("Veuillez remplir tous les champs");
+        }
+    }
 
     public function delete(int $id)
     {
         $this->userRepo->delete($id);
         header('Location: /admin/users?delete=1');
     }
-
 }
