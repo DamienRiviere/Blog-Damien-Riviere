@@ -127,4 +127,11 @@ class UserRepository extends Repository
         (new RoleRepository())->hydrateUsersWithRole($users);
         return $users;
     }
+
+    public function updateEmail(User $email, int $id): void
+    {
+        $this->update([
+            'email' => $email->getEmail()
+        ], $id);
+    }
 }

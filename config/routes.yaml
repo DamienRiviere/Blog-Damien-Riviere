@@ -22,6 +22,20 @@ post_category:
     controller: PostController::category
     methods:    GET
 
+# User account | profile
+user_index:
+    path:       /account
+    controller: UserController::account
+    methods:    GET
+user_show_edit_email:
+    path:       /account/email/edit/{id}
+    controller: UserController::showEditEmail
+    methods:    GET
+user_edit_email:
+    path:       /account/email/edit/{id}
+    controller: UserController::editEmail
+    methods:    POST
+
 # Admin Dashboard
 admin_dashboard:
     path:       /admin

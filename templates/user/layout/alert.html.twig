@@ -1,0 +1,11 @@
+{% if get['edit-email'] or get['edit-password'] %}
+<div class="alert alert-success mb-0 mt-3">
+    Votre 
+    {% if get['edit-email'] %}
+    adresse email 
+    {% elseif get['edit-password'] %}
+    mot de passe
+    {% endif %}
+    a bien été modifié
+</div>
+{% endif %}

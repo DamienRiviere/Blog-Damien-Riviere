@@ -33,6 +33,10 @@ class Authentication
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $user = $this->userRepo->findEmail($email);
+
+            if (is_bool($user) === true) {
+                header('Location: /login?access-denied=1');
+            }
         } else {
             header('Location: /login?access-denied=1');
         }

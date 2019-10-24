@@ -1,0 +1,75 @@
+<div class="container-fluid bg-light py-5 text-center section-title">
+    <h2 class="text-danger">{{ session.name }}</h2>
+    <p class="font-weight-bold mb-0">
+        {% if session.role_id == 1 %}
+        Administrateur
+        {% elseif session.role_id == 2 %}
+        Membre
+        {% endif %}
+    </p>
+    <span class="badge badge-primary">80 articles</span>
+    <span class="badge badge-warning text-white">390 messages</span>
+</div>
+
+<div class="container">
+
+    {% include 'user/layout/alert.html.twig' %}
+
+    <div class="row">
+
+        <!-- Col left -->
+        <div class="col-md-8 my-4">
+            <!-- Profile -->
+            <div class="card mb-3" style="max-width: 700px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{ session.picture }}" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ session.name }} |
+                                {% if session.role_id == 1 %}
+                                <span class="text-danger">Admin</span>
+                                {% elseif session.role_id == 2 %}
+                                <span class="text-primary">Membre</span>
+                                {% endif %}
+                            </h5>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                                additional content. This content is a little bit longer.</p>
+                            <p class="card-text">Adresse email : <span
+                                    class="font-weight-bold">{{ session.email }}</span></p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Compte créé le
+                                    {{ session.created_at| date("d/m/Y") }} à
+                                    {{ session.created_at | date("H:i") }}
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Col right  -->
+        <div class="col-md-4 my-4">
+            <!-- Account option -->
+            <div class="card" style="width: 21.8rem;">
+                <div class="card-header">
+                    Options du compte
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="/account/email/edit/{{ session.id }}">Changer d'adresse email</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/account/password/edit/{{ session.id }}">Changer de mot de passe</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>
