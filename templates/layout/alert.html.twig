@@ -1,10 +1,12 @@
-{% if get['created'] or get['edit'] %}
-<div class="alert alert-success mb-0 mt-3">
+{% if get['created'] or get['edit'] or get['reported'] %}
+<div class="alert {% if get['reported'] %} alert-warning {% else %} alert-success {% endif %} mb-0 mt-3">
     Le commentaire a bien été
     {% if get['created'] %}
-    créé
+        créé
     {% elseif get['edit'] %}
-    modifié
+        modifié
+    {% elseif get['reported'] %}
+        signalé
     {% endif %}
     !
 </div>

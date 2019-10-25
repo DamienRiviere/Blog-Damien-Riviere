@@ -67,6 +67,7 @@ CREATE TABLE comment (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     post_id INT UNSIGNED NOT NULL,
     user_id INT UNSIGNED NOT NULL,
+    status_id INT UNSIGNED NOT NULL,
     content TEXT NOT NULL,
     created_at DATETIME NOT NULL,
     modify_at DATETIME,
@@ -80,5 +81,16 @@ CREATE TABLE comment (
         FOREIGN KEY (user_id)
         REFERENCES user (id)
         ON DELETE CASCADE
+        ON UPDATE RESTRICT,
+    CONSTRAINT fk_moderation
+        FOREIGN KEY (status_id)
+        REFERENCES moderation (id)
+        ON DELETE CASCADE
         ON UPDATE RESTRICT
+)
+
+CREATE TABLE moderation (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    status VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
 )

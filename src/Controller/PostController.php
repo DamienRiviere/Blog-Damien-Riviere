@@ -63,7 +63,8 @@ class PostController extends Controller
                 ->setContent($_POST['content'])
                 ->setPostId($id)
                 ->setUserId($_SESSION['id'])
-                ->setCreatedAt(new \DateTime());
+                ->setCreatedAt(new \DateTime())
+                ->setStatusId(1);
                 
             $this->comment->createComment($comment);
 
@@ -101,5 +102,19 @@ class PostController extends Controller
         } else {
             throw new \Exception("Veuillez remplir le champ des commentaires");
         }
+    }
+
+    /**
+     *  Method to report a comment
+     *
+     * @param int $id
+     */
+    public function reported(int $id, string $slug, int $idComment)
+    {
+        $comment = $this->comment->find($idComment);
+        $comment->setStatusId(3);
+
+        $this->comment->updateStatus($comment, $idComment);
+        header('Location: /post/' . $id . '/' . $slug . '?reported=1');
     }
 }

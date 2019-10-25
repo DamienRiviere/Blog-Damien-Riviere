@@ -29,6 +29,9 @@ post_category:
     path:       /post/category/{id}/{slug}
     controller: PostController::category
     methods:    GET
+post_moderation_reported:
+    path:       /post/{id}/{slug}/reported/{idcomment}
+    controller: PostController::reported
 
 # User account | profile
 user_index:
@@ -89,6 +92,29 @@ admin_post_comment:
 admin_post_comment_delete:
     path:       /admin/post/{id}/comment/delete/{idcomment}
     controller: AdminPostController::deleteComment
+
+# Admin moderation
+admin_moderation_show_publication:
+    path:       /admin/moderation/comment-publication/{id}
+    controller: AdminModerationController::showPublication
+    methods:    GET
+admin_moderation_show_moderated:
+    path:       /admin/moderation/comment-moderated/{id}
+    controller: AdminModerationController::showModerated
+    methods:    GET
+admin_moderation_show_reported:
+    path:       /admin/moderation/comment-reported/{id}
+    controller: AdminModerationController::showReported
+    methods:    GET
+admin_moderation_publication:
+    path:       /admin/moderation/publication/{id}
+    controller: AdminModerationController::publication
+admin_moderation_moderated:
+    path:       /admin/moderation/moderated/{id}
+    controller: AdminModerationController::moderated
+admin_moderation_delete:
+    path:       /admin/moderation/delete/{id}
+    controller: AdminModerationController::delete
 
 # Admin Categories
 admin_category_index:

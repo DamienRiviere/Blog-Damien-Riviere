@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Model\Comment;
 use PDO;
 use App\Model\Post;
 use App\Repository\UserRepository;
