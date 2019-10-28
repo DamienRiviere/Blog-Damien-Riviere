@@ -41,7 +41,7 @@ class AdminModerationController extends Controller
         ]);
     }
 
-    public function publication(int $id)
+    public function publicated(int $id)
     {
         $comment = $this->commentRepo->find($id);
         $comment->setStatusId(2);
@@ -49,7 +49,7 @@ class AdminModerationController extends Controller
         $url = $this->redirect->redirectModeration($_SERVER['HTTP_REFERER']);
 
         $this->commentRepo->updateStatus($comment, $id);
-        header('Location: ' . $url . '?edit=1');
+        header('Location: ' . $url . '?publicated=1');
     }
 
     public function moderated(int $id)
@@ -60,7 +60,7 @@ class AdminModerationController extends Controller
         $url = $this->redirect->redirectModeration($_SERVER['HTTP_REFERER']);
 
         $this->commentRepo->updateStatus($comment, $id);
-        header('Location: ' . $url . '?edit=1');
+        header('Location: ' . $url . '?moderated=1');
     }
 
     public function delete(int $id)

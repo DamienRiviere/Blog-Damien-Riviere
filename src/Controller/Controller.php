@@ -50,7 +50,7 @@ abstract class Controller
 
     public function checkSession(): void
     {
-        if (empty($_SESSION)) {
+        if ($_SESSION['id'] === null) {
             header('Location: /login?forbidden=1');
         }
     }

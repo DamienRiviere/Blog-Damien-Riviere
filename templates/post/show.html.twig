@@ -77,7 +77,7 @@
                                         <i class="fas fa-pen-square"></i>
                                     </a>
                                 {% endif %}
-                                {% if comment.statusId == 2 and session.id != user.id %}
+                                {% if comment.statusId == 2 and session.id != user.id and session.id != null %}
                                     <a href="#" class="text-warning report-link" title="Signaler le commentaire"
                                        data-toggle="modal" data-target="#reportModal" data-id="{{ comment.id }}" data-post="{{ post.id }}"
                                     >

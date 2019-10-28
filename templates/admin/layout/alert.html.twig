@@ -1,12 +1,16 @@
-{% if get['created'] or get['edit'] or get['delete'] %}
-<div class="alert {% if get['delete'] %} alert-danger {% else %} alert-success {% endif %}">
+{% if get['created'] or get['edit'] or get['delete'] or get['moderated'] or get['publicated']%}
+<div class="alert {% if get['delete'] %} alert-danger {% elseif get['moderated']%} alert-warning {% else %} alert-success {% endif %}">
     L'élement a bien été
     {% if get['created'] %}
-    créé
+        créé
     {% elseif get['edit'] %}
-    modifié
+        modifié
     {% elseif get['delete']%}
-    supprimé
+        supprimé
+    {% elseif get['moderated'] %}
+        modéré
+    {% elseif get['publicated'] %}
+        publié
     {% endif %}
     !
 </div>

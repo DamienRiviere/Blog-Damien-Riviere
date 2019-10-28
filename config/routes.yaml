@@ -106,9 +106,9 @@ admin_moderation_show_reported:
     path:       /admin/moderation/comment-reported/{id}
     controller: AdminModerationController::showReported
     methods:    GET
-admin_moderation_publication:
-    path:       /admin/moderation/publication/{id}
-    controller: AdminModerationController::publication
+admin_moderation_publicated:
+    path:       /admin/moderation/publicated/{id}
+    controller: AdminModerationController::publicated
 admin_moderation_moderated:
     path:       /admin/moderation/moderated/{id}
     controller: AdminModerationController::moderated

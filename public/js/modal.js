@@ -24,3 +24,23 @@ $(document).on("click", ".modal-delete", function () {
         $('.modal-delete').attr('href','/admin/moderation/delete/' + id);
     }
 });
+
+$(document).on("click", ".moderate-link", function () {
+    let id = $(this).data('id');
+    $('.modal-moderate').attr('data-id', +id);
+});
+
+$(document).on("click", ".modal-moderate", function () {
+    let id = $(this).data('id');
+    $('.modal-moderate').attr('href','/admin/moderation/moderated/' + id);
+});
+
+$(document).on("click", ".publicated-link", function () {
+    let id = $(this).data('id');
+    $('.modal-publicated').attr('data-id', +id);
+});
+
+$(document).on("click", ".modal-publicated", function () {
+    let id = $(this).data('id');
+    $('.modal-publicated').attr('href','/admin/moderation/publicated/' + id);
+});
