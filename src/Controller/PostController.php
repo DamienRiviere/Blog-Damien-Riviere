@@ -63,7 +63,8 @@ class PostController extends Controller
                 ->setContent($_POST['content'])
                 ->setPostId($id)
                 ->setUserId($_SESSION['id'])
-                ->setCreatedAt(new \DateTime());
+                ->setCreatedAt(new \DateTime())
+                ->setStatusId(1);
                 
             $this->comment->createComment($comment);
 
@@ -75,19 +76,21 @@ class PostController extends Controller
 
     public function showEditComment($id, $slug, $idComment)
     {
-        $this->checkSession();
+        $comment = $this->comment->find($idComment);
 
-        $this->twig->display('post/edit_comment.html.twig', [
-            'post' => $this->post->findPost($id),
-            'comment' => $this->comment->find($idComment),
-            'categories' => $this->category->all()
-        ]);
+        if ($comment->getUserId() === $_SESSION['id']) {
+            $this->twig->display('post/edit_comment.html.twig', [
+                'post' => $this->post->findPost($id),
+                'comment' => $comment,
+                'categories' => $this->category->all()
+            ]);
+        } else {
+            header('Location: /login?forbidden=1');
+        }
     }
 
     public function editComment($id, $slug, $idComment)
     {
-        $this->checkSession();
-
         if (!in_array("", $_POST)) {
             $comment = $this->comment->find($idComment);
 
@@ -100,6 +103,24 @@ class PostController extends Controller
             header('Location: /post/' . $id . '/' . $slug . '?edit=1');
         } else {
             throw new \Exception("Veuillez remplir le champ des commentaires");
+        }
+    }
+
+    /**
+     *  Method to report a comment
+     *
+     * @param int $id
+     */
+    public function reported(int $id, string $slug, int $idComment)
+    {
+        if ($_SESSION['id'] == null) {
+            header('Location: /login?forbidden=1');
+        } else {
+            $comment = $this->comment->find($idComment);
+            $comment->setStatusId(3);
+
+            $this->comment->updateStatus($comment, $idComment);
+            header('Location: /post/' . $id . '/' . $slug . '?reported=1');
         }
     }
 }

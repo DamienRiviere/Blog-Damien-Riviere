@@ -11,6 +11,8 @@ class Comment
 
     private $user_id;
 
+    private $status_id;
+
     private $content;
 
     private $created_at;
@@ -18,6 +20,8 @@ class Comment
     private $modify_at;
 
     private $user;
+
+    private $post;
 
     public function getId(): int
     {
@@ -51,6 +55,18 @@ class Comment
     public function setUserId(int $user_id): self
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getStatusId(): int
+    {
+        return $this->status_id;
+    }
+
+    public function setStatusId(int $status_id): self
+    {
+        $this->status_id = $status_id;
 
         return $this;
     }
@@ -112,5 +128,15 @@ class Comment
         $this->user = $user;
 
         $user->setComment($this);
+    }
+
+    /**
+     * Add a post in his comment
+     *
+     * @param Post $post
+     */
+    public function addPost(Post $post): void
+    {
+        $this->post = $post;
     }
 }

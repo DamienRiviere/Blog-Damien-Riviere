@@ -19,7 +19,8 @@ class CommentRepository extends Repository
             'content' => $comment->getContent(),
             'post_id' => $comment->getPostId(),
             'user_id' => $comment->getUserId(),
-            'created_at' => $comment->getCreatedAt()->format('Y-m-d H:i:s')
+            'created_at' => $comment->getCreatedAt()->format('Y-m-d H:i:s'),
+            'status_id' => $comment->getStatusId()
         ]);
     }
 
@@ -31,33 +32,11 @@ class CommentRepository extends Repository
         ], $id);
     }
 
-    /**
-     * Hydrate a post with his comments
-     *
-     * @param Post $post
-     * @return void
-     * @throws \Exception
-     */
-    public function hydratePostWithComments(Post $post): void
+    public function updateStatus(Comment $comment, int $id): void
     {
-        $query = self::getDb()->prepare('
-            SELECT c.*
-            FROM comment c
-            JOIN post p ON c.post_id = p.id
-            WHERE p.id = ?
-        ');
-
-        $query->execute([$post->getId()]);
-        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
-        $comments = $query->fetchAll();
-
-        // Add all post in with his comments
-        foreach ($comments as $comment) {
-            $post->addComment($comment);
-
-            // Hydrate a comment with his user
-            (new UserRepository())->hydrateCommentWithUser($comment);
-        }
+        $comment = $this->update([
+            'status_id' => $comment->getStatusId()
+        ], $id);
     }
 
     /**
@@ -84,5 +63,61 @@ class CommentRepository extends Repository
         }
 
         return $commentsWithUser;
+    }
+
+    /**
+     * Find all comments by status
+     *
+     * @param int $id
+     * @return array
+     * @throws \Exception
+     */
+    public function findCommentsByStatus(int $id): array
+    {
+        $query = self::getDb()->prepare("
+			SELECT * FROM {$this->repository} 
+			WHERE status_id = ? 
+			ORDER BY created_at DESC");
+        $query->execute([$id]);
+        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
+        $comments = $query->fetchAll();
+
+        $commentsWithUser = [];
+
+        foreach ($comments as $comment) {
+            // Hydrate a comment with his user
+            (new UserRepository())->hydrateCommentWithUser($comment);
+            $commentsWithUser[] = $comment;
+        }
+
+        return $commentsWithUser;
+    }
+
+    /**
+     * Hydrate a post with his comments
+     *
+     * @param Post $post
+     * @return void
+     * @throws \Exception
+     */
+    public function hydratePostWithComments(Post $post): void
+    {
+        $query = self::getDb()->prepare('
+            SELECT c.*
+            FROM comment c
+            JOIN post p ON c.post_id = p.id
+            WHERE p.id = ?
+        ');
+        $query->execute([$post->getId()]);
+        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
+        $comments = $query->fetchAll();
+
+        // Add all post in with his comments
+        foreach ($comments as $comment) {
+            $post->addComment($comment);
+
+            // Hydrate a comment with his user
+            (new UserRepository())->hydrateCommentWithUser($comment);
+        }
     }
 }

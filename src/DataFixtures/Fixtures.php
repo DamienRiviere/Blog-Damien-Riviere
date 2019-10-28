@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures;
 
+use App\Model\Moderation;
+use App\Repository\ModerationRepository;
 use DateTime;
 use App\Model\Post;
 use App\Model\Role;
@@ -32,6 +34,7 @@ class Fixtures
         $db->exec('TRUNCATE TABLE user');
         $db->exec('TRUNCATE TABLE comment');
         $db->exec('TRUNCATE TABLE role');
+        $db->exec('TRUNCATE TABLE moderation');
         $db->exec('SET FOREIGN_KEY_CHECKS = 1');
 
         $repoRole = new RoleRepository();
@@ -60,6 +63,28 @@ class Fixtures
 
         $repoUser->createUser($damien);
 
+        $moderationRepo = new ModerationRepository();
+
+        $attentePublie = new Moderation();
+        $attentePublie->setStatus("En attente de publication");
+
+        $moderationRepo->createStatus($attentePublie);
+
+        $publie = new Moderation();
+        $publie->setStatus("Publié");
+
+        $moderationRepo->createStatus($publie);
+
+        $signale = new Moderation();
+        $signale->setStatus("Signalé");
+
+        $moderationRepo->createStatus($signale);
+
+        $modere = new Moderation();
+        $modere->setStatus("Modéré");
+
+        $moderationRepo->createStatus($modere);
+        
         for ($i = 0; $i < 10; $i++) {
             $user = new User();
 
@@ -95,6 +120,7 @@ class Fixtures
 
             $posts[] = $post->getId();
 
+            // Insert comment in post
             for ($c = 0; $c < 10; $c++) {
                 $comment = new Comment();
 
@@ -102,7 +128,8 @@ class Fixtures
                     ->setContent($faker->sentence(10))
                     ->setPostId($post->getId())
                     ->setUserId(mt_rand(1, 10))
-                    ->setCreatedAt(new DateTime());
+                    ->setCreatedAt(new DateTime())
+                    ->setStatusId(2);
 
                 $repoComment = new CommentRepository();
                 $repoComment->createComment($comment);

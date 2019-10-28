@@ -53,7 +53,7 @@
                                 {% endfor %}
                             </td>
                             <td>{{ user.name }}</td>
-                            <td>{{ post.created_at| date("d/m/Y") }} à {{ post.created_at | date("H:i") }}</td>
+                            <td>{{ post.createdAt| date("d/m/Y") }} à {{ post.createdAt | date("H:i") }}</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     <a href="/post/{{ post.id }}/{{ post.slug }}" class="btn btn-md btn-primary" title="Voir l'article" target="_blank">

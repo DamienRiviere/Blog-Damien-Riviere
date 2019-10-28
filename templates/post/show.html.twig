@@ -58,29 +58,39 @@
                     {% include '/post/new_comment.html.twig' %}
                 {% endif %}
 
-                {% if post.getComments() == null %}
-                    <h3 class="text-center my-4">Aucun commentaire</h3>
-                {% else %}
-                    <!-- Comments list -->
-                    {% for comment in post.getComments() %}
-                        {% set user = comment.getUser() %}
-                        <div class="media mb-4 mt-4">
-                            <img class="d-flex mr-3 rounded-circle avatar avatar-medium" src="{{ user.picture }}" alt="">
-                            <div class="media-body">
-                                <h5 class="mt-0 font-weight-bold">
-                                    <a href="#" class="name-style">{{ user.name }}</a>
-                                    {# Link to edit comment if user is connected #}
-                                    {% if session.id == comment.userId %}
-                                        <a href="/post/{{ post.id }}/{{ post.slug }}/edit-comment/{{ comment.id }}">
-                                            <i class="fas fa-pen-square"></i>
-                                        </a>
-                                    {% endif %}
-                                </h5>
-                                {{ comment.content }}
-                            </div>
+                <hr>
+
+                {% set comments = post.getComments() %}
+                <h3 class=""mb-3>Tous les commentaires</h3>
+                <!-- Comments list -->
+                {% for comment in post.getComments() if comment.statusId == 2 or comment.statusId == 3 %}
+                    {% set user = comment.getUser() %}
+                    <div class="media mb-4 mt-4">
+                        <img class="d-flex mr-3 rounded-circle avatar avatar-medium" src="{{ user.picture }}"
+                             alt="">
+                        <div class="media-body">
+                            <h5 class="mt-0 font-weight-bold">
+                                <a href="#" class="name-style">{{ user.name }}</a>
+                                {# Link to edit comment if user is connected #}
+                                {% if session.id == comment.userId %}
+                                    <a href="/post/{{ post.id }}/{{ post.slug }}/edit-comment/{{ comment.id }}">
+                                        <i class="fas fa-pen-square"></i>
+                                    </a>
+                                {% endif %}
+                                {% if comment.statusId == 2 and session.id != user.id and session.id != null %}
+                                    <a href="#" class="text-warning report-link" title="Signaler le commentaire"
+                                       data-toggle="modal" data-target="#reportModal" data-id="{{ comment.id }}" data-post="{{ post.id }}"
+                                    >
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </a>
+                                {% endif %}
+                            </h5>
+                            {{ comment.content }}
                         </div>
-                    {% endfor %}
-                {% endif %}
+                    </div>
+                {% else %}
+                    <h3 class="text-center my-4">Aucun commentaire</h3>
+                {% endfor %}
             </div>
 
             <!-- Categories -->
@@ -91,4 +101,11 @@
         </div>
 
     </div>
+
+    {% include 'post/layout/modal_report.html.twig' %}
+
+    {% block javascripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="/js/modal_report.js"></script>
+    {% endblock %}
 {% endblock %}
