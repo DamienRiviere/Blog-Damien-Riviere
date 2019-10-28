@@ -1,3 +1,5 @@
 /vendor/
 /config/database.php
 .idea
+
+/.phpcs-cache
