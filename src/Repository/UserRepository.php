@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Services\Pagination;
 use PDO;
 use App\Model\Post;
 use App\Model\User;
@@ -38,7 +39,7 @@ class UserRepository extends Repository
     public function hydrateCommentWithUser(Comment $comment): void
     {
         $sql = '
-            SELECT u.*
+            SELECT u.id, u.name, u.email, u.slug, u.picture, u.created_at, u.role_id
             FROM user u
             JOIN comment c ON u.id = c.user_id
             WHERE c.user_id = ?
@@ -75,7 +76,7 @@ class UserRepository extends Repository
     {
         $postsById = [];
         foreach ($posts as $post) {
-            $postsById[$post->getId()] = $post;
+            $postsById[$post->getUserId()] = $post;
         }
 
         $query = self::getDb()->prepare('
@@ -89,6 +90,7 @@ class UserRepository extends Repository
         $query->execute();
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $user = $query->fetch();
+
 
         foreach ($posts as $post) {
             $post->addUser($user);
@@ -127,6 +129,18 @@ class UserRepository extends Repository
         $users = $query->fetchAll();
         (new RoleRepository())->hydrateUsersWithRole($users);
         return $users;
+    }
+
+    public function findUsersPaginated()
+    {
+        $paginated = new Pagination(
+            "SELECT * FROM user ORDER BY created_at DESC",
+            "SELECT COUNT(id) FROM {$this->repository}",
+            10
+        );
+        $users = $paginated->getItems($this->class);
+        (new RoleRepository())->hydrateUsersWithRole($users);
+        return [$users, $paginated];
     }
 
     public function updateEmail(User $email, int $id): void

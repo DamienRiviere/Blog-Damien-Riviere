@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Services\Pagination;
 use PDO;
 use App\Model\Post;
 use App\Model\Comment;
@@ -119,5 +120,63 @@ class CommentRepository extends Repository
             // Hydrate a comment with his user
             (new UserRepository())->hydrateCommentWithUser($comment);
         }
+    }
+
+    /**
+     * Find comments by post with pagination
+     *
+     * @param int $id
+     * @return array
+     * @throws \Exception
+     */
+    public function findCommentsPaginated(int $id): array
+    {
+        $paginated = new Pagination(
+            "SELECT * FROM {$this->repository} WHERE post_id = ? AND status_id BETWEEN 2 AND 3 
+			ORDER BY created_at DESC",
+            "SELECT COUNT(id) FROM {$this->repository} WHERE post_id = ? AND status_id BETWEEN 2 AND 3",
+            10,
+            $id
+        );
+        $comments = $paginated->getItems($this->class);
+
+        $commentsWithUser = [];
+
+        foreach ($comments as $comment) {
+            // Hydrate a comment with his user
+            (new UserRepository())->hydrateCommentWithUser($comment);
+
+            $commentsWithUser[] = $comment;
+        }
+
+        return [$commentsWithUser, $paginated];
+    }
+
+    /**
+     * Find Comments by status with pagination
+     *
+     * @param int $id
+     * @return array
+     * @throws \Exception
+     */
+    public function findCommentsByStatusPaginated(int $id): array
+    {
+        $paginated = new Pagination(
+            "SELECT * FROM {$this->repository} WHERE status_id = ? ORDER BY created_at DESC",
+            "SELECT COUNT(id) FROM {$this->repository} WHERE status_id = ?",
+            10,
+            $id
+        );
+        $comments = $paginated->getItems($this->class);
+
+        $commentsWithUser = [];
+
+        foreach ($comments as $comment) {
+            // Hydrate a comment with his user
+            (new UserRepository())->hydrateCommentWithUser($comment);
+            $commentsWithUser[] = $comment;
+        }
+
+        return [$commentsWithUser, $paginated];
     }
 }

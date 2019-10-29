@@ -1,0 +1,17 @@
+<!-- Pagination -->
+<ul class="pagination justify-content-center mb-4">
+    <!-- Previous link -->
+    <li class="page-item {% if pagination.getCurrentPage <= 1 %} disabled {% endif %}">
+        <a class="page-link" href="{{ pagination.previousLink }}">&larr; Précédent</a>
+    </li>
+    <!-- Link per page -->
+    {% for page in 1..pagination.getPages() %}
+        <li class="page-item {% if page == pagination.getCurrentPage %} active {% endif %}">
+            <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+        </li>
+    {% endfor %}
+    <!-- Next link -->
+    <li class="page-item {% if pagination.getCurrentPage >= pagination.getPages %} disabled {% endif %}">
+        <a class="page-link" href="{{ pagination.nextLink }}">Suivant &rarr;</a>
+    </li>
+</ul>

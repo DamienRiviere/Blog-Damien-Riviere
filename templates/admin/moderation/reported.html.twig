@@ -68,8 +68,8 @@
         <div class="card-footer small text-muted">Mis à jour le {{ comment.createdAt| date("d/m/Y") }} à {{ comment.createdAt | date("H:i") }}</div>
     </div>
 
+    {% include 'layout/pagination.html.twig' %}
     {% include 'admin/layout/modal_delete.html.twig' %}
-
     {% include 'admin/layout/modal_moderated.html.twig' %}
 
     {% block javascripts %}

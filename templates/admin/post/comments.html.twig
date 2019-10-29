@@ -40,7 +40,7 @@
                         </tr>
                     </tfoot>
                     <tbody class="text-center">
-                        {% for comment in post.getComments() %}
+                        {% for comment in comments %}
                             {% set user = comment.getUser() %}
                             <tr>
                                 <td>{{ comment.id }}</td>
@@ -58,8 +58,10 @@
                 </table>
             </div>
         </div>
-        <div class="card-footer small text-muted">Mis à jour le {{ post.created_at| date("d/m/Y") }} à {{ post.created_at | date("H:i") }}</div>
+        <div class="card-footer small text-muted">Mis à jour le {{ post.createdAt| date("d/m/Y") }} à {{ post.createdAt | date("H:i") }}</div>
     </div>
+
+    {% include 'layout/pagination.html.twig' %}
 
     {% include 'admin/layout/modal_delete.html.twig' %}
 

@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container-fluid bg-light py-5 text-center section-title">
         <h1 class="text-danger h2">{{ post.title }}</h1>
-        <p class="font-weight-bold mb-0">Publié le {{ post.created_at | date("d/m/Y") }} à {{ post.created_at | date("H:i") }}</p>
+        <p class="font-weight-bold mb-0">Publié le {{ post.createdAt | date("d/m/Y") }} à {{ post.createdAt | date("H:i") }}</p>
         {% for category in post.getCategories()  %}
             <a href="/post/category/{{ category.id }}/{{ category.slug }}" class="{{ category.style }} text-white">{{ category.name }}</a>
         {% endfor %}
@@ -60,10 +60,9 @@
 
                 <hr>
 
-                {% set comments = post.getComments() %}
                 <h3 class=""mb-3>Tous les commentaires</h3>
                 <!-- Comments list -->
-                {% for comment in post.getComments() if comment.statusId == 2 or comment.statusId == 3 %}
+                {% for comment in comments if comment.statusId == 2 or comment.statusId == 3 %}
                     {% set user = comment.getUser() %}
                     <div class="media mb-4 mt-4">
                         <img class="d-flex mr-3 rounded-circle avatar avatar-medium" src="{{ user.picture }}"
@@ -84,6 +83,7 @@
                                         <i class="fas fa-exclamation-circle"></i>
                                     </a>
                                 {% endif %}
+                                <small class="text-muted">le {{ comment.createdAt | date("d/m/Y") }} à {{ comment.createdAt | date("H:i") }}</small>
                             </h5>
                             {{ comment.content }}
                         </div>
@@ -91,6 +91,8 @@
                 {% else %}
                     <h3 class="text-center my-4">Aucun commentaire</h3>
                 {% endfor %}
+
+                {% include 'layout/pagination.html.twig' %}
             </div>
 
             <!-- Categories -->

@@ -22,22 +22,25 @@ class AdminModerationController extends Controller
 
     public function showPublication(int $id)
     {
-        $this->twig->display('admin/moderation/publication.html.twig', [
-            'comments' => $this->commentRepo->findCommentsByStatus($id)
+        $this->twig->display('admin/moderation/publicated.html.twig', [
+            'comments' => $this->commentRepo->findCommentsByStatusPaginated($id)[0],
+            'pagination' => $this->commentRepo->findCommentsByStatusPaginated($id)[1]
         ]);
     }
 
     public function showModerated(int $id)
     {
         $this->twig->display('admin/moderation/moderated.html.twig', [
-            'comments' => $this->commentRepo->findCommentsByStatus($id)
+            'comments' => $this->commentRepo->findCommentsByStatusPaginated($id)[0],
+            'pagination' => $this->commentRepo->findCommentsByStatusPaginated($id)[1]
         ]);
     }
 
     public function showReported(int $id)
     {
         $this->twig->display('admin/moderation/reported.html.twig', [
-            'comments' => $this->commentRepo->findCommentsByStatus($id)
+            'comments' => $this->commentRepo->findCommentsByStatusPaginated($id)[0],
+            'pagination' => $this->commentRepo->findCommentsByStatusPaginated($id)[1]
         ]);
     }
 
