@@ -26,7 +26,8 @@ class PostController extends Controller
         $this->twig->display(
             'post/index.html.twig',
             [
-                'posts' => $this->post->findAllPosts(),
+                'posts' => $this->post->findPostsPaginated()[0],
+                'pagination' => $this->post->findPostsPaginated()[1],
                 'categories' => $this->category->all()
             ]
         );
@@ -38,6 +39,8 @@ class PostController extends Controller
             'post/show.html.twig',
             [
                 'post' => $this->post->findPost($id),
+                'comments' => $this->comment->findCommentsPaginated($id)[0],
+                'pagination' => $this->comment->findCommentsPaginated($id)[1],
                 'categories' => $this->category->all()
             ]
         );
@@ -49,7 +52,9 @@ class PostController extends Controller
             'post/category.html.twig',
             [
                 'category' => $this->category->find($id),
-                'posts' => $this->post->findPostByCategory($id)
+                'posts' => $this->post->findPostsPaginatedByCategory($id)[0],
+                'pagination' => $this->post->findPostsPaginatedByCategory($id)[1],
+                'categories' => $this->category->all()
             ]
         );
     }

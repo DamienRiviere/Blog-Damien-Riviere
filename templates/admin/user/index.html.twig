@@ -86,6 +86,7 @@
         <div class="card-footer small text-muted">Mis à jour le {{ user.created_at| date("d/m/Y") }}</div>
     </div>
 
+    {% include 'layout/pagination.html.twig' %}
     {% include 'admin/layout/modal_delete.html.twig' %}
 
     {% block javascripts %}

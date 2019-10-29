@@ -22,7 +22,8 @@ class AdminUserController extends Controller
     public function users()
     {
         $this->twig->display('admin/user/index.html.twig', [
-            'users' => $this->userRepo->findAllUsers()
+            'users' => $this->userRepo->findUsersPaginated()[0],
+            'pagination' => $this->userRepo->findUsersPaginated()[1]
         ]);
     }
     

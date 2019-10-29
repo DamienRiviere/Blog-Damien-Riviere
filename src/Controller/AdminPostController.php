@@ -29,7 +29,8 @@ class AdminPostController extends Controller
     public function posts()
     {
         $this->twig->display('admin/post/index.html.twig', [
-            'posts' => $this->post->findAllPosts()
+            'posts' => $this->post->findPostsPaginated()[0],
+            'pagination' => $this->post->findPostsPaginated()[1]
         ]);
     }
     
@@ -102,7 +103,9 @@ class AdminPostController extends Controller
     public function comments(int $id)
     {
         $this->twig->display('admin/post/comments.html.twig', [
-            'post' => $this->post->findPost($id)
+            'post' => $this->post->findPost($id),
+            'comments' => $this->comment->findCommentsPaginated($id)[0],
+            'pagination' => $this->comment->findCommentsPaginated($id)[1]
         ]);
     }
 

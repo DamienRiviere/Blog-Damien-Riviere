@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Model\Comment;
+use App\Services\Pagination;
 use PDO;
 use App\Model\Post;
 use App\Repository\UserRepository;
@@ -62,7 +63,6 @@ class PostRepository extends Repository
             throw new Exception("Article introuvable");
         }
         (new CategoryRepository())->hydratePostsWithCategories([$post]);
-        (new CommentRepository())->hydratePostWithComments($post);
         (new UserRepository())->hydratePostWithUser($post);
         return $post;
     }
@@ -72,7 +72,8 @@ class PostRepository extends Repository
         $query = self::getDb()->prepare("
             SELECT * FROM {$this->repository} 
             JOIN post_category pc ON pc.post_id = {$this->repository}.id 
-            WHERE pc.category_id = :id ORDER BY created_at DESC
+            WHERE pc.category_id = :id 
+            ORDER BY created_at DESC
         ");
         $query->execute(['id' => $id]);
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
@@ -95,5 +96,57 @@ class PostRepository extends Repository
         foreach ($categories as $category) {
             $query->execute([$id, $category]);
         }
+    }
+
+    /**
+     * Find posts with pagination
+     *
+     * @return array
+     * @throws Exception
+     */
+    public function findPostsPaginated()
+    {
+        $paginated = new Pagination(
+            "SELECT * FROM post ORDER BY created_at DESC",
+            "SELECT COUNT(id) FROM {$this->repository}"
+        );
+        $posts = $paginated->getItems($this->class);
+
+        (new CategoryRepository())->hydratePostsWithCategories($posts);
+        (new UserRepository())->hydratePostsWithUser($posts);
+        return [$posts, $paginated];
+    }
+
+    /**
+     * Find posts by category with pagination
+     *
+     * @param int $id
+     * @return array
+     * @throws Exception
+     */
+    public function findPostsPaginatedByCategory(int $id)
+    {
+        $paginated = new Pagination(
+            "SELECT * FROM {$this->repository} p
+            JOIN post_category pc ON pc.post_id = p.id 
+            WHERE pc.category_id = ?
+            ORDER BY created_at DESC",
+            "SELECT COUNT(category_id) FROM post_category WHERE category_id = {$id}",
+            8,
+            $id
+        );
+        $posts = $paginated->getItems($this->class);
+        (new CategoryRepository())->hydratePostsWithCategories($posts);
+        return [$posts, $paginated];
+    }
+
+    public function findLastPosts()
+    {
+        $query = self::getDb()->prepare("SELECT * FROM {$this->repository} ORDER BY created_at DESC LIMIT 3");
+        $query->execute();
+        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
+        $posts = $query->fetchAll();
+
+        return $posts;
     }
 }
