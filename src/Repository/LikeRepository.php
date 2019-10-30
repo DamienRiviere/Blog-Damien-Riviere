@@ -46,4 +46,17 @@ class LikeRepository extends Repository
 
         return $like = null;
     }
+
+    public function deleteLike(int $postId)
+    {
+        $query = self::getDb()->prepare('
+			DELETE FROM post_like 
+			WHERE post_id = :post_id 
+			AND user_id = :user_id
+		');
+        $query->execute([
+            ':post_id' => $postId,
+            ':user_id' => $_SESSION['id']
+        ]);
+    }
 }

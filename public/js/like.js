@@ -18,9 +18,9 @@
 
     function makeRequest()
     {
-        let slug = document.getElementById("likeButton").getAttribute('data-slug');
-        let postId = document.getElementById("likeButton").getAttribute('data-post-id');
-        let userId = document.getElementById("likeButton").getAttribute('data-user-id');
+        let slug = document.getElementById(link.getAttribute('id')).getAttribute('data-slug');
+        let postId = document.getElementById(link.getAttribute('id')).getAttribute('data-post-id');
+        let userId = document.getElementById(link.getAttribute('id')).getAttribute('data-user-id');
 
         req = new XMLHttpRequest();
 

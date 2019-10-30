@@ -36,6 +36,10 @@ post_like:
     path:       /post/{id}/{slug}/like
     controller: PostController::like
     methods:    GET
+post_unlike:
+    path:       /post/{id}/{slug}/unlike
+    controller: PostController::unlike
+    methods:    GET
 
 # User account | profile
 user_index:

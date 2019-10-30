@@ -141,13 +141,21 @@ class PostController extends Controller
             header('Location: /login?forbidden=1');
         } else {
             $like = new Like();
-            $likeRepo = new LikeRepository();
 
             $like
                 ->setPostId($_GET['post_id'])
                 ->setUserId($_GET['user_id']);
 
-            $likeRepo->createLike($like);
+            $this->like->createLike($like);
+        }
+    }
+
+    public function unlike($id)
+    {
+        if ($_SESSION['id'] == null) {
+            header('Location: /login?forbidden=1');
+        } else {
+            $this->like->deleteLike($id);
         }
     }
 }
