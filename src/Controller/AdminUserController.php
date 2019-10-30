@@ -14,9 +14,9 @@ class AdminUserController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
         $this->userRepo = new UserRepository();
         $this->roleRepo = new RoleRepository();
+        parent::__construct();
     }
     
     public function users()

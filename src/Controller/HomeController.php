@@ -10,8 +10,8 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
         $this->posts = new PostRepository();
+        parent::__construct();
     }
 
     public function home(): void

@@ -11,9 +11,9 @@ class UserController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
         $this->checkSession();
         $this->userRepo = new UserRepository();
+        parent::__construct();
     }
 
     public function account()

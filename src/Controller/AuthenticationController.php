@@ -16,10 +16,10 @@ class AuthenticationController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
         $this->auth = new Authentication();
         $this->userRepo = new UserRepository();
         $this->slugify = new Slugify();
+        parent::__construct();
     }
 
     public function showLogin($errors = null)

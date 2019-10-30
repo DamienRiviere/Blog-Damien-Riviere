@@ -14,10 +14,10 @@ class AdminModerationController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
         $this->checkRole();
         $this->commentRepo = new CommentRepository();
         $this->redirect = new Redirect();
+        parent::__construct();
     }
 
     public function showPublication(int $id)
@@ -49,10 +49,8 @@ class AdminModerationController extends Controller
         $comment = $this->commentRepo->find($id);
         $comment->setStatusId(2);
 
-        $url = $this->redirect->redirectModeration($_SERVER['HTTP_REFERER']);
-
         $this->commentRepo->updateStatus($comment, $id);
-        header('Location: ' . $url . '?publicated=1');
+        header('Location: ' . $_SERVER['HTTP_REFERER'] . '?publicated=1');
     }
 
     public function moderated(int $id)
@@ -60,17 +58,13 @@ class AdminModerationController extends Controller
         $comment = $this->commentRepo->find($id);
         $comment->setStatusId(4);
 
-        $url = $this->redirect->redirectModeration($_SERVER['HTTP_REFERER']);
-
         $this->commentRepo->updateStatus($comment, $id);
-        header('Location: ' . $url . '?moderated=1');
+        header('Location: ' . $_SERVER['HTTP_REFERER'] . '?moderated=1');
     }
 
     public function delete(int $id)
     {
-        $url = $this->redirect->redirectModeration($_SERVER['HTTP_REFERER']);
-
         $this->commentRepo->delete($id);
-        header('Location: ' . $url . '?delete=1');
+        header('Location: ' . $_SERVER['HTTP_REFERER'] . '?delete=1');
     }
 }

@@ -15,10 +15,10 @@ class PostController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
         $this->post = new PostRepository();
         $this->category = new CategoryRepository();
         $this->comment = new CommentRepository();
+        parent::__construct();
     }
 
     public function posts(): void

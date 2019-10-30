@@ -48,7 +48,7 @@
                             <td>{{ comment.createdAt| date("d/m/Y") }} à {{ comment.createdAt | date("H:i") }}</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="/admin/moderation/publicated/{{ comment.id }}" class="btn btn-md btn-success" title="Publié le commentaire">
+                                    <a href="#" class="btn btn-md btn-success publicated-link" title="Publié le commentaire" data-toggle="modal" data-target="#publicatedModal" data-id={{ comment.id }}>
                                         <i class="fas fa-check-square"></i>
                                     </a>
                                     <a href="#" class="btn btn-md btn-warning text-white moderate-link" title="Modéré le commentaire" data-toggle="modal" data-target="#moderateModal" data-id={{ comment.id }}>
@@ -71,6 +71,7 @@
     {% include 'layout/pagination.html.twig' %}
     {% include 'admin/layout/modal_delete.html.twig' %}
     {% include 'admin/layout/modal_moderated.html.twig' %}
+    {% include 'admin/layout/modal_publicated.html.twig' %}
 
     {% block javascripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

@@ -12,8 +12,8 @@ class AdminRoleController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
         $this->roleRepo = new RoleRepository();
+        parent::__construct();
     }
 
     public function roles()
