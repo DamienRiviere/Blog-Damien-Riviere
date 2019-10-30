@@ -32,6 +32,10 @@ post_category:
 post_moderation_reported:
     path:       /post/{id}/{slug}/reported/{idcomment}
     controller: PostController::reported
+post_like:
+    path:       /post/{id}/{slug}/like
+    controller: PostController::like
+    methods:    GET
 
 # User account | profile
 user_index:

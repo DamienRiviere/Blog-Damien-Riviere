@@ -99,6 +99,12 @@ class Pagination
             $this->count = $query->fetch()[0];
         }
 
-        return $pages = ceil($this->count / $this->perPage);
+        $pages = ceil($this->count / $this->perPage);
+
+        if ($pages <= 0) {
+            return $pages += 1;
+        } else {
+            return $pages;
+        }
     }
 }
