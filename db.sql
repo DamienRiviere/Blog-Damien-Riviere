@@ -40,6 +40,22 @@ CREATE TABLE post_category (
         ON UPDATE RESTRICT
 )
 
+CREATE TABLE post_like (
+    post_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (post_id, user_id),
+    CONSTRAINT fk_post_like
+        FOREIGN KEY (post_id)
+        REFERENCES post (id)
+        ON DELETE CASCADE
+        ON UPDATE RESTRICT,
+    CONSTRAINT fk_user_like
+        FOREIGN KEY (user_id)
+        REFERENCES user (id)
+        ON DELETE CASCADE
+        ON UPDATE RESTRICT
+)
+
 CREATE TABLE user (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,

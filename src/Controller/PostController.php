@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Model\Comment;
+use App\Model\Like;
+use App\Repository\LikeRepository;
 use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
 use App\Repository\CategoryRepository;
@@ -13,11 +15,14 @@ class PostController extends Controller
 
     private $category;
 
+    private $like;
+
     public function __construct()
     {
         $this->post = new PostRepository();
         $this->category = new CategoryRepository();
         $this->comment = new CommentRepository();
+        $this->like = new LikeRepository();
         parent::__construct();
     }
 
@@ -41,7 +46,8 @@ class PostController extends Controller
                 'post' => $this->post->findPost($id),
                 'comments' => $this->comment->findCommentsPaginated($id)[0],
                 'pagination' => $this->comment->findCommentsPaginated($id)[1],
-                'categories' => $this->category->all()
+                'categories' => $this->category->all(),
+                'like' => $this->like->findLike($id)
             ]
         );
     }
@@ -126,6 +132,22 @@ class PostController extends Controller
 
             $this->comment->updateStatus($comment, $idComment);
             header('Location: /post/' . $id . '/' . $slug . '?reported=1');
+        }
+    }
+
+    public function like()
+    {
+        if ($_SESSION['id'] == null) {
+            header('Location: /login?forbidden=1');
+        } else {
+            $like = new Like();
+            $likeRepo = new LikeRepository();
+
+            $like
+                ->setPostId($_GET['post_id'])
+                ->setUserId($_GET['user_id']);
+
+            $likeRepo->createLike($like);
         }
     }
 }
