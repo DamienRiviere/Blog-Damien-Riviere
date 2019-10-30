@@ -149,4 +149,16 @@ class PostRepository extends Repository
 
         return $posts;
     }
+
+    public function findCountPostsByUser($id)
+    {
+        $query = self::getDb()->prepare("
+			SELECT COUNT(id)
+			FROM {$this->repository}
+			WHERE user_id = ?
+		");
+        $query->execute([$id]);
+        $count = $query->fetch();
+        return $count[0];
+    }
 }

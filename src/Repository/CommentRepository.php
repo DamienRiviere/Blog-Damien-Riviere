@@ -179,4 +179,16 @@ class CommentRepository extends Repository
 
         return [$commentsWithUser, $paginated];
     }
+
+    public function findCountCommentsByUser($id)
+    {
+        $query = self::getDb()->prepare("
+			SELECT COUNT(id)
+			FROM {$this->repository}
+			WHERE user_id = ?
+		");
+        $query->execute([$id]);
+        $count = $query->fetch();
+        return $count[0];
+    }
 }

@@ -42,25 +42,33 @@ post_unlike:
     methods:    GET
 
 # User account | profile
-user_index:
+account_index:
     path:       /account
-    controller: UserController::account
+    controller: AccountController::account
     methods:    GET
-user_show_edit_email:
+account_show_edit_email:
     path:       /account/email/edit/{id}
-    controller: UserController::showEditEmail
+    controller: AccountController::showEditEmail
     methods:    GET
-user_edit_email:
+account_edit_email:
     path:       /account/email/edit/{id}
-    controller: UserController::editEmail
+    controller: AccountController::editEmail
     methods:    POST
-user_show_edit_password:
+account_show_edit_password:
     path:       /account/password/edit/{id}
-    controller: UserController::showEditPassword
+    controller: AccountController::showEditPassword
     methods:    GET
-user_edit_password:
+account_edit_password:
     path:       /account/password/edit/{id}
-    controller: UserController::editPassword
+    controller: AccountController::editPassword
+    methods:    POST
+account_show_edit_picture:
+    path:       /account/picture/edit/{id}
+    controller: AccountController::showEditPicture
+    methods:    GET
+account_edit_picture:
+    path:       /account/picture/edit/{id}
+    controller: AccountController::editPicture
     methods:    POST
 
 # Admin Dashboard
