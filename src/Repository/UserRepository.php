@@ -115,22 +115,6 @@ class UserRepository extends Repository
         return $user;
     }
 
-    /**
-     * Find all users with each role
-     *
-     * @return array
-     * @throws Exception
-     */
-    public function findAllUsers()
-    {
-        $query = self::getDb()->prepare('SELECT * FROM user ORDER BY created_at DESC');
-        $query->execute();
-        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
-        $users = $query->fetchAll();
-        (new RoleRepository())->hydrateUsersWithRole($users);
-        return $users;
-    }
-
     public function findUsersPaginated()
     {
         $paginated = new Pagination(
@@ -154,6 +138,13 @@ class UserRepository extends Repository
     {
         $this->update([
             'password' => $password->getPassword()
+        ], (int)$id);
+    }
+
+    public function updatePicture(User $picture, int $id): void
+    {
+        $this->update([
+            'picture' => $picture->getPicture()
         ], (int)$id);
     }
 

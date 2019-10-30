@@ -1,10 +1,12 @@
-{% if get['edit-email'] or get['edit-password'] %}
+{% if get['edit-email'] or get['edit-password'] or get['edit-picture'] %}
 <div class="alert alert-success mb-0 mt-3">
     Votre 
     {% if get['edit-email'] %}
-    adresse email 
+        adresse email
     {% elseif get['edit-password'] %}
-    mot de passe
+        mot de passe
+    {% elseif get['edit-picture'] %}
+        image de profil
     {% endif %}
     a bien été modifié
 </div>
