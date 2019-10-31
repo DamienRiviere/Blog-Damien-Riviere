@@ -56,7 +56,7 @@
                     </div>
                     <div class="col-lg col-md col-sm-12 article-author">
                         <h5 class="mb-0"> 
-                            <a href="#" class="text-danger"><strong>{{ user.name }}</strong></a>
+                            <a href="/profile/{{ user.id }}" class="text-danger text-decoration-none"><strong>{{ user.name }}</strong></a>
                         </h5>
                         {% if post.modifyAt != null %}
                             <p class="small text-muted mb-0">Modifié le {{ post.modifyAt | date("d/m/Y") }} à {{ post.modifyAt | date("H:i") }}</p>
