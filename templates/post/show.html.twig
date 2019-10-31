@@ -58,11 +58,11 @@
                         <h5 class="mb-0"> 
                             <a href="#" class="text-danger"><strong>{{ user.name }}</strong></a>
                         </h5>
-                        {% if post.modify_at != null %}
-                            <p class="small text-muted mb-0">Modifié le {{ post.modify_at | date("d/m/Y") }} à {{ post.modify_at | date("H:i") }}</p>
+                        {% if post.modifyAt != null %}
+                            <p class="small text-muted mb-0">Modifié le {{ post.modifyAt | date("d/m/Y") }} à {{ post.modifyAt | date("H:i") }}</p>
                         {% endif %}
-                        <span class="badge badge-primary">80 articles</span>
-                        <span class="badge badge-warning text-white">390 messages</span>
+                        <span class="badge badge-primary">{{ countPosts }} articles</span>
+                        <span class="badge badge-warning text-white">{{ countComments }} messages</span>
                     </div>
                 </div>
 
@@ -86,7 +86,9 @@
                              alt="">
                         <div class="media-body">
                             <h5 class="mt-0 font-weight-bold">
-                                <a href="#" class="name-style">{{ user.name }}</a>
+                                <a href="/profile/{{ user.id }}" class="name-style">
+                                    {{ user.name }}
+                                </a>
                                 {# Link to edit comment if user is connected #}
                                 {% if session.id == comment.userId %}
                                     <a href="/post/{{ post.id }}/{{ post.slug }}/edit-comment/{{ comment.id }}">
