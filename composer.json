@@ -20,7 +20,7 @@
         "twig/twig": "^2.12",
         "fzaninotto/faker": "^1.8",
         "cocur/slugify": "^3.2",
-        "symfony/validator": "^4.3"
+        "phpmailer/phpmailer": "^6.1"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.3",

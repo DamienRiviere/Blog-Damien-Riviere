@@ -3,6 +3,10 @@ home_index:
     path:       /
     controller: HomeController::home
     methods:    GET
+home_email:
+    path:       /send-email
+    controller: HomeController::email
+    methods:    POST
 
 # Post
 post_index:
