@@ -4,7 +4,7 @@
     <div class="card-body">
         <form action="/post/{{ post.id }}/{{ post.slug }}/new-comment" method="post">
             <div class="form-group">
-                <textarea class="form-control" rows="5" name="content"></textarea>
+                <textarea class="form-control" rows="5" name="content" id="commentForm"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Envoyer</button>
         </form>
