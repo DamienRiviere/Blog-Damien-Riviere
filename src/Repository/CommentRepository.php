@@ -191,4 +191,82 @@ class CommentRepository extends Repository
         $count = $query->fetch();
         return $count[0];
     }
+
+    /**
+     * Find the total number of comments publicated for dashboard
+     *
+     * @return mixed
+     */
+    public function findCountCommentsNotPublicated()
+    {
+        $query = self::getDb()->prepare("
+			SELECT COUNT(id)
+			FROM {$this->repository}
+			WHERE status_id = 1
+		");
+        $query->execute();
+        $count = $query->fetch();
+        return $count[0];
+    }
+
+    /**
+     * Find the total number of comments reported for dashboard
+     *
+     * @return mixed
+     */
+    public function findCountCommentsReported()
+    {
+        $query = self::getDb()->prepare("
+			SELECT COUNT(id)
+			FROM {$this->repository}
+			WHERE status_id = 3
+		");
+        $query->execute();
+        $count = $query->fetch();
+        return $count[0];
+    }
+
+    /**
+     * Find the total number of comments moderated for dashboard
+     *
+     * @return mixed
+     */
+    public function findCountCommentsModerated()
+    {
+        $query = self::getDb()->prepare("
+			SELECT COUNT(id)
+			FROM {$this->repository}
+			WHERE status_id = 4
+		");
+        $query->execute();
+        $count = $query->fetch();
+        return $count[0];
+    }
+
+    /**
+     * Find the last five comments reported for dashboard
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function findLastFiveCommentsReported()
+    {
+        $query = self::getDb()->prepare("
+			SELECT * FROM {$this->repository} WHERE status_id = 3 ORDER BY created_at DESC LIMIT 5
+		");
+        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
+        $query->execute();
+        $lastFiveCommentsReported = $query->fetchAll();
+
+        $lastComments = [];
+
+        foreach ($lastFiveCommentsReported as $comment) {
+            // Hydrate a comment with his user
+            (new UserRepository())->hydrateCommentWithUser($comment);
+
+            $lastComments[] = $comment;
+        }
+
+        return $lastComments;
+    }
 }

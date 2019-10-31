@@ -74,4 +74,20 @@ class CategoryRepository extends Repository
         ");
         $query->execute([$id]);
     }
+
+    /**
+     * Find the total number of categories for dashboard
+     *
+     * @return mixed
+     */
+    public function findCountCategories()
+    {
+        $query = self::getDb()->prepare("
+			SELECT COUNT(id)
+			FROM {$this->repository}
+		");
+        $query->execute();
+        $count = $query->fetch();
+        return $count[0];
+    }
 }
