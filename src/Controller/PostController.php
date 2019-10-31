@@ -47,7 +47,9 @@ class PostController extends Controller
                 'comments' => $this->comment->findCommentsPaginated($id)[0],
                 'pagination' => $this->comment->findCommentsPaginated($id)[1],
                 'categories' => $this->category->all(),
-                'like' => $this->like->findLike($id)
+                'like' => $this->like->findLike($id),
+                'countPosts' => $this->post->findCountPostsByUser($this->post->findPost($id)->getUserId()),
+                'countComments' => $this->comment->findCountCommentsByUser($this->post->findPost($id)->getUserId())
             ]
         );
     }

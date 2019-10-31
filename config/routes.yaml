@@ -71,6 +71,11 @@ account_edit_picture:
     controller: AccountController::editPicture
     methods:    POST
 
+profile_index:
+    path:       /profile/{id}
+    controller: ProfileController::showProfile
+    methods:    GET
+
 # Admin Dashboard
 admin_dashboard:
     path:       /admin
