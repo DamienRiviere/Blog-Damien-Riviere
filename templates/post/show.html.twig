@@ -91,7 +91,7 @@
                                 </a>
                                 {# Link to edit comment if user is connected #}
                                 {% if session.id == comment.userId %}
-                                    <a href="/post/{{ post.id }}/{{ post.slug }}/edit-comment/{{ comment.id }}">
+                                    <a href="/post/{{ post.id }}/{{ post.slug }}/edit-comment/{{ comment.id }}" class="text-decoration-none">
                                         <i class="fas fa-pen-square"></i>
                                     </a>
                                 {% endif %}

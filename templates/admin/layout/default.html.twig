@@ -16,6 +16,10 @@
         {% block stylesheets %}
             <link rel="stylesheet" href="/css/admin.css">
         {% endblock %}
+        <!-- Tiny MCE -->
+        <script src='https://cdn.tiny.cloud/1/lefft9o2ysg9fbwwe3cf7t7i20vfxb926logux6y2e5osyq9/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
+        <script>tinymce.init({selector:'#introduction', height: 300});</script>
+        <script>tinymce.init({selector:'#content', height: 350});</script>
         <!-- Favicons -->
         <link href="/img/favicon/favicon-32x32.png" type="img/png" rel="icon" />
         <link rel="icon" type="img/png" href="/img/favicon/favicon-32x32.png" sizes="32x32">

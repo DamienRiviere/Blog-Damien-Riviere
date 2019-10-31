@@ -45,7 +45,7 @@ class Post
 
     public function getTitle(): string
     {
-        return $this->title;
+        return strip_tags(html_entity_decode($this->title));
     }
 
     public function setTitle(string $title): self
@@ -57,7 +57,7 @@ class Post
 
     public function getIntroduction(): string
     {
-        return $this->introduction;
+        return strip_tags(html_entity_decode($this->introduction));
     }
 
     public function setIntroduction(string $introduction): self
@@ -69,7 +69,7 @@ class Post
 
     public function getContent(): string
     {
-        return $this->content;
+        return strip_tags(html_entity_decode($this->content));
     }
 
     public function setContent(string $content): self

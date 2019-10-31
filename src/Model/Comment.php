@@ -73,7 +73,7 @@ class Comment
 
     public function getContent(): string
     {
-        return $this->content;
+        return strip_tags(html_entity_decode($this->content));
     }
  
     public function setContent(string $content): self

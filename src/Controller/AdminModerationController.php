@@ -10,13 +10,10 @@ class AdminModerationController extends Controller
 
     private $commentRepo;
 
-    private $redirect;
-
     public function __construct()
     {
         $this->checkRole();
         $this->commentRepo = new CommentRepository();
-        $this->redirect = new Redirect();
         parent::__construct();
     }
 
