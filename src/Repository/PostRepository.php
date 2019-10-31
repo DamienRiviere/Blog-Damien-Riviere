@@ -161,4 +161,20 @@ class PostRepository extends Repository
         $count = $query->fetch();
         return $count[0];
     }
+
+    /**
+     * Find the total number of posts for dashboard
+     *
+     * @return mixed
+     */
+    public function findCountPosts()
+    {
+        $query = self::getDb()->prepare("
+			SELECT COUNT(id)
+			FROM {$this->repository}
+		");
+        $query->execute();
+        $count = $query->fetch();
+        return $count[0];
+    }
 }

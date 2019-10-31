@@ -60,4 +60,20 @@ class RoleRepository extends Repository
             }
         }
     }
+
+    /**
+     * Find the total number of role for dashboard
+     *
+     * @return mixed
+     */
+    public function findCountRole()
+    {
+        $query = self::getDb()->prepare("
+			SELECT COUNT(id)
+			FROM {$this->repository}
+		");
+        $query->execute();
+        $count = $query->fetch();
+        return $count[0];
+    }
 }

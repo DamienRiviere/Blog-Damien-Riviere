@@ -154,4 +154,20 @@ class UserRepository extends Repository
             'role_id' => $roleId->getRoleId()
         ], (int)$id);
     }
+
+    /**
+     * Find the total number of users for dashboard
+     *
+     * @return mixed
+     */
+    public function findCountUsers()
+    {
+        $query = self::getDb()->prepare("
+			SELECT COUNT(id)
+			FROM {$this->repository}
+		");
+        $query->execute();
+        $count = $query->fetch();
+        return $count[0];
+    }
 }
