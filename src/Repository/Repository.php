@@ -64,6 +64,11 @@ abstract class Repository
         $query->execute(['id' => $id]);
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $result = $query->fetch();
+
+        if ($result === false) {
+            throw new \Exception("Ressource introuvable !");
+        }
+
         return $result;
     }
 

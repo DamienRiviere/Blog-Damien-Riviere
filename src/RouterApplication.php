@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Controller\CustomExceptionController;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,13 +40,12 @@ class RouterApplication
             $controllerName = explode('::', $params['_controller']);
             $controller = self::CONTROLLER_PATH . $controllerName[0];
             $method = $controllerName[1];
-            
             $controller = $this->instanciateController($controller);
             $params = $this->cleanParams($params);
-        
+            
             return call_user_func_array([$controller, $method], $params);
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            (new CustomExceptionController($exception = $e->getMessage()))->error404();
         }
     }
     

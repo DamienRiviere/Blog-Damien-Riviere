@@ -37,7 +37,7 @@ class Pagination
             $currentPage = $this->getCurrentPage();
 
             if ($currentPage > $pages) {
-                throw new \Exception("Cette page n'existe pas");
+                throw new \Exception("Cette page n'existe pas !");
             }
 
             $offset = $this->perPage * ($currentPage - 1);
