@@ -28,7 +28,9 @@ class AccountController extends Controller
     {
         $this->twig->display('user/account.html.twig', [
             'countComments' => $this->commentRepo->findCountCommentsByUser($_SESSION['id']),
-            'countPosts' => $this->postRepo->findCountPostsByUser($_SESSION['id'])
+            'countPosts' => $this->postRepo->findCountPostsByUser($_SESSION['id']),
+            'posts' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[0],
+            'pagination' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[1]
         ]);
     }
 

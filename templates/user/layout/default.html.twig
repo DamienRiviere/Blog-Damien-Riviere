@@ -54,6 +54,19 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card mb-3" style="max-width: 700px;">
+                <div class="card-header">
+                    Liste des articles aimés par {{ session.name }}
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for post in posts %}
+                        <a href="/post/{{ post.id }}/{{ post.slug }}"><li class="list-group-item">{{ post.title }}</li></a>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {% include 'layout/pagination.html.twig' %}
         </div>
 
         <!-- Col right  -->

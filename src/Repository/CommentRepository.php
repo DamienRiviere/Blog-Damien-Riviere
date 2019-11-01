@@ -169,6 +169,10 @@ class CommentRepository extends Repository
         );
         $comments = $paginated->getItems($this->class);
 
+        if (empty($comments)) {
+            throw new \Exception("Ce statut de commentaire n'existe pas !");
+        }
+
         $commentsWithUser = [];
 
         foreach ($comments as $comment) {

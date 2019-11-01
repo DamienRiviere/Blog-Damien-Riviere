@@ -60,7 +60,7 @@ class PostRepository extends Repository
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $post = $query->fetch();
         if ($post === false) {
-            throw new Exception("Article introuvable");
+            throw new Exception("L'article que vous recherchez est introuvable !");
         }
         (new CategoryRepository())->hydratePostsWithCategories([$post]);
         (new UserRepository())->hydratePostWithUser($post);
@@ -136,6 +136,11 @@ class PostRepository extends Repository
             $id
         );
         $posts = $paginated->getItems($this->class);
+
+        if (empty($posts)) {
+            throw new Exception("Cette catégorie n'existe pas !");
+        }
+
         (new CategoryRepository())->hydratePostsWithCategories($posts);
         return [$posts, $paginated];
     }
@@ -176,5 +181,29 @@ class PostRepository extends Repository
         $query->execute();
         $count = $query->fetch();
         return $count[0];
+    }
+
+    /**
+     * Find all posts liked by the user connected
+     *
+     * @param $id
+     * @return array
+     * @throws Exception
+     */
+    public function findPostsLikeByUser($id)
+    {
+        $paginated = new Pagination(
+            "SELECT p.*, pl.user_id
+			FROM post_like pl
+			JOIN post p ON p.id = pl.post_id
+			WHERE pl.user_id = ?
+			ORDER BY p.created_at DESC",
+            "SELECT COUNT(user_id) FROM post_like WHERE user_id = ?",
+            5,
+            $id
+        );
+        $posts = $paginated->getItems($this->class);
+
+        return [$posts, $paginated];
     }
 }
