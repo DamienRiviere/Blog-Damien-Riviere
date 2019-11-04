@@ -30,16 +30,11 @@ class AdminRoleController extends Controller
 
     public function new()
     {
-        if (!in_array("", $_POST)) {
-            $role = new Role();
-            $role->setName($_POST['name']);
+        $role = new Role();
+        $role->setName($_POST['name']);
+        $this->roleRepo->createRole($role);
 
-            $this->roleRepo->createRole($role);
-
-            header('Location: /admin/roles?created=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs !");
-        }
+        header('Location: /admin/roles?created=1');
     }
 
     public function showEdit(int $id)
@@ -51,17 +46,11 @@ class AdminRoleController extends Controller
 
     public function edit(int $id)
     {
-        if (!in_array("", $_POST)) {
-            $role = $this->roleRepo->find($id);
+        $role = $this->roleRepo->find($id);
+        $role->setName($_POST['name']);
+        $this->roleRepo->updateRole($role);
 
-            $role->setName($_POST['name']);
-
-            $this->roleRepo->updateRole($role);
-
-            header('Location: /admin/roles?edit=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs");
-        }
+        header('Location: /admin/roles?edit=1');
     }
 
     public function delete(int $id)

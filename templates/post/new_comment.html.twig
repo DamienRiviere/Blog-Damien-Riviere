@@ -4,7 +4,10 @@
     <div class="card-body">
         <form action="/post/{{ post.id }}/{{ post.slug }}/new-comment" method="post">
             <div class="form-group">
-                <textarea class="form-control" rows="5" name="content" id="commentForm"></textarea>
+                <textarea class="form-control {% if session['checkPostComment'] %}is-invalid{% endif %}" rows="5" name="content" id="commentForm"></textarea>
+                <div class="invalid-feedback">
+                    {{ session['checkPostComment'] }}
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Envoyer</button>
         </form>

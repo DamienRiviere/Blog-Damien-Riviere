@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Helpers\UserHelpers;
 use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 
@@ -12,10 +13,13 @@ class AdminUserController extends Controller
 
     private $roleRepo;
 
+    private $userHelpers;
+
     public function __construct()
     {
         $this->userRepo = new UserRepository();
         $this->roleRepo = new RoleRepository();
+        $this->userHelpers = new UserHelpers();
         parent::__construct();
     }
     
@@ -37,16 +41,7 @@ class AdminUserController extends Controller
 
     public function edit(int $id)
     {
-        if (!in_array("", $_POST)) {
-            $user = $this->userRepo->find($id);
-            $user->setRoleId($_POST['role']);
-
-            $this->userRepo->updateRole($user, $user->getId());
-
-            header('Location: /admin/users?edit=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs");
-        }
+        $this->userHelpers->setEditUser($id);
     }
 
     public function delete(int $id)

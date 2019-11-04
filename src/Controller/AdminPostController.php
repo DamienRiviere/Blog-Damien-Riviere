@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\Post;
+use App\Helpers\PostHelpers;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
@@ -16,6 +16,8 @@ class AdminPostController extends Controller
 
     private $comment;
 
+    private $postHelpers;
+
     public function __construct()
     {
         $this->checkRole();
@@ -23,6 +25,7 @@ class AdminPostController extends Controller
         $this->slugify = new Slugify();
         $this->category = new CategoryRepository();
         $this->comment = new CommentRepository();
+        $this->postHelpers = new PostHelpers();
         parent::__construct();
     }
 
@@ -43,25 +46,7 @@ class AdminPostController extends Controller
 
     public function new()
     {
-        if (!in_array("", $_POST)) {
-            $post = new Post();
-
-            $post
-                ->setTitle($_POST['title'])
-                ->setIntroduction($_POST['introduction'])
-                ->setContent($_POST['content'])
-                ->setCreatedAt(new \DateTime())
-                ->setCoverImage($_POST['image'])
-                ->setSlug($this->slugify->slugify($_POST['title']))
-                ->setUserId(1);
-
-            $this->post->createPost($post);
-            $this->post->attachCategoriesToPost($post->getId(), $_POST['categories']);
-
-            header('Location: /admin/posts?created=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs !");
-        }
+        $this->postHelpers->post($_POST, $_SERVER['REQUEST_URI']);
     }
 
     public function showEdit(int $id)
@@ -74,24 +59,7 @@ class AdminPostController extends Controller
 
     public function edit(int $id)
     {
-        if (!in_array("", $_POST)) {
-            $post = $this->post->find($id);
-
-            $post
-                ->setTitle($_POST['title'])
-                ->setIntroduction($_POST['introduction'])
-                ->setContent($_POST['content'])
-                ->setModifyAt(new \DateTime())
-                ->setCoverImage($_POST['image'])
-                ->setSlug($this->slugify->slugify($_POST['title']));
-
-            $this->post->updatePost($post);
-            $this->post->attachCategoriesToPost($post->getId(), $_POST['categories']);
-
-            header('Location: /admin/posts?edit=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs !");
-        }
+        $this->postHelpers->post($_POST, $_SERVER['REQUEST_URI']);
     }
 
     public function delete(int $id)
