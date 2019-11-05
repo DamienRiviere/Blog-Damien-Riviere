@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\Role;
+use App\Helpers\RoleHelpers;
 use App\Repository\RoleRepository;
 
 class AdminRoleController extends Controller
@@ -10,9 +10,12 @@ class AdminRoleController extends Controller
 
     private $roleRepo;
 
+    private $roleHelpers;
+
     public function __construct()
     {
         $this->roleRepo = new RoleRepository();
+        $this->roleHelpers = new RoleHelpers();
         parent::__construct();
     }
 
@@ -30,16 +33,7 @@ class AdminRoleController extends Controller
 
     public function new()
     {
-        if (!in_array("", $_POST)) {
-            $role = new Role();
-            $role->setName($_POST['name']);
-
-            $this->roleRepo->createRole($role);
-
-            header('Location: /admin/roles?created=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs !");
-        }
+        $this->roleHelpers->newRole();
     }
 
     public function showEdit(int $id)
@@ -51,17 +45,7 @@ class AdminRoleController extends Controller
 
     public function edit(int $id)
     {
-        if (!in_array("", $_POST)) {
-            $role = $this->roleRepo->find($id);
-
-            $role->setName($_POST['name']);
-
-            $this->roleRepo->updateRole($role);
-
-            header('Location: /admin/roles?edit=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs");
-        }
+        $this->roleHelpers->editRole($id);
     }
 
     public function delete(int $id)

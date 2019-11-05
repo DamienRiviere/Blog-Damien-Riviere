@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\Comment;
+use App\Helpers\CommentHelpers;
 use App\Model\Like;
 use App\Repository\LikeRepository;
 use App\Repository\PostRepository;
@@ -17,12 +17,15 @@ class PostController extends Controller
 
     private $like;
 
+    private $commentHelpers;
+
     public function __construct()
     {
         $this->post = new PostRepository();
         $this->category = new CategoryRepository();
         $this->comment = new CommentRepository();
         $this->like = new LikeRepository();
+        $this->commentHelpers = new CommentHelpers();
         parent::__construct();
     }
 
@@ -69,22 +72,7 @@ class PostController extends Controller
 
     public function newComment($id, $slug): void
     {
-        if (!in_array("", $_POST)) {
-            $comment = new Comment();
-
-            $comment
-                ->setContent($_POST['content'])
-                ->setPostId($id)
-                ->setUserId($_SESSION['id'])
-                ->setCreatedAt(new \DateTime())
-                ->setStatusId(1);
-                
-            $this->comment->createComment($comment);
-
-            header('Location: /post/' . $id . '/' . $slug . '?created=1');
-        } else {
-            throw new \Exception("Veuillez remplir le champ des commentaires");
-        }
+        $this->commentHelpers->newComment($_POST, $_SERVER['REQUEST_URI']);
     }
 
     public function showEditComment($id, $slug, $idComment)
@@ -104,25 +92,14 @@ class PostController extends Controller
 
     public function editComment($id, $slug, $idComment)
     {
-        if (!in_array("", $_POST)) {
-            $comment = $this->comment->find($idComment);
-
-            $comment
-                ->setContent($_POST['content'])
-                ->setModifyAt(new \DateTime());
-
-            $this->comment->updateComment($comment, $idComment);
-
-            header('Location: /post/' . $id . '/' . $slug . '?edit=1');
-        } else {
-            throw new \Exception("Veuillez remplir le champ des commentaires");
-        }
+        $this->commentHelpers->editComment($_POST, $_SERVER['REQUEST_URI']);
     }
 
     /**
      *  Method to report a comment
      *
      * @param int $id
+     * @throws \Exception
      */
     public function reported(int $id, string $slug, int $idComment)
     {

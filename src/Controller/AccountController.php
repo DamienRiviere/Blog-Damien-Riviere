@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Helpers\UserHelpers;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
@@ -15,12 +16,15 @@ class AccountController extends Controller
 
     private $postRepo;
 
+    private $userHelpers;
+
     public function __construct()
     {
         $this->checkSession();
         $this->userRepo = new UserRepository();
         $this->commentRepo = new CommentRepository();
         $this->postRepo = new PostRepository();
+        $this->userHelpers = new UserHelpers();
         parent::__construct();
     }
 
@@ -34,64 +38,49 @@ class AccountController extends Controller
         ]);
     }
 
-    public function showEditEmail($id)
+    public function showEditEmail(int $id)
     {
         $this->twig->display('user/edit_email.html.twig', [
-            'email' => $_SESSION['email']
+            'email' => $_SESSION['email'],
+            'countComments' => $this->commentRepo->findCountCommentsByUser($_SESSION['id']),
+            'countPosts' => $this->postRepo->findCountPostsByUser($_SESSION['id']),
+            'posts' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[0],
+            'pagination' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[1]
         ]);
     }
 
-    public function editEmail($id)
+    public function editEmail(int $id)
     {
-        if (!in_array("", $_POST)) {
-            $email = $this->userRepo->find($id);
-
-            $email->setEmail($_POST['email']);
-
-            $this->userRepo->updateEmail($email, $id);
-            $_SESSION['email'] = $_POST['email'];
-
-            header('Location: /account?edit-email=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs !");
-        }
+        $this->userHelpers->email($_POST['email'], $id);
     }
 
-    public function showEditPassword($id)
+    public function showEditPassword(int $id)
     {
-        $this->twig->display('user/edit_password.html.twig');
+        $this->twig->display('user/edit_password.html.twig', [
+            'countComments' => $this->commentRepo->findCountCommentsByUser($_SESSION['id']),
+            'countPosts' => $this->postRepo->findCountPostsByUser($_SESSION['id']),
+            'posts' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[0],
+            'pagination' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[1]
+        ]);
     }
 
-    public function editPassword($id)
+    public function editPassword(int $id)
     {
-        if (!in_array("", $_POST)) {
-            $password = $this->userRepo->find($id);
-
-            $password->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
-
-            $this->userRepo->updatePassword($password, $id);
-            header('Location: /account?edit-password=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs !");
-        }
+        $this->userHelpers->password($_POST['password'], $id);
     }
 
     public function showEditPicture($id)
     {
-        $this->twig->display('user/edit_picture.html.twig');
+        $this->twig->display('user/edit_picture.html.twig', [
+            'countComments' => $this->commentRepo->findCountCommentsByUser($_SESSION['id']),
+            'countPosts' => $this->postRepo->findCountPostsByUser($_SESSION['id']),
+            'posts' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[0],
+            'pagination' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[1]
+        ]);
     }
 
-    public function editPicture($id)
+    public function editPicture(int $id)
     {
-        if (!empty($_POST)) {
-            $picture = $this->userRepo->find($id);
-
-            $picture->setPicture($_POST['picture']);
-
-            $this->userRepo->updatePicture($picture, $id);
-            header('Location: /account?edit-picture=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs !");
-        }
+        $this->userHelpers->setEditPicture($_POST['picture'], $id);
     }
 }

@@ -2,11 +2,9 @@
 
 namespace App\Repository;
 
-use App\Model\Comment;
 use App\Services\Pagination;
 use PDO;
 use App\Model\Post;
-use App\Repository\UserRepository;
 use Exception;
 
 class PostRepository extends Repository
@@ -42,17 +40,6 @@ class PostRepository extends Repository
         ], $post->getId());
     }
 
-    public function findAllPosts()
-    {
-        $query = self::getDb()->prepare("SELECT * FROM {$this->repository} ORDER BY created_at DESC");
-        $query->execute();
-        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
-        $posts = $query->fetchAll();
-        (new CategoryRepository())->hydratePostsWithCategories($posts);
-        (new UserRepository())->hydratePostsWithUser($posts);
-        return $posts;
-    }
-
     public function findPost(int $id)
     {
         $query = self::getDb()->prepare('SELECT * FROM ' . $this->repository . ' WHERE id = :id');
@@ -65,21 +52,6 @@ class PostRepository extends Repository
         (new CategoryRepository())->hydratePostsWithCategories([$post]);
         (new UserRepository())->hydratePostWithUser($post);
         return $post;
-    }
-
-    public function findPostByCategory(int $id)
-    {
-        $query = self::getDb()->prepare("
-            SELECT * FROM {$this->repository} 
-            JOIN post_category pc ON pc.post_id = {$this->repository}.id 
-            WHERE pc.category_id = :id 
-            ORDER BY created_at DESC
-        ");
-        $query->execute(['id' => $id]);
-        $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
-        $posts = $query->fetchAll();
-        (new CategoryRepository())->hydratePostsWithCategories($posts);
-        return $posts;
     }
 
     /**

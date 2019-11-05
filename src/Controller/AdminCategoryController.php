@@ -2,29 +2,28 @@
 
 namespace App\Controller;
 
-use App\Model\Category;
+use App\Helpers\CategoryHelpers;
 use App\Repository\CategoryRepository;
-use Cocur\Slugify\Slugify;
 
 class AdminCategoryController extends Controller
 {
 
-    private $category;
+    private $categoryRepo;
 
-    private $slugify;
+    private $categoryHelpers;
 
     public function __construct()
     {
         $this->checkRole();
-        $this->category = new CategoryRepository();
-        $this->slugify = new Slugify();
+        $this->categoryRepo = new CategoryRepository();
+        $this->categoryHelpers = new CategoryHelpers();
         parent::__construct();
     }
 
     public function categories()
     {
         $this->twig->display('admin/category/index.html.twig', [
-            'categories'    => $this->category->all()
+            'categories'    => $this->categoryRepo->all()
         ]);
     }
 
@@ -35,50 +34,24 @@ class AdminCategoryController extends Controller
 
     public function new()
     {
-        if (!in_array("", $_POST)) {
-            $category = new Category();
-
-            $category
-                ->setName($_POST['name'])
-                ->setStyle($_POST['style'])
-                ->setSlug($this->slugify->slugify($_POST['name']));
-
-            $this->category->createCategory($category);
-
-            header('Location: /admin/categories?created=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs");
-        }
+        $this->categoryHelpers->newCategory();
     }
 
     public function showEdit(int $id)
     {
         $this->twig->display('admin/category/edit.html.twig', [
-            'category' => $this->category->find($id)
+            'category' => $this->categoryRepo->find($id)
         ]);
     }
 
     public function edit(int $id)
     {
-        if (!in_array("", $_POST)) {
-            $category = $this->category->find($id);
-
-            $category
-                ->setName($_POST['name'])
-                ->setStyle($_POST['style'])
-                ->setSlug($this->slugify->slugify($_POST['name']));
-
-            $this->category->updateCategory($category);
-
-            header('Location: /admin/categories?edit=1');
-        } else {
-            throw new \Exception("Veuillez remplir tous les champs !");
-        }
+        $this->categoryHelpers->editCategory($id);
     }
 
     public function delete(int $id)
     {
-        $this->category->deleteCategory($id);
+        $this->categoryRepo->deleteCategory($id);
         header('Location: /admin/categories?delete=1');
     }
 }

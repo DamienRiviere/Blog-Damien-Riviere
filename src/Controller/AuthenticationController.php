@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Model\User;
 use App\Services\Authentication;
 use App\Repository\UserRepository;
 use Cocur\Slugify\Slugify;

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\CommentRepository;
-use App\Services\Redirect;
 
 class AdminModerationController extends Controller
 {
