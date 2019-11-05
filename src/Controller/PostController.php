@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Helpers\CommentHelpers;
-use App\Model\Comment;
 use App\Model\Like;
 use App\Repository\LikeRepository;
 use App\Repository\PostRepository;

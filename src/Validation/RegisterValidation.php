@@ -6,11 +6,17 @@ use App\Repository\UserRepository;
 
 class RegisterValidation
 {
-    private $checkName = false;
+    private $checkNameLength = false;
 
-    private $checkEmail = false;
+    private $checkNameExist = false;
+
+    private $checkEmailFormat = false;
+
+    private $checkEmailExist = false;
 
     private $checkPassword = false;
+
+    private $userRepo;
 
     public function __construct()
     {
@@ -56,11 +62,11 @@ class RegisterValidation
     public function checkNameExist(string $name)
     {
         if ($this->userRepo->findName($name) == true) {
-            $this->setCheckName(false);
+            $this->setCheckNameExist(false);
             $_SESSION['check_name'] = "Ce pseudo est déjà utilisé, veuillez en choisir un autre !";
             header('Location: /register');
         } else {
-            $this->setCheckName(true);
+            $this->setCheckNameExist(true);
         }
     }
 
@@ -72,11 +78,11 @@ class RegisterValidation
     public function checkNameLength(string $name)
     {
         if (strlen($name) <= 3) {
-            $this->setCheckName(false);
+            $this->setCheckNameLength(false);
             $_SESSION['check_name'] = "Votre pseudo doit comporter au minimum 3 caractères";
             header('Location: /register');
         } else {
-            $this->setCheckName(true);
+            $this->setCheckNameLength(true);
         }
     }
 
@@ -88,11 +94,11 @@ class RegisterValidation
     public function checkEmailFormat(string $email)
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
-            $this->setCheckEmail(false);
+            $this->setCheckEmailFormat(false);
             $_SESSION['check_email'] = "Veuillez entrer un bon format d'email !";
             header('Location: /register');
         } else {
-            $this->setCheckEmail(true);
+            $this->setCheckEmailFormat(true);
         }
     }
 
@@ -104,11 +110,11 @@ class RegisterValidation
     public function checkEmailExist(string $email)
     {
         if ($this->userRepo->findEmail($email) == true) {
-            $this->setCheckEmail(false);
+            $this->setCheckEmailExist(false);
             $_SESSION['check_email'] = "Cet email est déjà utilisé, veuillez en choisir un autre !";
             header('Location: /register');
         } else {
-            $this->setCheckEmail(true);
+            $this->setCheckEmailExist(true);
         }
     }
 
@@ -128,24 +134,44 @@ class RegisterValidation
         }
     }
 
-    public function isCheckName(): bool
+    public function isCheckNameLength(): bool
     {
-        return $this->checkName;
+        return $this->checkNameLength;
     }
 
-    public function setCheckName(bool $checkName): void
+    public function setCheckNameLength(bool $checkNameLength): void
     {
-        $this->checkName = $checkName;
+        $this->checkNameLength = $checkNameLength;
     }
 
-    public function isCheckEmail(): bool
+    public function isCheckNameExist(): bool
     {
-        return $this->checkEmail;
+        return $this->checkNameExist;
     }
 
-    public function setCheckEmail(bool $checkEmail): void
+    public function setCheckNameExist(bool $checkNameExist): void
     {
-        $this->checkEmail = $checkEmail;
+        $this->checkNameExist = $checkNameExist;
+    }
+
+    public function isCheckEmailFormat(): bool
+    {
+        return $this->checkEmailFormat;
+    }
+
+    public function setCheckEmailFormat(bool $checkEmailFormat): void
+    {
+        $this->checkEmailFormat = $checkEmailFormat;
+    }
+
+    public function isCheckEmailExist(): bool
+    {
+        return $this->checkEmailExist;
+    }
+
+    public function setCheckEmailExist(bool $checkEmailExist): void
+    {
+        $this->checkEmailExist = $checkEmailExist;
     }
 
     public function isCheckPassword(): bool

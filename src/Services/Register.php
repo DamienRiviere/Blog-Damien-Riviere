@@ -35,8 +35,10 @@ class Register
         $this->checkValidation($user);
 
         if (
-            $this->validation->isCheckName()
-            && $this->validation->isCheckEmail()
+            $this->validation->isCheckNameExist()
+            && $this->validation->isCheckNameLength()
+            && $this->validation->isCheckEmailExist()
+            && $this->validation->isCheckEmailFormat()
             && $this->validation->isCheckPassword() != false
         ) {
             $this->setUser($user);

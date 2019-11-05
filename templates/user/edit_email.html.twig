@@ -7,13 +7,16 @@
 
     <div class="container">
         <!-- Email Form -->
-        <div class="card my-4">
+        <div class="card mb-4">
             <h5 class="card-header"><i class="fas fa-envelope-square"></i> Entrez votre nouvel email :</h5>
             <div class="card-body">
                 <form action="/account/email/edit/{{ session.id }}" method="post">
                     <div class="form-group">
                         <label for="email">Nouvel email</label>
-                        <input class="form-control" type="email" name="email" id="email" value="{{ session.email }}">
+                        <input class="form-control {% if session['checkAccountEmail'] %}is-invalid{% endif %}" type="email" name="email" id="email" value="{{ session.email }}">
+                        <div class="invalid-feedback">
+                            {{ session['checkAccountEmail'] }}
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>

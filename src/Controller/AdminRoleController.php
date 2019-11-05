@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\Role;
+use App\Helpers\RoleHelpers;
 use App\Repository\RoleRepository;
 
 class AdminRoleController extends Controller
@@ -10,9 +10,12 @@ class AdminRoleController extends Controller
 
     private $roleRepo;
 
+    private $roleHelpers;
+
     public function __construct()
     {
         $this->roleRepo = new RoleRepository();
+        $this->roleHelpers = new RoleHelpers();
         parent::__construct();
     }
 
@@ -30,11 +33,7 @@ class AdminRoleController extends Controller
 
     public function new()
     {
-        $role = new Role();
-        $role->setName($_POST['name']);
-        $this->roleRepo->createRole($role);
-
-        header('Location: /admin/roles?created=1');
+        $this->roleHelpers->newRole();
     }
 
     public function showEdit(int $id)
@@ -46,11 +45,7 @@ class AdminRoleController extends Controller
 
     public function edit(int $id)
     {
-        $role = $this->roleRepo->find($id);
-        $role->setName($_POST['name']);
-        $this->roleRepo->updateRole($role);
-
-        header('Location: /admin/roles?edit=1');
+        $this->roleHelpers->editRole($id);
     }
 
     public function delete(int $id)
