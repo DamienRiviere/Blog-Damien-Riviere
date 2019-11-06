@@ -51,10 +51,10 @@
 
                 <div class="row">
                 {% set user = post.getUser() %}
-                    <div class="col-1 img-author-article">
+                    <div class="col-lg-1 col-md-1 col-sm-12 img-author-article">
                         <img src="{{ user.picture }}" class="avatar avatar-medium" alt="Avatar de Damien">
                     </div>
-                    <div class="col-lg col-md col-sm-12 article-author">
+                    <div class="col-lg-10 col-md-10 col-sm-12 article-author">
                         <h5 class="mb-0"> 
                             <a href="/profile/{{ user.id }}" class="text-danger text-decoration-none"><strong>{{ user.name }}</strong></a>
                         </h5>
@@ -77,15 +77,15 @@
 
                 <hr>
 
-                <h3 class="mb-3">Tous les commentaires</h3>
+                <h3 class="mb-3 all-comments">Tous les commentaires</h3>
                 <!-- Comments list -->
                 {% for comment in comments if comment.statusId == 2 or comment.statusId == 3 %}
                     {% set user = comment.getUser() %}
                     <div class="media mb-4 mt-4">
                         <img class="d-flex mr-3 rounded-circle avatar avatar-medium" src="{{ user.picture }}"
                              alt="">
-                        <div class="media-body">
-                            <h5 class="mt-0 font-weight-bold">
+                        <div class="media-body comment-sm">
+                            <h5 class="mt-0 font-weight-bold author-comment-sm">
                                 <a href="/profile/{{ user.id }}" class="name-style">
                                     {{ user.name }}
                                 </a>
@@ -96,13 +96,13 @@
                                     </a>
                                 {% endif %}
                                 {% if comment.statusId == 2 and session.id != user.id and session.id != null %}
-                                    <a href="#" class="text-warning report-link" title="Signaler le commentaire"
+                                    <a href="#" class="text-warning report-link text-decoration-none" title="Signaler le commentaire"
                                        data-toggle="modal" data-target="#reportModal" data-id="{{ comment.id }}" data-post="{{ post.id }}"
                                     >
                                         <i class="fas fa-exclamation-circle"></i>
                                     </a>
                                 {% endif %}
-                                <small class="text-muted">le {{ comment.createdAt | date("d/m/Y") }} à {{ comment.createdAt | date("H:i") }}</small>
+                                <small class="text-muted date-publicated-message">le {{ comment.createdAt | date("d/m/Y") }} à {{ comment.createdAt | date("H:i") }}</small>
                             </h5>
                             {{ comment.content }}
                         </div>
@@ -115,7 +115,7 @@
             </div>
 
             <!-- Categories -->
-            <div class="col-md-4">
+            <div class="col-md-4 categories">
                 {% include 'layout/categories.html.twig' %}
             </div>
 

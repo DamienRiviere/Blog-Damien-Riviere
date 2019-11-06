@@ -3,8 +3,10 @@
 {% block title %}Accueil - Blog Damien Riviere{% endblock %}
 
 {% block body %}
+    {% include 'layout/header.html.twig' %}
+
     <section id="accueil">
-        <div class="container-fluid bg-light py-5 text-center section-title">
+        <div class="container-fluid bg-light py-5 text-center">
             <h2 class="text-danger">À propos</h2>
             <p class="font-weight-bold mb-0">Qui suis je ?</p>
         </div>
@@ -15,8 +17,10 @@
                     <img src="img/damien-riviere.jpg" alt="Damien Riviere" class="rounded img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-12">
-                    <h3 class="text-center"><span class="font-weight-bold text-danger">Damien RIVIERE</span>, <span
-                            class="font-weight-bold">Développeur PHP / Symfony</span>.</h3>
+                    <h3 class="text-center title-sm">
+                        <span class="font-weight-bold text-danger">Damien RIVIERE</span>,
+                        <span class="font-weight-bold">Développeur PHP / Symfony</span>.
+                    </h3>
 
                     <ul class="list-unstyled d-flex justify-content-center row small text-muted">
                         <li class="mr-2">
@@ -54,10 +58,15 @@
                     <hr>
 
                     <div class="col text-center">
-                        <a href="https://www.linkedin.com/in/damien-riviere/" target="_blank" title="Mon Linkedin"><i
-                                class="fab fa-linkedin text-danger"></i></a>
-                        <a href="https://github.com/DamienRiviere" target="_blank" title="Mon Github"><i
-                                class="fab fa-github-square text-danger"></i></a>
+                        <a href="https://www.linkedin.com/in/damien-riviere/" target="_blank" title="Mon Linkedin">
+                            <i class="fab fa-linkedin text-danger"></i>
+                        </a>
+                        <a href="https://github.com/DamienRiviere" target="_blank" title="Mon Github">
+                            <i class="fab fa-github-square text-danger"></i>
+                        </a>
+                        <a href="img/cv/DAMIEN_RIVIERE_CV.pdf" title="Mon CV" download>
+                            <i class="fas fa-download text-danger"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -73,7 +82,7 @@
         <div class="container py-5">
             <div class="row py-4">
                 {% for post in posts %}
-                <div class="col-4">
+                <div class="col-lg-4 col-md-6 col-sm-12">
                     <!-- Blog Post -->
                     <div class="card mb-4 mt-4">
                         <div class="card-header">

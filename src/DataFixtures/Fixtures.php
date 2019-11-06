@@ -107,9 +107,9 @@ class Fixtures
             $post = new Post();
 
             $post
-                ->setTitle($faker->sentence())
-                ->setIntroduction($faker->paragraph(4))
-                ->setContent($faker->paragraph(8))
+                ->setTitle($faker->sentence(2, true))
+                ->setIntroduction($faker->paragraph(2))
+                ->setContent($faker->paragraph(16))
                 ->setCreatedAt(new DateTime())
                 ->setCoverImage($faker->imageUrl(750, 300))
                 ->setSlug($slugify->slugify($post->getTitle()))
@@ -144,7 +144,7 @@ class Fixtures
             $category = new Category();
 
             $category
-                ->setName($faker->sentence(1))
+                ->setName($faker->sentence(1, true))
                 ->setSlug($slugify->slugify($category->getName()))
                 ->setStyle("badge badge-danger");
 

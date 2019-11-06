@@ -25,7 +25,11 @@
         <div class="h-100 row align-items-center bg-light">
             <div class="col text-center">
                 <h2 class="text-danger">
+                    {% if exception | length > 0 %}
                         {{ exception }}
+                    {% else %}
+                        Page introuvable
+                    {% endif %}
                 </h2>
                 <p>Vous pouvez retourner à l'accueil pour voir nos derniers articles ou vous connectez !</p>
 
