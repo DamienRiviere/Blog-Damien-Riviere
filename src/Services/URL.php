@@ -18,10 +18,6 @@ class URL
             return $default;
         }
 
-        if (!filter_var($_GET[$name], FILTER_VALIDATE_INT)) {
-            throw new \Exception("Le paramètre $name dans l'url n'est pas un entier");
-        }
-
         return (int)$_GET[$name];
     }
 

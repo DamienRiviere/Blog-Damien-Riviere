@@ -3,6 +3,21 @@ body {
     font-family: 'Comfortaa', cursive;
 }
 
+/** HEADER SECTION **/
+.masthead {
+    height: 100vh;
+    min-height: 500px;
+    background-image: url('../img/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.shadow-title {
+    text-shadow: 1px 1px 3px #000000;
+}
+/** HEADER SECTION **/
+
 h1 {
     font-size: 5em;
     font-family: 'Permanent Marker', cursive;
@@ -22,6 +37,7 @@ h2 {
     font-weight: bold;
 }
 
+/** LOGO SECTION A PROPOS*/
 .fa-linkedin {
     font-size: 2.5em;
 }
@@ -29,6 +45,11 @@ h2 {
 .fa-github-square {
     font-size: 2.5em;
 }
+
+.fa-download {
+    font-size: 2.2em;
+}
+/** END LOGO SECTION A PROPOS*/
 
 .grey-lighten-1 {
     background-color: #bdbdbd;
@@ -215,13 +236,76 @@ h2 {
 
 /** END LOGIN  */
 
+/** RESPONSIVE */
+@media screen and (max-width: 992px) {
+    .categories {
+        display: none;
+    }
+
+    .title-sm {
+        margin-top: 15px;
+    }
+}
 
 @media screen and (max-width: 768px) {
     h1 {
         font-size: 4em;
+        text-align: center;
     }
 
-    .h2 {
+    h2 {
         font-size: 2em;
+        text-align: center;
+    }
+
+    h5 {
+        text-align: center;
+    }
+
+    .author-comment-sm {
+        text-align: left;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    .date-publicated {
+        display: none;
+    }
+
+    .all-comments {
+        text-align: center;
+        font-size: 1.5em;
+    }
+
+    .img-author-article {
+        text-align: center;
+    }
+
+    .article-author {
+        text-align: center;
+        margin-left: 0px;
     }
 }
+
+@media screen and (max-width: 500px) {
+    .date-publicated-message {
+        display: none;
+    }
+
+    .card-body-sm {
+        padding: 0.5rem !important;
+    }
+
+    .card-header-sm {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .nb-pages {
+        display: none;
+    }
+}
+/** END RESPONSIVE */

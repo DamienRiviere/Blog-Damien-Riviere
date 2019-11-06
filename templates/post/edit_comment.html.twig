@@ -23,9 +23,8 @@
                         Mon commentaire
                     </div>
                     <div class="media mb-4 mt-4">
-                        <img class="d-flex ml-3 mr-3 rounded-circle avatar avatar-medium" src="{{ session.picture }}" alt="Avatar de {{ session.name }}">
-                        <div class="media-body">
-                            <h5 class="mt-0 font-weight-bold">
+                        <div class="media-body ml-3 mr-3">
+                            <h5 class="mt-0 font-weight-bold author-comment-sm">
                                 <a href="#" class="name-style">{{ session.name }}</a>
                             </h5>
                             {{ comment.content }}
@@ -35,8 +34,8 @@
 
                 <!-- Comments Form -->
                 <div class="card my-4">
-                    <h5 class="card-header"><i class="fas fa-pen-square"></i> Modifier mon commentaire :</h5>
-                    <div class="card-body">
+                    <h5 class="card-header card-header-sm"><i class="fas fa-pen-square"></i> Modifier mon commentaire :</h5>
+                    <div class="card-body card-body-sm">
                         <form action="/post/{{ post.id }}/{{ post.slug }}/edit-comment/{{ comment.id }}" method="post">
                             <div class="form-group">
                                 <textarea class="form-control {% if session['checkPostComment'] %}is-invalid{% endif %}" rows="5" name="content" id="commentForm">{{ comment.content }}</textarea>
@@ -51,7 +50,7 @@
             </div>
 
             <!-- Categories -->
-            <div class="col-md-4">
+            <div class="col-md-4 categories">
                 {% include 'layout/categories.html.twig' %}
             </div>
 

@@ -48,6 +48,13 @@
                             Github
                         </a>
                     </li>
+                    {% if session['id'] != null and session['role_id'] == 1 %}
+                    <li>
+                        <a href="/admin" class="footer-link">
+                            Administration
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
 

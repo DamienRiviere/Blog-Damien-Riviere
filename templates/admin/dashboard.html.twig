@@ -3,7 +3,7 @@
 {% block title %}Dashboard - Administration{% endblock %}
 
 {% block body %}
-    <ol class="breadcrumb">
+    <ol class="breadcrumb breadcrumb-sm">
         <li class="breadcrumb-item">
             <a href="#">Dashboard</a>
         </li>
@@ -138,47 +138,49 @@
             <i class="fas fa-table"></i>
             Liste des 5 derniers commentaires signalés
         </div>
-        <div class="card-body">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead class="text-center">
-                <tr>
-                    <th>#</th>
-                    <th>Commentaire</th>
-                    <th>Auteur</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tfoot class="text-center">
-                <tr>
-                    <th>#</th>
-                    <th>Commentaire</th>
-                    <th>Auteur</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-                </tfoot>
-                <tbody class="text-center">
-                {% for comment in lastCommentsReported %}
+        <div class="card-body card-body-sm">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="text-center">
                     <tr>
-                        <td>{{ comment.id }}</td>
-                        <td>{{ comment.content }}</td>
-                        <td>{{ comment.user.name }}</td>
-                        <td>{{ comment.createdAt| date("d/m/Y") }} à {{ comment.createdAt | date("H:i") }}</td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                <a href="#" class="btn btn-md btn-success publicated-link" title="Publié le commentaire" data-toggle="modal" data-target="#publicatedModal" data-id={{ comment.id }}>
-                                    <i class="fas fa-check-square"></i>
-                                </a>
-                                <a href="#" class="btn btn-md btn-warning text-white moderate-link" title="Modéré le commentaire" data-toggle="modal" data-target="#moderateModal" data-id={{ comment.id }}>
-                                    <i class="fas fa-comment-slash"></i>
-                                </a>
-                            </div>
-                        </td>
+                        <th>#</th>
+                        <th>Commentaire</th>
+                        <th>Auteur</th>
+                        <th>Date</th>
+                        <th>Action</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tfoot class="text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Commentaire</th>
+                        <th>Auteur</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                    </tfoot>
+                    <tbody class="text-center">
+                    {% for comment in lastCommentsReported %}
+                        <tr>
+                            <td>{{ comment.id }}</td>
+                            <td>{{ comment.content }}</td>
+                            <td>{{ comment.user.name }}</td>
+                            <td>{{ comment.createdAt| date("d/m/Y") }} à {{ comment.createdAt | date("H:i") }}</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a href="#" class="btn btn-md btn-success publicated-link" title="Publié le commentaire" data-toggle="modal" data-target="#publicatedModal" data-id={{ comment.id }}>
+                                        <i class="fas fa-check-square"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-md btn-warning text-white moderate-link" title="Modéré le commentaire" data-toggle="modal" data-target="#moderateModal" data-id={{ comment.id }}>
+                                        <i class="fas fa-comment-slash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="card-footer small text-muted">Mis à jour le {{ comment.createdAt| date("d/m/Y") }} à {{ comment.createdAt | date("H:i") }}</div>
     </div>
