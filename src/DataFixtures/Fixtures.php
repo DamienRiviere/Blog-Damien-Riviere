@@ -21,21 +21,29 @@ use App\Repository\RoleRepository;
 class Fixtures
 {
 
+    private $db;
+
+    private $faker;
+
+    public function __construct()
+    {
+        $this->db = Repository::getDb();
+        $this->faker = \Faker\Factory::create('fr_FR');
+    }
+
     public function setData()
     {
-        $db = Repository::getDb();
-        $faker = \Faker\Factory::create('fr_FR');
         $slugify = new Slugify();
 
-        $db->exec('SET FOREIGN_KEY_CHECKS = 0');
-        $db->exec('TRUNCATE TABLE post');
-        $db->exec('TRUNCATE TABLE category');
-        $db->exec('TRUNCATE TABLE post_category');
-        $db->exec('TRUNCATE TABLE user');
-        $db->exec('TRUNCATE TABLE comment');
-        $db->exec('TRUNCATE TABLE role');
-        $db->exec('TRUNCATE TABLE moderation');
-        $db->exec('SET FOREIGN_KEY_CHECKS = 1');
+        $this->db->exec('SET FOREIGN_KEY_CHECKS = 0');
+        $this->db->exec('TRUNCATE TABLE post');
+        $this->db->exec('TRUNCATE TABLE category');
+        $this->db->exec('TRUNCATE TABLE post_category');
+        $this->db->exec('TRUNCATE TABLE user');
+        $this->db->exec('TRUNCATE TABLE comment');
+        $this->db->exec('TRUNCATE TABLE role');
+        $this->db->exec('TRUNCATE TABLE moderation');
+        $this->db->exec('SET FOREIGN_KEY_CHECKS = 1');
 
         $repoRole = new RoleRepository();
 
@@ -89,9 +97,9 @@ class Fixtures
             $user = new User();
 
             $user
-                ->setName($faker->name())
-                ->setEmail($faker->email())
-                ->setPassword(password_hash($faker->password(), PASSWORD_BCRYPT))
+                ->setName($this->faker->name())
+                ->setEmail($this->faker->email())
+                ->setPassword(password_hash($this->faker->password(), PASSWORD_BCRYPT))
                 ->setSlug($slugify->slugify($user->getName()))
                 ->setCreatedAt(new DateTime())
                 ->setPicture("http://image.jeuxvideo.com/avatar-md/default.jpg")
@@ -107,11 +115,11 @@ class Fixtures
             $post = new Post();
 
             $post
-                ->setTitle($faker->sentence(2, true))
-                ->setIntroduction($faker->paragraph(2))
-                ->setContent($faker->paragraph(16))
+                ->setTitle($this->faker->sentence(2, true))
+                ->setIntroduction($this->faker->paragraph(2))
+                ->setContent($this->faker->paragraph(16))
                 ->setCreatedAt(new DateTime())
-                ->setCoverImage($faker->imageUrl(750, 300))
+                ->setCoverImage($this->faker->imageUrl(750, 300))
                 ->setSlug($slugify->slugify($post->getTitle()))
                 ->setUserId($damien->getId());
 
@@ -125,7 +133,7 @@ class Fixtures
                 $comment = new Comment();
 
                 $comment
-                    ->setContent($faker->sentence(10))
+                    ->setContent($this->faker->sentence(10))
                     ->setPostId($post->getId())
                     ->setUserId(mt_rand(1, 10))
                     ->setCreatedAt(new DateTime())
@@ -144,7 +152,7 @@ class Fixtures
             $category = new Category();
 
             $category
-                ->setName($faker->sentence(1, true))
+                ->setName($this->faker->sentence(1, true))
                 ->setSlug($slugify->slugify($category->getName()))
                 ->setStyle("badge badge-danger");
 
@@ -157,10 +165,10 @@ class Fixtures
 
         // Attach a post to one or more categories
         foreach ($posts as $post) {
-            $randCategories = $faker->randomElements($categories, rand(0, count($categories)));
+            $randCategories = $this->faker->randomElements($categories, rand(0, count($categories)));
 
             foreach ($randCategories as $category) {
-                $db->exec("INSERT INTO post_category SET post_id=$post, category_id=$category");
+                $this->db->exec("INSERT INTO post_category SET post_id=$post, category_id=$category");
             }
         }
     }

@@ -49,37 +49,37 @@ class PostHelpers
      * @param $url
      * @throws \Exception
      */
-    public function newOrEdit($post, $url)
+    public function newOrEdit(array $post, string $url)
     {
         $type = explode("/", $url)[3];
 
         if ($type === "new") {
             $this->setNewPost($post);
-        } else {
-            $this->setEditPost($post, $url);
         }
+
+        $this->setEditPost($post, $url);
     }
 
     /**
      * Set a new Post in database
-     * @param array $post
+     * @param array $data
      * @throws \Exception
      */
-    public function setNewPost(array $post)
+    public function setNewPost(array $data)
     {
         $post = new Post();
 
         $post
-            ->setTitle($_POST['title'])
-            ->setIntroduction($_POST['introduction'])
-            ->setContent($_POST['content'])
+            ->setTitle($data['title'])
+            ->setIntroduction($data['introduction'])
+            ->setContent($data['content'])
             ->setCreatedAt(new \DateTime())
-            ->setCoverImage($_POST['image'])
-            ->setSlug($this->slugify->slugify($_POST['title']))
+            ->setCoverImage($data['image'])
+            ->setSlug($this->slugify->slugify($data['title']))
             ->setUserId($_SESSION['id']);
 
         $this->postRepo->createPost($post);
-        $this->postRepo->attachCategoriesToPost($post->getId(), $_POST['categories']);
+        $this->postRepo->attachCategoriesToPost($post->getId(), $data['categories']);
 
         $this->unsetSessionCheck();
         $this->unsetSessionValue();
@@ -88,24 +88,24 @@ class PostHelpers
 
     /**
      * Set an edit post in database
-     * @param array $post
+     * @param array $data
      * @param string $url
      * @throws \Exception
      */
-    public function setEditPost(array $post, string $url)
+    public function setEditPost(array $data, $url)
     {
         $post = $this->postRepo->find($this->getId($url));
 
         $post
-            ->setTitle($_POST['title'])
-            ->setIntroduction($_POST['introduction'])
-            ->setContent($_POST['content'])
+            ->setTitle($data['title'])
+            ->setIntroduction($data['introduction'])
+            ->setContent($data['content'])
             ->setModifyAt(new \DateTime())
-            ->setCoverImage($_POST['image'])
-            ->setSlug($this->slugify->slugify($_POST['title']));
+            ->setCoverImage($data['image'])
+            ->setSlug($this->slugify->slugify($data['title']));
 
         $this->postRepo->updatePost($post);
-        $this->postRepo->attachCategoriesToPost($post->getId(), $_POST['categories']);
+        $this->postRepo->attachCategoriesToPost($post->getId(), $data['categories']);
 
         $this->unsetSessionCheck();
         $this->unsetSessionValue();
@@ -117,7 +117,7 @@ class PostHelpers
      * @param $url
      * @return mixed
      */
-    public function getId($url)
+    public function getId(string $url)
     {
         return $id = explode("/", $url)[4];
     }
@@ -127,13 +127,13 @@ class PostHelpers
      * @param $post
      * @param $url
      */
-    public function checkValidation($post, $url)
+    public function checkValidation(array $post, string $url)
     {
         $this->validation = new PostValidation($url);
-        $this->validation->checkTitle($_POST['title']);
-        $this->validation->checkIntro($_POST['introduction']);
-        $this->validation->checkPicture($_POST['image']);
-        $this->validation->checkContent($_POST['content']);
+        $this->validation->checkTitle($post['title']);
+        $this->validation->checkIntro($post['introduction']);
+        $this->validation->checkPicture($post['image']);
+        $this->validation->checkContent($post['content']);
     }
 
     /**
@@ -155,10 +155,10 @@ class PostHelpers
      */
     public function setValueIfErrors(array $post)
     {
-        $_SESSION['postTitle'] = $_POST['title'];
-        $_SESSION['postIntro'] = $_POST['introduction'];
-        $_SESSION['postImage'] = $_POST['image'];
-        $_SESSION['postContent'] = $_POST['content'];
+        $_SESSION['postTitle'] = $post['title'];
+        $_SESSION['postIntro'] = $post['introduction'];
+        $_SESSION['postImage'] = $post['image'];
+        $_SESSION['postContent'] = $post['content'];
     }
 
     /**

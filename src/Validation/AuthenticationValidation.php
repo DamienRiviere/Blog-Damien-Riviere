@@ -16,15 +16,11 @@ class AuthenticationValidation
 
     public function checkEmail($email)
     {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $user = $this->userRepo->findEmail($email);
-
-            if (is_bool($user) === true) {
-                header('Location: /login?access-denied=1');
-            }
-        } else {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             header('Location: /login?access-denied=1');
         }
+
+        $user = $this->userRepo->findEmail($email);
 
         return $user;
     }

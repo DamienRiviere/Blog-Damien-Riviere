@@ -23,10 +23,10 @@ class CommentValidation
         if (empty($comment)) {
             $this->setCheckComment(false);
             $_SESSION['checkPostComment'] = "Veuillez écrire un commentaire !";
-            header('Location: ' . $this->url);
-        } else {
-            $this->setCheckComment(true);
+            return header('Location: ' . $this->url);
         }
+
+        $this->setCheckComment(true);
     }
 
     public function isCheckComment(): bool

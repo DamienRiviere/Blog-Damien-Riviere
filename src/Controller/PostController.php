@@ -70,12 +70,12 @@ class PostController extends Controller
         );
     }
 
-    public function newComment($id, $slug): void
+    public function newComment(): void
     {
         $this->commentHelpers->newComment($_POST, $_SERVER['REQUEST_URI']);
     }
 
-    public function showEditComment($id, $slug, $idComment)
+    public function showEditComment($id, $idComment)
     {
         $comment = $this->comment->find($idComment);
 
@@ -90,7 +90,7 @@ class PostController extends Controller
         }
     }
 
-    public function editComment($id, $slug, $idComment)
+    public function editComment()
     {
         $this->commentHelpers->editComment($_POST, $_SERVER['REQUEST_URI']);
     }
@@ -133,8 +133,8 @@ class PostController extends Controller
     {
         if ($_SESSION['id'] == null) {
             header('Location: /login?forbidden=1');
-        } else {
-            $this->like->deleteLike($id);
         }
+
+        $this->like->deleteLike($id);
     }
 }

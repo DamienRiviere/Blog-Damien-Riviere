@@ -38,7 +38,7 @@ class AccountController extends Controller
         ]);
     }
 
-    public function showEditEmail(int $id)
+    public function showEditEmail()
     {
         $this->twig->display('user/edit_email.html.twig', [
             'email' => $_SESSION['email'],
@@ -54,7 +54,7 @@ class AccountController extends Controller
         $this->userHelpers->email($_POST['email'], $id);
     }
 
-    public function showEditPassword(int $id)
+    public function showEditPassword()
     {
         $this->twig->display('user/edit_password.html.twig', [
             'countComments' => $this->commentRepo->findCountCommentsByUser($_SESSION['id']),
@@ -69,7 +69,7 @@ class AccountController extends Controller
         $this->userHelpers->password($_POST['password'], $id);
     }
 
-    public function showEditPicture(int $id)
+    public function showEditPicture()
     {
         $this->twig->display('user/edit_picture.html.twig', [
             'countComments' => $this->commentRepo->findCountCommentsByUser($_SESSION['id']),

@@ -64,10 +64,10 @@ class Mail
             $this->setEmail($_POST['email']);
             $this->setSubject($_POST['subject']);
             $this->setMessage($_POST['message']);
-        } else {
-            $this->check = false;
-            $_SESSION['email_error'] = "Veuillez remplir tous les champs du formulaire !";
         }
+
+        $this->check = false;
+        $_SESSION['email_error'] = "Veuillez remplir tous les champs du formulaire !";
     }
 
     public function sendEmail()

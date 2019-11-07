@@ -128,10 +128,10 @@ class RegisterValidation
         if (strlen($password) < 4) {
             $this->setCheckPassword(false);
             $_SESSION['check_password'] = "Votre mot de passe doit comporter au minimum 4 caractères";
-            header('Location: /register');
-        } else {
-            $this->setCheckPassword(true);
+            return header('Location: /register');
         }
+
+        $this->setCheckPassword(true);
     }
 
     public function isCheckNameLength(): bool

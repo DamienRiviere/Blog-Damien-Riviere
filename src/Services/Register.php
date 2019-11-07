@@ -22,17 +22,17 @@ class Register
         $this->slugify = new Slugify();
         $this->validation = new RegisterValidation();
     }
-    
+
     /**
      * Check if every field send by user is valid
      * If all field are valid, a new user is created
      *
-     * @param array $user
+     * @param array $data
      * @return void
      */
-    public function registration(array $user)
+    public function registration(array $data)
     {
-        $this->checkValidation($user);
+        $this->checkValidation($data);
 
         if (
             $this->validation->isCheckNameExist()
@@ -41,18 +41,18 @@ class Register
             && $this->validation->isCheckEmailFormat()
             && $this->validation->isCheckPassword() != false
         ) {
-            $this->setUser($user);
+            $this->setUser($data);
         }
     }
 
-    public function setUser(array $user)
+    public function setUser(array $data)
     {
         $user = new User();
         $user
-            ->setName($_POST['name'])
-            ->setEmail($_POST['email'])
+            ->setName($data['name'])
+            ->setEmail($data['email'])
             ->setSlug($this->slugify->slugify($user->getName()))
-            ->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT))
+            ->setPassword(password_hash($data['password'], PASSWORD_BCRYPT))
             ->setPicture("http://image.jeuxvideo.com/avatar-md/default.jpg")
             ->setCreatedAt(new \DateTime())
             ->setRoleId(2);
@@ -77,12 +77,12 @@ class Register
 
     /**
      * Validate the data posted
-     * @param $user
+     * @param array $data
      */
-    public function checkValidation($user)
+    public function checkValidation(array $data)
     {
-        $this->validation->checkName($_POST['name']);
-        $this->validation->checkEmail($_POST['email']);
-        $this->validation->checkPassword($_POST['password']);
+        $this->validation->checkName($data['name']);
+        $this->validation->checkEmail($data['email']);
+        $this->validation->checkPassword($data['password']);
     }
 }

@@ -22,12 +22,15 @@ class Pagination
 
     private $id;
 
+    private $currentPage;
+
     public function __construct(string $query, string $queryCount, int $perPage = 10, int $id = null)
     {
         $this->query = $query;
         $this->queryCount = $queryCount;
         $this->perPage = $perPage;
         $this->id = $id;
+        $this->currentPage = new URL();
     }
 
     public function getItems(string $class): array
@@ -75,12 +78,12 @@ class Pagination
             return null;
         }
 
-        return $link = "?page=" . ($currentPage + 1);
+        return "?page=" . ($currentPage + 1);
     }
 
     public function getCurrentPage(): int
     {
-        return $currentPage = URL::getPositiveInt('page', 1);
+        return $this->currentPage->getPositiveInt('page', 1);
     }
 
     /**
@@ -103,8 +106,8 @@ class Pagination
 
         if ($pages <= 0) {
             return $pages += 1;
-        } else {
-            return $pages;
         }
+
+        return $pages;
     }
 }

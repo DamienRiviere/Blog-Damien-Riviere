@@ -87,10 +87,10 @@ class AccountValidation
         if (strlen($password) < 4) {
             $this->setCheckPasswordLength(false);
             $_SESSION['checkAccountPassword'] = "Votre mot de passe doit comporter au minimum 4 caractères";
-            header('Location: /account/password/edit/' . $id);
-        } else {
-            $this->setCheckPasswordLength(true);
+            return header('Location: /account/password/edit/' . $id);
         }
+
+        $this->setCheckPasswordLength(true);
     }
 
     public function isCheckEmailFormat(): bool

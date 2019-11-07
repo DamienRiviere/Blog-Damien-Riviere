@@ -98,7 +98,7 @@ class CommentHelpers
      */
     public function getIdPost(string $url)
     {
-        return $id = explode('/', $url)[2];
+        return explode('/', $url)[2];
     }
 
     /**
@@ -108,7 +108,7 @@ class CommentHelpers
      */
     public function getIdComment(string $url)
     {
-        return $id = explode('/', $url)[5];
+        return explode('/', $url)[5];
     }
 
     /**

@@ -24,10 +24,10 @@ class Authentication
 
         if ($this->validation->checkPassword($password, $user)) {
             $this->setSession($user);
-            header('Location: /');
-        } else {
-            header('Location: /login?access-denied=1');
+            return header('Location: /');
         }
+
+        return header('Location: /login?access-denied=1');
     }
 
     private function setSession($user)

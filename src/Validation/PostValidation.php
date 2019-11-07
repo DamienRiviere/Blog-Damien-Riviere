@@ -113,10 +113,10 @@ class PostValidation
         if (strlen($content) < 100) {
             $this->setCheckContent(false);
             $_SESSION['checkPostContent'] = "Le contenu de l'article doit comporter au minimum 100 caractères !";
-            header('Location: ' . $this->url);
-        } else {
-            $this->setCheckContent(true);
+            return header('Location: ' . $this->url);
         }
+
+        $this->setCheckContent(true);
     }
 
     public function isCheckTitle(): bool

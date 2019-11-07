@@ -178,11 +178,11 @@ class CommentRepository extends Repository
 		");
         $query->setFetchMode(PDO::FETCH_CLASS, $this->class);
         $query->execute();
-        $lastFiveCommentsReported = $query->fetchAll();
+        $commentsReported = $query->fetchAll();
 
         $lastComments = [];
 
-        foreach ($lastFiveCommentsReported as $comment) {
+        foreach ($commentsReported as $comment) {
             // Hydrate a comment with his user
             (new UserRepository())->hydrateCommentWithUser($comment);
 
