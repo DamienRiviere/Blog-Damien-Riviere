@@ -69,7 +69,7 @@ class AccountController extends Controller
         $this->userHelpers->password($_POST['password'], $id);
     }
 
-    public function showEditPicture($id)
+    public function showEditPicture(int $id)
     {
         $this->twig->display('user/edit_picture.html.twig', [
             'countComments' => $this->commentRepo->findCountCommentsByUser($_SESSION['id']),

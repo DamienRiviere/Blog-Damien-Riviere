@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Controller\CustomExceptionController;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,6 +45,8 @@ class RouterApplication
             $params = $this->cleanParams($params);
             
             return call_user_func_array([$controller, $method], $params);
+        } catch (ResourceNotFoundException $e) {
+            (new CustomExceptionController($exception = "Page introuvable"))->error404();
         } catch (\Exception $e) {
             (new CustomExceptionController($exception = $e->getMessage()))->error404();
         }
