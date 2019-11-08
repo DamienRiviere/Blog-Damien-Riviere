@@ -27,7 +27,7 @@ class Fixtures
 
     public function __construct()
     {
-        $this->db = Repository::getDb();
+        $this->db = (Repository::getDb());
         $this->faker = \Faker\Factory::create('fr_FR');
     }
 

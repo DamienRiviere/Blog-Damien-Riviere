@@ -120,4 +120,9 @@ abstract class Repository
 
         $item->$add($hydrate);
     }
+
+    public function session()
+    {
+        return $_SESSION;
+    }
 }

@@ -46,9 +46,7 @@ class AdminPostController extends Controller
 
     public function new()
     {
-        $url = $_SERVER['REQUEST_URI'];
-
-        $this->postHelpers->post($_POST, $url);
+        $this->postHelpers->post($_POST, $this->server()['REQUEST_URI']);
     }
 
     public function showEdit(int $id)
@@ -61,7 +59,7 @@ class AdminPostController extends Controller
 
     public function edit()
     {
-        $this->postHelpers->post($_POST, $_SERVER['REQUEST_URI']);
+        $this->postHelpers->post($_POST, $this->server()['REQUEST_URI']);
     }
 
     public function delete(int $id)

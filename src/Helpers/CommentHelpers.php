@@ -6,7 +6,7 @@ use App\Model\Comment;
 use App\Repository\CommentRepository;
 use App\Validation\CommentValidation;
 
-class CommentHelpers
+class CommentHelpers extends Helpers
 {
 
     private $commentRepo;
@@ -26,7 +26,7 @@ class CommentHelpers
      */
     public function newComment(array $comment, string $url)
     {
-        $this->checkValidation($_POST['content'], $this->getPostNewUrl($url));
+        $this->checkValidation($comment['content'], $this->getPostNewUrl($url));
 
         if ($this->validation->isCheckComment() != false) {
             $this->setNewComment($comment, $this->getPostNewUrl($url));
@@ -41,7 +41,7 @@ class CommentHelpers
      */
     public function editComment(array $comment, string $url)
     {
-        $this->checkValidation($_POST['content'], $url);
+        $this->checkValidation($comment['content'], $url);
 
         if ($this->validation->isCheckComment() != false) {
             $this->setEditComment($comment, $url);
@@ -50,18 +50,18 @@ class CommentHelpers
 
     /**
      * Set a new comment in post
-     * @param array $comment
+     * @param array $data
      * @param string $url
      * @throws \Exception
      */
-    public function setNewComment(array $comment, string $url)
+    public function setNewComment(array $data, string $url)
     {
         $comment = new Comment();
 
         $comment
-            ->setContent($_POST['content'])
+            ->setContent($data['content'])
             ->setPostId($this->getIdPost($url))
-            ->setUserId($_SESSION['id'])
+            ->setUserId($this->session()['id'])
             ->setCreatedAt(new \DateTime())
             ->setStatusId(1);
 
@@ -73,16 +73,16 @@ class CommentHelpers
 
     /**
      * Set an edit comment in post
-     * @param array $comment
+     * @param array $data
      * @param string $url
      * @throws \Exception
      */
-    public function setEditComment(array $comment, string $url)
+    public function setEditComment(array $data, string $url)
     {
         $comment = $this->commentRepo->find($this->getIdComment($url));
 
         $comment
-            ->setContent($_POST['content'])
+            ->setContent($data['content'])
             ->setModifyAt(new \DateTime());
 
         $this->commentRepo->updateComment($comment, $this->getIdComment($url));

@@ -72,14 +72,14 @@ class PostController extends Controller
 
     public function newComment(): void
     {
-        $this->commentHelpers->newComment($_POST, $_SERVER['REQUEST_URI']);
+        $this->commentHelpers->newComment($this->post(), $this->server()['REQUEST_URI']);
     }
 
-    public function showEditComment($id, $idComment)
+    public function showEditComment(int $id, string $slug, int $idComment)
     {
         $comment = $this->comment->find($idComment);
 
-        if ($comment->getUserId() === $_SESSION['id']) {
+        if ($comment->getUserId() === $this->session()['id']) {
             $this->twig->display('post/edit_comment.html.twig', [
                 'post' => $this->post->findPost($id),
                 'comment' => $comment,
@@ -92,18 +92,20 @@ class PostController extends Controller
 
     public function editComment()
     {
-        $this->commentHelpers->editComment($_POST, $_SERVER['REQUEST_URI']);
+        $this->commentHelpers->editComment($this->post(), $this->server()['REQUEST_URI']);
     }
 
     /**
      *  Method to report a comment
      *
      * @param int $id
+     * @param string $slug
+     * @param int $idComment
      * @throws \Exception
      */
     public function reported(int $id, string $slug, int $idComment)
     {
-        if ($_SESSION['id'] == null) {
+        if ($this->session()['id'] == null) {
             header('Location: /login?forbidden=1');
         } else {
             $comment = $this->comment->find($idComment);
@@ -116,22 +118,21 @@ class PostController extends Controller
 
     public function like()
     {
-        if ($_SESSION['id'] == null) {
+        if ($this->session()['id'] == null) {
             header('Location: /login?forbidden=1');
-        } else {
-            $like = new Like();
-
-            $like
-                ->setPostId($_GET['post_id'])
-                ->setUserId($_GET['user_id']);
-
-            $this->like->createLike($like);
         }
+
+        $like = new Like();
+        $like
+            ->setPostId($_GET['post_id'])
+            ->setUserId($_GET['user_id']);
+
+        $this->like->createLike($like);
     }
 
     public function unlike($id)
     {
-        if ($_SESSION['id'] == null) {
+        if ($this->session()['id'] == null) {
             header('Location: /login?forbidden=1');
         }
 

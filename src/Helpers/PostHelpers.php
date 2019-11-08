@@ -7,7 +7,7 @@ use App\Repository\PostRepository;
 use App\Validation\PostValidation;
 use Cocur\Slugify\Slugify;
 
-class PostHelpers
+class PostHelpers extends Helpers
 {
     private $slugify;
 
@@ -76,7 +76,7 @@ class PostHelpers
             ->setCreatedAt(new \DateTime())
             ->setCoverImage($data['image'])
             ->setSlug($this->slugify->slugify($data['title']))
-            ->setUserId($_SESSION['id']);
+            ->setUserId($this->session()['id']);
 
         $this->postRepo->createPost($post);
         $this->postRepo->attachCategoriesToPost($post->getId(), $data['categories']);
@@ -119,7 +119,7 @@ class PostHelpers
      */
     public function getId(string $url)
     {
-        return $id = explode("/", $url)[4];
+        return explode("/", $url)[4];
     }
 
     /**

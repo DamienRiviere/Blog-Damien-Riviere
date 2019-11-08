@@ -31,10 +31,10 @@ class AccountController extends Controller
     public function account()
     {
         $this->twig->display('user/account.html.twig', [
-            'countComments' => $this->commentRepo->findCountCommentsByUser($_SESSION['id']),
-            'countPosts' => $this->postRepo->findCountPostsByUser($_SESSION['id']),
-            'posts' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[0],
-            'pagination' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[1]
+            'countComments' => $this->commentRepo->findCountCommentsByUser($this->session()['id']),
+            'countPosts' => $this->postRepo->findCountPostsByUser($this->session()['id']),
+            'posts' => $this->postRepo->findPostsLikeByUser($this->session()['id'])[0],
+            'pagination' => $this->postRepo->findPostsLikeByUser($this->session()['id'])[1]
         ]);
     }
 
@@ -42,45 +42,45 @@ class AccountController extends Controller
     {
         $this->twig->display('user/edit_email.html.twig', [
             'email' => $_SESSION['email'],
-            'countComments' => $this->commentRepo->findCountCommentsByUser($_SESSION['id']),
-            'countPosts' => $this->postRepo->findCountPostsByUser($_SESSION['id']),
-            'posts' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[0],
-            'pagination' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[1]
+            'countComments' => $this->commentRepo->findCountCommentsByUser($this->session()['id']),
+            'countPosts' => $this->postRepo->findCountPostsByUser($this->session()['id']),
+            'posts' => $this->postRepo->findPostsLikeByUser($this->session()['id'])[0],
+            'pagination' => $this->postRepo->findPostsLikeByUser($this->session()['id'])[1]
         ]);
     }
 
     public function editEmail(int $id)
     {
-        $this->userHelpers->email($_POST['email'], $id);
+        $this->userHelpers->email($this->post(), $id);
     }
 
     public function showEditPassword()
     {
         $this->twig->display('user/edit_password.html.twig', [
-            'countComments' => $this->commentRepo->findCountCommentsByUser($_SESSION['id']),
-            'countPosts' => $this->postRepo->findCountPostsByUser($_SESSION['id']),
-            'posts' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[0],
-            'pagination' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[1]
+            'countComments' => $this->commentRepo->findCountCommentsByUser($this->session()['id']),
+            'countPosts' => $this->postRepo->findCountPostsByUser($this->session()['id']),
+            'posts' => $this->postRepo->findPostsLikeByUser($this->session()['id'])[0],
+            'pagination' => $this->postRepo->findPostsLikeByUser($this->session()['id'])[1]
         ]);
     }
 
     public function editPassword(int $id)
     {
-        $this->userHelpers->password($_POST['password'], $id);
+        $this->userHelpers->password($this->post(), $id);
     }
 
     public function showEditPicture()
     {
         $this->twig->display('user/edit_picture.html.twig', [
-            'countComments' => $this->commentRepo->findCountCommentsByUser($_SESSION['id']),
-            'countPosts' => $this->postRepo->findCountPostsByUser($_SESSION['id']),
-            'posts' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[0],
-            'pagination' => $this->postRepo->findPostsLikeByUser($_SESSION['id'])[1]
+            'countComments' => $this->commentRepo->findCountCommentsByUser($this->session()['id']),
+            'countPosts' => $this->postRepo->findCountPostsByUser($this->session()['id']),
+            'posts' => $this->postRepo->findPostsLikeByUser($this->session()['id'])[0],
+            'pagination' => $this->postRepo->findPostsLikeByUser($this->session()['id'])[1]
         ]);
     }
 
     public function editPicture(int $id)
     {
-        $this->userHelpers->setEditPicture($_POST['picture'], $id);
+        $this->userHelpers->setEditPicture($this->post(), $id);
     }
 }

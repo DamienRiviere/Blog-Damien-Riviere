@@ -5,7 +5,7 @@ namespace App\Helpers;
 use App\Repository\UserRepository;
 use App\Validation\AccountValidation;
 
-class UserHelpers
+class UserHelpers extends Helpers
 {
 
     private $userRepo;
@@ -20,43 +20,44 @@ class UserHelpers
 
     /**
      * Start the steps for checking and adding an new email to database
-     * @param string $email
+     * @param array $data
      * @param int $id
      * @throws \Exception
      */
-    public function email(string $email, int $id)
+    public function email(array $data, int $id)
     {
-        $this->validation->checkEmail($email, $id);
+        $this->validation->checkEmail($data, $id);
 
         if ($this->validation->isCheckEmailFormat() && $this->validation->isCheckEmailExist() != false) {
-            $this->setEditEmail($email, $id);
+            $this->setEditEmail($data, $id);
         }
     }
 
     /**
      * Start the steps for checking and adding a new password to database
-     * @param string $password
+     * @param array $data
      * @param int $id
      * @throws \Exception
      */
-    public function password(string $password, int $id)
+    public function password(array $data, int $id)
     {
-        $this->validation->checkPassword($password, $id);
+        $this->validation->checkPassword($data, $id);
 
         if ($this->validation->isCheckPasswordLength() != false) {
-            $this->setEditPassword($password, $id);
+            $this->setEditPassword($data, $id);
         }
     }
 
     /**
      * Set a new role for user
      * @param int $id
+     * @param array $data
      * @throws \Exception
      */
-    public function setEditUser(int $id)
+    public function setEditUser(int $id, array $data)
     {
         $user = $this->userRepo->find($id);
-        $user->setRoleId($_POST['role']);
+        $user->setRoleId($data['role']);
 
         $this->userRepo->updateRole($user, $user->getId());
 
@@ -65,17 +66,17 @@ class UserHelpers
 
     /**
      * Set a new email for user
-     * @param string $email
+     * @param array $data
      * @param int $id
      * @throws \Exception
      */
-    public function setEditEmail(string $email, int $id)
+    public function setEditEmail(array $data, int $id)
     {
         $email = $this->userRepo->find($id);
-        $email->setEmail($_POST['email']);
+        $email->setEmail($data['email']);
 
         $this->userRepo->updateEmail($email, $id);
-        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['email'] = $data['email'];
 
         $this->unsetSessionCheckEmail();
         header('Location: /account?edit-email=1');
@@ -83,14 +84,14 @@ class UserHelpers
 
     /**
      * Set a new password for user
-     * @param string $password
+     * @param array $data
      * @param int $id
      * @throws \Exception
      */
-    public function setEditPassword(string $password, int $id)
+    public function setEditPassword(array $data, int $id)
     {
         $password = $this->userRepo->find($id);
-        $password->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
+        $password->setPassword(password_hash($data['password'], PASSWORD_BCRYPT));
 
         $this->userRepo->updatePassword($password, $id);
         $this->unsetSessionCheckPassword();
@@ -99,14 +100,14 @@ class UserHelpers
 
     /**
      * Set a new picture for user
-     * @param string $picture
+     * @param array $data
      * @param int $id
      * @throws \Exception
      */
-    public function setEditPicture(string $picture, int $id)
+    public function setEditPicture(array $data, int $id)
     {
         $picture = $this->userRepo->find($id);
-        $picture->setPicture($_POST['picture']);
+        $picture->setPicture($data['picture']);
 
         $this->userRepo->updatePicture($picture, $id);
         header('Location: /account?edit-picture=1');

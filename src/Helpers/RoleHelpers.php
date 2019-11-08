@@ -5,7 +5,7 @@ namespace App\Helpers;
 use App\Model\Role;
 use App\Repository\RoleRepository;
 
-class RoleHelpers
+class RoleHelpers extends Helpers
 {
 
     private $roleRepo;
@@ -15,19 +15,19 @@ class RoleHelpers
         $this->roleRepo = new RoleRepository();
     }
 
-    public function newRole()
+    public function newRole(array $data)
     {
         $role = new Role();
-        $role->setName($_POST['name']);
+        $role->setName($data['name']);
         $this->roleRepo->createRole($role);
 
         header('Location: /admin/roles?created=1');
     }
 
-    public function editRole(int $id)
+    public function editRole(int $id, array $data)
     {
         $role = $this->roleRepo->find($id);
-        $role->setName($_POST['name']);
+        $role->setName($data['name']);
         $this->roleRepo->updateRole($role);
 
         header('Location: /admin/roles?edit=1');

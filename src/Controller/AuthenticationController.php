@@ -30,7 +30,7 @@ class AuthenticationController extends Controller
 
     public function login()
     {
-        $this->auth->authentication($_POST['email'], $_POST['password']);
+        $this->auth->authentication($this->post());
     }
 
     public function logout()

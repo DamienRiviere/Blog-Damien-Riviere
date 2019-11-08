@@ -18,11 +18,11 @@ class Authentication
         $this->validation = new AuthenticationValidation();
     }
 
-    public function authentication($email, $password)
+    public function authentication(array $data)
     {
-        $user = $this->validation->checkEmail($email);
+        $user = $this->validation->checkEmail($data['email']);
 
-        if ($this->validation->checkPassword($password, $user)) {
+        if ($this->validation->checkPassword($data['password'], $user)) {
             $this->setSession($user);
             return header('Location: /');
         }

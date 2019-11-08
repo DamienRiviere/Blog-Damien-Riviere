@@ -22,35 +22,35 @@ class AccountValidation
 
     /**
      * Load the methods to check the email
-     * @param string $email
+     * @param array $data
      * @param int $id
      * @return void
      */
-    public function checkEmail(string $email, int $id)
+    public function checkEmail(array $data, int $id)
     {
-        $this->checkEmailFormat($email, $id);
-        $this->checkEmailExist($email, $id);
+        $this->checkEmailFormat($data, $id);
+        $this->checkEmailExist($data, $id);
     }
 
     /**
      * Load the method to check the password
-     * @param string $password
+     * @param array $data
      * @param int $id
      */
-    public function checkPassword(string $password, int $id)
+    public function checkPassword(array $data, int $id)
     {
-        $this->checkPasswordLength($password, $id);
+        $this->checkPasswordLength($data, $id);
     }
 
     /**
      * Check if the email format is right
-     * @param string $email
+     * @param array $data
      * @param int $id
      * @return void
      */
-    public function checkEmailFormat(string $email, int $id)
+    public function checkEmailFormat(array $data, int $id)
     {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
+        if (filter_var($data['email'], FILTER_VALIDATE_EMAIL) == false) {
             $this->setCheckEmailFormat(false);
             $_SESSION['checkAccountEmail'] = "Veuillez entrer un bon format d'email !";
             header('Location: /account/email/edit/' . $id);
@@ -61,13 +61,13 @@ class AccountValidation
 
     /**
      * Check if the email is already present in database
-     * @param string $email
+     * @param array $data
      * @param int $id
      * @return void
      */
-    public function checkEmailExist(string $email, int $id)
+    public function checkEmailExist(array $data, int $id)
     {
-        if ($this->userRepo->findEmail($email) == true) {
+        if ($this->userRepo->findEmail($data['email']) == true) {
             $this->setCheckEmailExist(false);
             $_SESSION['checkAccountEmail'] = "Cet email est déjà utilisé, veuillez en choisir un autre !";
             header('Location: /account/email/edit/' . $id);
@@ -78,13 +78,13 @@ class AccountValidation
 
     /**
      * Check password length
-     * @param string $password
+     * @param array $data
      * @param int $id
      * @return void
      */
-    public function checkPasswordLength(string $password, int $id)
+    public function checkPasswordLength(array $data, int $id)
     {
-        if (strlen($password) < 4) {
+        if (strlen($data['password']) < 4) {
             $this->setCheckPasswordLength(false);
             $_SESSION['checkAccountPassword'] = "Votre mot de passe doit comporter au minimum 4 caractères";
             return header('Location: /account/password/edit/' . $id);

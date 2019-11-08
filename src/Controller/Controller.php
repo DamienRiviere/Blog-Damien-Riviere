@@ -32,8 +32,8 @@ abstract class Controller
         $this->twig = new \Twig\Environment($this->loader, $params);
 
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
-        $this->twig->addGlobal('get', $_GET);
-        $this->twig->addGlobal('session', $_SESSION);
+        $this->twig->addGlobal('get', $this->get());
+        $this->twig->addGlobal('session', $this->session());
     }
 
     /**
@@ -43,15 +43,35 @@ abstract class Controller
      */
     public function checkRole(): void
     {
-        if (empty($_SESSION) or $_SESSION['role_id'] != 1) {
+        if (empty($this->session()) or $this->session()['role_id'] != 1) {
             header('Location: /login?forbidden=1');
         }
     }
 
     public function checkSession(): void
     {
-        if ($_SESSION['id'] === null) {
+        if ($this->session()['id'] === null) {
             header('Location: /login?forbidden=1');
         }
+    }
+
+    public function session()
+    {
+        return $_SESSION;
+    }
+
+    public function post()
+    {
+        return $_POST;
+    }
+
+    public function get()
+    {
+        return $_GET;
+    }
+
+    public function server()
+    {
+        return $_SERVER;
     }
 }

@@ -34,7 +34,7 @@ class AdminRoleController extends Controller
 
     public function new()
     {
-        $this->roleHelpers->newRole();
+        $this->roleHelpers->newRole($this->post());
     }
 
     public function showEdit(int $id)
@@ -46,7 +46,7 @@ class AdminRoleController extends Controller
 
     public function edit(int $id)
     {
-        $this->roleHelpers->editRole($id);
+        $this->roleHelpers->editRole($id, $this->post());
     }
 
     public function delete(int $id)

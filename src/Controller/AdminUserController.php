@@ -42,7 +42,7 @@ class AdminUserController extends Controller
 
     public function edit(int $id)
     {
-        $this->userHelpers->setEditUser($id);
+        $this->userHelpers->setEditUser($id, $this->post());
     }
 
     public function delete(int $id)

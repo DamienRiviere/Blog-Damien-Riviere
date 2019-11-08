@@ -6,7 +6,7 @@ use App\Model\Category;
 use App\Repository\CategoryRepository;
 use Cocur\Slugify\Slugify;
 
-class CategoryHelpers
+class CategoryHelpers extends Helpers
 {
     private $categoryRepo;
 
@@ -18,28 +18,28 @@ class CategoryHelpers
         $this->slugify = new Slugify();
     }
 
-    public function newCategory()
+    public function newCategory(array $data)
     {
         $category = new Category();
 
         $category
-            ->setName($_POST['name'])
-            ->setStyle($_POST['style'])
-            ->setSlug($this->slugify->slugify($_POST['name']));
+            ->setName($data['name'])
+            ->setStyle($data['style'])
+            ->setSlug($this->slugify->slugify($data['name']));
 
         $this->categoryRepo->createCategory($category);
 
         header('Location: /admin/categories?created=1');
     }
 
-    public function editCategory(int $id)
+    public function editCategory(int $id, array $data)
     {
         $category = $this->categoryRepo->find($id);
 
         $category
-            ->setName($_POST['name'])
-            ->setStyle($_POST['style'])
-            ->setSlug($this->slugify->slugify($_POST['name']));
+            ->setName($data['name'])
+            ->setStyle($data['style'])
+            ->setSlug($this->slugify->slugify($data['name']));
 
         $this->categoryRepo->updateCategory($category);
 
