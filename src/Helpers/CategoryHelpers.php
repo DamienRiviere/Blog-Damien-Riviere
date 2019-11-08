@@ -6,7 +6,7 @@ use App\Model\Category;
 use App\Repository\CategoryRepository;
 use Cocur\Slugify\Slugify;
 
-class CategoryHelpers extends Helpers
+class CategoryHelpers
 {
     private $categoryRepo;
 

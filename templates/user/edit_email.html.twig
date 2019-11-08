@@ -13,7 +13,7 @@
                 <form action="/account/email/edit/{{ session.id }}" method="post">
                     <div class="form-group">
                         <label for="email">Nouvel email</label>
-                        <input class="form-control {% if session['checkAccountEmail'] %}is-invalid{% endif %}" type="email" name="email" id="email" value="{{ session.email }}">
+                        <input class="form-control {% if session['checkAccountEmail'] %}is-invalid{% endif %}" type="email" name="email" id="email" value="{{ session['email'] }}">
                         <div class="invalid-feedback">
                             {{ session['checkAccountEmail'] }}
                         </div>

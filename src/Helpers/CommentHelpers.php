@@ -6,16 +6,19 @@ use App\Model\Comment;
 use App\Repository\CommentRepository;
 use App\Validation\CommentValidation;
 
-class CommentHelpers extends Helpers
+class CommentHelpers
 {
 
     private $commentRepo;
 
     private $validation;
 
+    private $session;
+
     public function __construct()
     {
         $this->commentRepo = new CommentRepository();
+        $this->session = new Session();
     }
 
     /**
@@ -61,7 +64,7 @@ class CommentHelpers extends Helpers
         $comment
             ->setContent($data['content'])
             ->setPostId($this->getIdPost($url))
-            ->setUserId($this->session()['id'])
+            ->setUserId($this->session->getItem("id"))
             ->setCreatedAt(new \DateTime())
             ->setStatusId(1);
 
@@ -92,7 +95,7 @@ class CommentHelpers extends Helpers
     }
 
     /**
-     * Get the id of the post
+     * DataUrl the id of the post
      * @param string $url
      * @return mixed
      */
@@ -102,7 +105,7 @@ class CommentHelpers extends Helpers
     }
 
     /**
-     * Get the id of edit comment
+     * DataUrl the id of edit comment
      * @param string $url
      * @return mixed
      */
@@ -112,7 +115,7 @@ class CommentHelpers extends Helpers
     }
 
     /**
-     * Get the url redirect for the new comment
+     * DataUrl the url redirect for the new comment
      * @param string $url
      * @return string
      */
@@ -125,7 +128,7 @@ class CommentHelpers extends Helpers
     }
 
     /**
-     * Get the url redirect for the edit comment
+     * DataUrl the url redirect for the edit comment
      * @param string $url
      * @return string
      */
@@ -153,6 +156,6 @@ class CommentHelpers extends Helpers
      */
     public function unsetSessionCheck()
     {
-        unset($_SESSION['checkPostComment']);
+        $this->session->deleteItem("checkPostComment");
     }
 }

@@ -30,7 +30,7 @@ class AuthenticationController extends Controller
 
     public function login()
     {
-        $this->auth->authentication($this->post());
+        $this->auth->authentication($this->data->getData());
     }
 
     public function logout()

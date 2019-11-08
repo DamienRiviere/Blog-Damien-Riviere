@@ -2,21 +2,26 @@
 
 namespace App\Validation;
 
+use App\Helpers\Session;
+
 class PostValidation
 {
-    private $checkTitle = false;
+    private $checkTitle = true;
 
-    private $checkPicture = false;
+    private $checkPicture = true;
 
-    private $checkIntro = false;
+    private $checkIntro = true;
 
-    private $checkContent = false;
+    private $checkContent = true;
 
     private $url;
+
+    private $session;
 
     public function __construct(string $url)
     {
         $this->url = $url;
+        $this->session = new Session();
     }
 
     public function checkTitle(string $title)
@@ -46,10 +51,11 @@ class PostValidation
     {
         if (empty($title)) {
             $this->setCheckTitle(false);
-            $_SESSION['checkPostTitle'] = "Le titre ne doit pas être vide !";
+            $this->session->setSession(
+                "checkPostTitle",
+                "Le titre ne doit pas être vide"
+            );
             header('Location: ' . $this->url);
-        } else {
-            $this->setCheckTitle(true);
         }
     }
 
@@ -57,10 +63,11 @@ class PostValidation
     {
         if (strlen($title) < 10) {
             $this->setCheckTitle(false);
-            $_SESSION['checkPostTitle'] = "Le titre doit comporter au minimum 10 caractères !";
+            $this->session->setSession(
+                "checkPostTitle",
+                "Le titre doit comporter au minimum 10 caractères !"
+            );
             header('Location: ' . $this->url);
-        } else {
-            $this->setCheckTitle(true);
         }
     }
 
@@ -68,10 +75,11 @@ class PostValidation
     {
         if (empty($picture)) {
             $this->setCheckPicture(false);
-            $_SESSION['checkPostPicture'] = "L'image de l'article ne doit pas être vide";
+            $this->session->setSession(
+                "checkPostPicture",
+                "L'image de l'article ne doit pas être vide !"
+            );
             header('Location: ' . $this->url);
-        } else {
-            $this->setCheckPicture(true);
         }
     }
 
@@ -79,10 +87,11 @@ class PostValidation
     {
         if (empty($intro)) {
             $this->setCheckIntro(false);
-            $_SESSION['checkPostIntro'] = "L'introduction de l'article ne doit pas être vide !";
+            $this->session->setSession(
+                "checkPostIntro",
+                "L'introduction de l'article ne doit pas être vide !"
+            );
             header('Location: ' . $this->url);
-        } else {
-            $this->setCheckIntro(true);
         }
     }
 
@@ -90,10 +99,11 @@ class PostValidation
     {
         if (strlen($intro) < 50) {
             $this->setCheckIntro(false);
-            $_SESSION['checkPostIntro'] = "L'introduction doit comporter au minimum 50 caractères !";
+            $this->session->setSession(
+                "checkPostIntro",
+                "L'introduction doit comporter au minimum 50 caractères !"
+            );
             header('Location: ' . $this->url);
-        } else {
-            $this->setCheckIntro(true);
         }
     }
 
@@ -101,10 +111,11 @@ class PostValidation
     {
         if (empty($content)) {
             $this->setCheckContent(false);
-            $_SESSION['checkPostContent'] = "Le contenu de l'article ne doit pas être vide !";
+            $this->session->setSession(
+                "checkPostContent",
+                "Le contenu de l'article ne doit pas être vide !"
+            );
             header('Location: ' . $this->url);
-        } else {
-            $this->setCheckContent(true);
         }
     }
 
@@ -112,11 +123,12 @@ class PostValidation
     {
         if (strlen($content) < 100) {
             $this->setCheckContent(false);
-            $_SESSION['checkPostContent'] = "Le contenu de l'article doit comporter au minimum 100 caractères !";
+            $this->session->setSession(
+                "checkPostContent",
+                "Le contenu de l'article doit comporter au minimum 100 caractères !"
+            );
             return header('Location: ' . $this->url);
         }
-
-        $this->setCheckContent(true);
     }
 
     public function isCheckTitle(): bool

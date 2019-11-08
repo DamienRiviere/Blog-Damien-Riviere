@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Session;
 use App\Repository\UserRepository;
 use App\Validation\AuthenticationValidation;
 
@@ -12,12 +13,19 @@ class Authentication
 
     private $validation;
 
+    private $session;
+
     public function __construct()
     {
         $this->userRepo = new UserRepository();
         $this->validation = new AuthenticationValidation();
+        $this->session = new Session();
     }
 
+    /**
+     * Check the email and password and get user to authenticate him
+     * @param array $data
+     */
     public function authentication(array $data)
     {
         $user = $this->validation->checkEmail($data['email']);
@@ -30,15 +38,19 @@ class Authentication
         return header('Location: /login?access-denied=1');
     }
 
+    /**
+     * Set user session when he is connected
+     * @param $user
+     */
     private function setSession($user)
     {
-        $_SESSION['id'] = $user->getId();
-        $_SESSION['name'] = $user->getName();
-        $_SESSION['email'] = $user->getEmail();
-        $_SESSION['slug'] = $user->getSlug();
-        $_SESSION['picture'] = $user->getPicture();
-        $_SESSION['created_at'] = $user->getCreatedAt();
-        $_SESSION['role_id'] = $user->getRoleId();
+        $this->session->setSession("id", $user->getId());
+        $this->session->setSession("name", $user->getName());
+        $this->session->setSession("email", $user->getEmail());
+        $this->session->setSession("slug", $user->getSlug());
+        $this->session->setSession("picture", $user->getPicture());
+        $this->session->setSession("created_at", $user->getCreatedAt());
+        $this->session->setSession("role_id", $user->getRoleId());
     }
 
     public function logout()

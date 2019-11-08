@@ -2,25 +2,29 @@
 
 namespace App\Validation;
 
+use App\Helpers\Session;
 use App\Repository\UserRepository;
 
 class RegisterValidation
 {
-    private $checkNameLength = false;
+    private $checkNameLength = true;
 
-    private $checkNameExist = false;
+    private $checkNameExist = true;
 
-    private $checkEmailFormat = false;
+    private $checkEmailFormat = true;
 
-    private $checkEmailExist = false;
+    private $checkEmailExist = true;
 
-    private $checkPassword = false;
+    private $checkPassword = true;
 
     private $userRepo;
+
+    private $session;
 
     public function __construct()
     {
         $this->userRepo = new UserRepository();
+        $this->session = new Session();
     }
 
     /**
@@ -63,10 +67,8 @@ class RegisterValidation
     {
         if ($this->userRepo->findName($name) == true) {
             $this->setCheckNameExist(false);
-            $_SESSION['check_name'] = "Ce pseudo est déjà utilisé, veuillez en choisir un autre !";
+            $this->session->setSession("check_name", "Ce pseudo est déjà utilisé, veuillez en choisir un autre !");
             header('Location: /register');
-        } else {
-            $this->setCheckNameExist(true);
         }
     }
 
@@ -79,10 +81,8 @@ class RegisterValidation
     {
         if (strlen($name) <= 3) {
             $this->setCheckNameLength(false);
-            $_SESSION['check_name'] = "Votre pseudo doit comporter au minimum 3 caractères";
+            $this->session->setSession("check_name", "Votre pseudo doit comporter au minimum 3 caractères");
             header('Location: /register');
-        } else {
-            $this->setCheckNameLength(true);
         }
     }
 
@@ -95,10 +95,8 @@ class RegisterValidation
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
             $this->setCheckEmailFormat(false);
-            $_SESSION['check_email'] = "Veuillez entrer un bon format d'email !";
+            $this->session->setSession("check_email", "Veuillez entrer un bon format d'email !");
             header('Location: /register');
-        } else {
-            $this->setCheckEmailFormat(true);
         }
     }
 
@@ -111,10 +109,8 @@ class RegisterValidation
     {
         if ($this->userRepo->findEmail($email) == true) {
             $this->setCheckEmailExist(false);
-            $_SESSION['check_email'] = "Cet email est déjà utilisé, veuillez en choisir un autre !";
+            $this->session->setSession("check_email", "Cet email est déjà utilisé, veuillez en choisir un autre !");
             header('Location: /register');
-        } else {
-            $this->setCheckEmailExist(true);
         }
     }
 
@@ -127,11 +123,9 @@ class RegisterValidation
     {
         if (strlen($password) < 4) {
             $this->setCheckPassword(false);
-            $_SESSION['check_password'] = "Votre mot de passe doit comporter au minimum 4 caractères";
+            $this->session->setSession("check_password", "Votre mot de passe doit comporter au minimum 4 caractères !");
             return header('Location: /register');
         }
-
-        $this->setCheckPassword(true);
     }
 
     public function isCheckNameLength(): bool

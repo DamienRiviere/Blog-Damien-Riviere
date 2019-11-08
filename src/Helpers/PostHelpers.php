@@ -7,7 +7,7 @@ use App\Repository\PostRepository;
 use App\Validation\PostValidation;
 use Cocur\Slugify\Slugify;
 
-class PostHelpers extends Helpers
+class PostHelpers
 {
     private $slugify;
 
@@ -15,10 +15,13 @@ class PostHelpers extends Helpers
 
     private $validation;
 
+    private $session;
+
     public function __construct()
     {
         $this->slugify = new Slugify();
         $this->postRepo = new PostRepository();
+        $this->session = new Session();
     }
 
     /**
@@ -61,7 +64,7 @@ class PostHelpers extends Helpers
     }
 
     /**
-     * Set a new Post in database
+     * Set a new Data in database
      * @param array $data
      * @throws \Exception
      */
@@ -76,7 +79,7 @@ class PostHelpers extends Helpers
             ->setCreatedAt(new \DateTime())
             ->setCoverImage($data['image'])
             ->setSlug($this->slugify->slugify($data['title']))
-            ->setUserId($this->session()['id']);
+            ->setUserId($this->session->getItem('id'));
 
         $this->postRepo->createPost($post);
         $this->postRepo->attachCategoriesToPost($post->getId(), $data['categories']);
@@ -113,7 +116,7 @@ class PostHelpers extends Helpers
     }
 
     /**
-     * Get id from the url for edit post
+     * DataUrl id from the url for edit post
      * @param $url
      * @return mixed
      */
@@ -141,10 +144,10 @@ class PostHelpers extends Helpers
      */
     public function unsetSessionCheck()
     {
-        unset($_SESSION['checkPostTitle']);
-        unset($_SESSION['checkPostPicture']);
-        unset($_SESSION['checkPostIntro']);
-        unset($_SESSION['checkPostContent']);
+        $this->session->deleteItem('checkPostTitle');
+        $this->session->deleteItem('checkPostPicture');
+        $this->session->deleteItem('checkPostIntro');
+        $this->session->deleteItem('checkPostContent');
     }
 
     /**
@@ -155,10 +158,10 @@ class PostHelpers extends Helpers
      */
     public function setValueIfErrors(array $post)
     {
-        $_SESSION['postTitle'] = $post['title'];
-        $_SESSION['postIntro'] = $post['introduction'];
-        $_SESSION['postImage'] = $post['image'];
-        $_SESSION['postContent'] = $post['content'];
+        $this->session->setSession("postTitle", $post['title']);
+        $this->session->setSession("postIntro", $post['introduction']);
+        $this->session->setSession("postImage", $post['image']);
+        $this->session->setSession("postContent", $post['content']);
     }
 
     /**
@@ -166,9 +169,9 @@ class PostHelpers extends Helpers
      */
     public function unsetSessionValue()
     {
-        unset($_SESSION['postTitle']);
-        unset($_SESSION['postIntro']);
-        unset($_SESSION['postImage']);
-        unset($_SESSION['postContent']);
+        $this->session->deleteItem('postTitle');
+        $this->session->deleteItem('postIntro');
+        $this->session->deleteItem('postImage');
+        $this->session->deleteItem('postContent');
     }
 }

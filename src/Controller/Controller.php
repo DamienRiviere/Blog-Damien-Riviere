@@ -2,6 +2,11 @@
 
 namespace App\Controller;
 
+use App\Helpers\Data;
+use App\Helpers\DataUrl;
+use App\Helpers\Server;
+use App\Helpers\Session;
+
 abstract class Controller
 {
     
@@ -11,9 +16,21 @@ abstract class Controller
 
     private $templatePath = "..\\templates\\";
 
+    protected $session;
+
+    protected $data;
+
+    protected $server;
+
+    protected $dataUrl;
+
     public function __construct()
     {
         $this->loadTwig();
+        $this->session = new Session();
+        $this->data = new Data();
+        $this->server = new Server();
+        $this->dataUrl = new DataUrl();
     }
     
     public function loadTwig(): void
@@ -32,8 +49,8 @@ abstract class Controller
         $this->twig = new \Twig\Environment($this->loader, $params);
 
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
-        $this->twig->addGlobal('get', $this->get());
-        $this->twig->addGlobal('session', $this->session());
+        $this->twig->addGlobal('get', $_GET);
+        $this->twig->addGlobal('session', $_SESSION);
     }
 
     /**
@@ -43,35 +60,15 @@ abstract class Controller
      */
     public function checkRole(): void
     {
-        if (empty($this->session()) or $this->session()['role_id'] != 1) {
+        if (empty($_SESSION) or $_SESSION['role_id'] != 1) {
             header('Location: /login?forbidden=1');
         }
     }
 
     public function checkSession(): void
     {
-        if ($this->session()['id'] === null) {
+        if ($_SESSION['id'] === null) {
             header('Location: /login?forbidden=1');
         }
-    }
-
-    public function session()
-    {
-        return $_SESSION;
-    }
-
-    public function post()
-    {
-        return $_POST;
-    }
-
-    public function get()
-    {
-        return $_GET;
-    }
-
-    public function server()
-    {
-        return $_SERVER;
     }
 }

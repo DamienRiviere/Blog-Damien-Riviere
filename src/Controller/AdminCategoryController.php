@@ -34,7 +34,7 @@ class AdminCategoryController extends Controller
 
     public function new()
     {
-        $this->categoryHelpers->newCategory($this->post());
+        $this->categoryHelpers->newCategory($this->data->getData());
     }
 
     public function showEdit(int $id)
@@ -46,7 +46,7 @@ class AdminCategoryController extends Controller
 
     public function edit(int $id)
     {
-        $this->categoryHelpers->editCategory($id, $this->post());
+        $this->categoryHelpers->editCategory($id, $this->data->getData());
     }
 
     public function delete(int $id)

@@ -108,7 +108,7 @@ class Fixtures
             $repoUser->createUser($user);
         }
 
-        // Insert Post
+        // Insert Data
         $posts = [];
      
         for ($i = 0; $i < 30; $i++) {
@@ -143,7 +143,7 @@ class Fixtures
                 $repoComment->createComment($comment);
             }
         }
-        // End Post
+        // End Data
 
         // Insert categories
         $categories = [];

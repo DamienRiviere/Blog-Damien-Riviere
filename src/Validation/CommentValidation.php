@@ -2,15 +2,21 @@
 
 namespace App\Validation;
 
+use App\Helpers\Session;
+
 class CommentValidation
 {
-    private $checkComment = false;
+
+    private $checkComment = true;
 
     private $url;
+
+    private $session;
 
     public function __construct($url)
     {
         $this->url = $url;
+        $this->session = new Session();
     }
 
     public function checkComment(string $comment)
@@ -22,11 +28,9 @@ class CommentValidation
     {
         if (empty($comment)) {
             $this->setCheckComment(false);
-            $_SESSION['checkPostComment'] = "Veuillez écrire un commentaire !";
+            $this->session->setSession("checkPostComment", "Veuillez écrire un commentaire !");
             return header('Location: ' . $this->url);
         }
-
-        $this->setCheckComment(true);
     }
 
     public function isCheckComment(): bool

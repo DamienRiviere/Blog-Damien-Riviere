@@ -20,8 +20,8 @@ class RegisterController extends Controller
         $this->twig->display('register/register.html.twig');
     }
 
-    public function register(array $data)
+    public function register()
     {
-        $this->register->registration($data);
+        $this->register->registration($this->data->getData());
     }
 }

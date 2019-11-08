@@ -86,11 +86,6 @@ class Pagination
         return $this->currentPage->getPositiveInt('page', 1);
     }
 
-    /**
-     * Get all pages
-     *
-     * @return int
-     */
     public function getPages(): int
     {
         if ($this->count === null) {

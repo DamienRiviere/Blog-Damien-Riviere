@@ -8,7 +8,7 @@ home_email:
     controller: HomeController::email
     methods:    POST
 
-# Post
+# Data
 post_index:
     path:       /posts
     controller: PostController::posts
@@ -86,7 +86,7 @@ admin_dashboard:
     controller: AdminDashboardController::dashboard
     methods:    GET
 
-# Admin Post
+# Admin Data
 admin_post_index:
     path:       /admin/posts
     controller: AdminPostController::posts

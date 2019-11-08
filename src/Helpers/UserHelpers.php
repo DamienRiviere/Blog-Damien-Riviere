@@ -5,17 +5,20 @@ namespace App\Helpers;
 use App\Repository\UserRepository;
 use App\Validation\AccountValidation;
 
-class UserHelpers extends Helpers
+class UserHelpers
 {
 
     private $userRepo;
 
     private $validation;
 
+    private $session;
+
     public function __construct()
     {
         $this->userRepo = new UserRepository();
         $this->validation = new AccountValidation();
+        $this->session = new Session();
     }
 
     /**
@@ -76,7 +79,7 @@ class UserHelpers extends Helpers
         $email->setEmail($data['email']);
 
         $this->userRepo->updateEmail($email, $id);
-        $_SESSION['email'] = $data['email'];
+        $this->session->setSession("email", $data['email']);
 
         $this->unsetSessionCheckEmail();
         header('Location: /account?edit-email=1');
@@ -118,7 +121,7 @@ class UserHelpers extends Helpers
      */
     public function unsetSessionCheckEmail()
     {
-        unset($_SESSION['checkAccountEmail']);
+        $this->session->deleteItem('checkAccountEmail');
     }
 
     /**
@@ -126,6 +129,6 @@ class UserHelpers extends Helpers
      */
     public function unsetSessionCheckPassword()
     {
-        unset($_SESSION['checkAccountPassword']);
+        $this->session->deleteItem('checkAccountPassword');
     }
 }

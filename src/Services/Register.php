@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Session;
 use App\Model\User;
 use App\Validation\RegisterValidation;
 use Cocur\Slugify\Slugify;
@@ -16,11 +17,14 @@ class Register
 
     private $validation;
 
+    private $session;
+
     public function __construct()
     {
         $this->userRepo = new UserRepository();
         $this->slugify = new Slugify();
         $this->validation = new RegisterValidation();
+        $this->session = new Session();
     }
 
     /**
@@ -70,9 +74,9 @@ class Register
      */
     public function unsetSessionCheck()
     {
-        unset($_SESSION['check_name']);
-        unset($_SESSION['check_email']);
-        unset($_SESSION['check_password']);
+        $this->session->deleteItem("check_name");
+        $this->session->deleteItem("check_email");
+        $this->session->deleteItem("check_password");
     }
 
     /**

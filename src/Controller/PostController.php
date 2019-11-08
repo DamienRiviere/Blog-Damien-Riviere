@@ -72,27 +72,27 @@ class PostController extends Controller
 
     public function newComment(): void
     {
-        $this->commentHelpers->newComment($this->post(), $this->server()['REQUEST_URI']);
+        $this->commentHelpers->newComment($this->data->getData(), $this->server->getServer('REQUEST_URI'));
     }
 
     public function showEditComment(int $id, string $slug, int $idComment)
     {
         $comment = $this->comment->find($idComment);
 
-        if ($comment->getUserId() === $this->session()['id']) {
-            $this->twig->display('post/edit_comment.html.twig', [
-                'post' => $this->post->findPost($id),
-                'comment' => $comment,
-                'categories' => $this->category->all()
-            ]);
-        } else {
+        if ($comment->getUserId() != $this->session->getItem('id')) {
             header('Location: /login?forbidden=1');
         }
+
+        $this->twig->display('post/edit_comment.html.twig', [
+            'post' => $this->post->findPost($id),
+            'comment' => $comment,
+            'categories' => $this->category->all()
+        ]);
     }
 
     public function editComment()
     {
-        $this->commentHelpers->editComment($this->post(), $this->server()['REQUEST_URI']);
+        $this->commentHelpers->editComment($this->data->getData(), $this->server->getServer('REQUEST_URI'));
     }
 
     /**
@@ -105,34 +105,33 @@ class PostController extends Controller
      */
     public function reported(int $id, string $slug, int $idComment)
     {
-        if ($this->session()['id'] == null) {
+        if ($this->session->getItem("id") == null) {
             header('Location: /login?forbidden=1');
-        } else {
-            $comment = $this->comment->find($idComment);
-            $comment->setStatusId(3);
-
-            $this->comment->updateStatus($comment, $idComment);
-            header('Location: /post/' . $id . '/' . $slug . '?reported=1');
         }
+
+        $comment = $this->comment->find($idComment);
+        $comment->setStatusId(3);
+        $this->comment->updateStatus($comment, $idComment);
+        header('Location: /post/' . $id . '/' . $slug . '?reported=1');
     }
 
     public function like()
     {
-        if ($this->session()['id'] == null) {
+        if ($this->session->getItem("id") == null) {
             header('Location: /login?forbidden=1');
         }
 
         $like = new Like();
         $like
-            ->setPostId($_GET['post_id'])
-            ->setUserId($_GET['user_id']);
+            ->setPostId($this->dataUrl->getDataUrl("post_id"))
+            ->setUserId($this->dataUrl->getDataUrl('user_id'));
 
         $this->like->createLike($like);
     }
 
     public function unlike($id)
     {
-        if ($this->session()['id'] == null) {
+        if ($this->session->getItem("id") == null) {
             header('Location: /login?forbidden=1');
         }
 

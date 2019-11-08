@@ -2,22 +2,26 @@
 
 namespace App\Validation;
 
+use App\Helpers\Session;
 use App\Repository\UserRepository;
 
 class AccountValidation
 {
 
-    private $checkEmailFormat = false;
+    private $checkEmailFormat = true;
 
-    private $checkEmailExist = false;
+    private $checkEmailExist = true;
 
-    private $checkPasswordLength = false;
+    private $checkPasswordLength = true;
 
     private $userRepo;
+
+    private $session;
 
     public function __construct()
     {
         $this->userRepo = new UserRepository();
+        $this->session = new Session();
     }
 
     /**
@@ -52,10 +56,11 @@ class AccountValidation
     {
         if (filter_var($data['email'], FILTER_VALIDATE_EMAIL) == false) {
             $this->setCheckEmailFormat(false);
-            $_SESSION['checkAccountEmail'] = "Veuillez entrer un bon format d'email !";
+            $this->session->setSession(
+                "checkAccountEmail",
+                "Veuillez entrer un bon format d'email !"
+            );
             header('Location: /account/email/edit/' . $id);
-        } else {
-            $this->setCheckEmailFormat(true);
         }
     }
 
@@ -69,10 +74,11 @@ class AccountValidation
     {
         if ($this->userRepo->findEmail($data['email']) == true) {
             $this->setCheckEmailExist(false);
-            $_SESSION['checkAccountEmail'] = "Cet email est déjà utilisé, veuillez en choisir un autre !";
+            $this->session->setSession(
+                "checkAccountEmail",
+                "Cet email est déjà utilisé, veuillez en choisir un autre !"
+            );
             header('Location: /account/email/edit/' . $id);
-        } else {
-            $this->setCheckEmailExist(true);
         }
     }
 
@@ -86,11 +92,12 @@ class AccountValidation
     {
         if (strlen($data['password']) < 4) {
             $this->setCheckPasswordLength(false);
-            $_SESSION['checkAccountPassword'] = "Votre mot de passe doit comporter au minimum 4 caractères";
+            $this->session->setSession(
+                "checkAccountPassword",
+                "Votre mot de passe doit comporter au minimum 4 caractères"
+            );
             return header('Location: /account/password/edit/' . $id);
         }
-
-        $this->setCheckPasswordLength(true);
     }
 
     public function isCheckEmailFormat(): bool

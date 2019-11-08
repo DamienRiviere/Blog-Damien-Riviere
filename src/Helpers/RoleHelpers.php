@@ -5,7 +5,7 @@ namespace App\Helpers;
 use App\Model\Role;
 use App\Repository\RoleRepository;
 
-class RoleHelpers extends Helpers
+class RoleHelpers
 {
 
     private $roleRepo;
