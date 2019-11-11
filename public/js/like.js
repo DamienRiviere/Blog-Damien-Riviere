@@ -12,15 +12,22 @@
         like = "unlike";
     }
 
-    if (link != null) {
-        link.addEventListener('click', makeRequest);
+    function alertContents()
+    {
+        if (req.readyState === XMLHttpRequest.DONE) {
+            if (req.status === 200) {
+                console.log(req.responseText);
+            } else {
+                console.log("Il y a eu un problème avec la requête.");
+            }
+        }
     }
 
     function makeRequest()
     {
-        let slug = document.getElementById(link.getAttribute('id')).getAttribute('data-slug');
-        let postId = document.getElementById(link.getAttribute('id')).getAttribute('data-post-id');
-        let userId = document.getElementById(link.getAttribute('id')).getAttribute('data-user-id');
+        let slug = document.getElementById(link.getAttribute('id')).getAttribute("data-slug");
+        let postId = document.getElementById(link.getAttribute('id')).getAttribute("data-post-id");
+        let userId = document.getElementById(link.getAttribute('id')).getAttribute("data-user-id");
 
         req = new XMLHttpRequest();
 
@@ -29,7 +36,7 @@
             return false;
         }
         req.onreadystatechange = alertContents;
-        req.open('GET', '/post/' + postId + '/' + slug + '/' + like + '?post_id=' + postId + '&user_id=' + userId, true);
+        req.open("GET", "/post/" + postId + "/" + slug + "/" + like + "?post_id=" + postId + "&user_id=" + userId, true);
         req.send();
 
         if (like === "like") {
@@ -39,14 +46,7 @@
         }
     }
 
-    function alertContents()
-    {
-        if (req.readyState === XMLHttpRequest.DONE) {
-            if (req.status === 200) {
-                console.log(req.responseText);
-            } else {
-                console.log('Il y a eu un problème avec la requête.');
-            }
-        }
+    if (link != null) {
+        link.addEventListener("click", makeRequest);
     }
 })();

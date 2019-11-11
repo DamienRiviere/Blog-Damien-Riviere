@@ -1,5 +1,43 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e3c19937c43a4f63ab0948f770ac6f01)](https://www.codacy.com/manual/DamienRiviere/Blog-Damien-Riviere?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DamienRiviere/Blog-Damien-Riviere&amp;utm_campaign=Badge_Grade)
 
+# Installation du projet
+
+## Choix et installation du serveur
+
+Suivant votre système d'exploitation plusieurs serveurs peuvent être installés :
+
+    - Windows : WAMP (http://www.wampserver.com/)
+    - MAC : MAMP (https://www.mamp.info/en/mamp/)
+    - Linux : LAMP (https://doc.ubuntu-fr.org/lamp)
+    - XAMP (https://www.apachefriends.org/fr/index.html) qui dispose d'une version pour chaque OS 
+
+## Récupération du projet
+
+Il faudra tout d'abord avoir installé GIT :
+
+    - GIT (https://git-scm.com/downloads) 
+    
+Une fois GIT installé placer vous dans le répertoire de votre choix puis exécuter la commande suivante :
+
+    - git clone https://github.com/DamienRiviere/Blog-Damien-Riviere.git
+    
+Le dossier sera automatiquement cloné dans votre répertoire.
+
+## Lancement du projet
+
+La première chose à faire sera de lancer votre serveur puis de définir votre base de données dans le fichier suivant :
+
+    - Blog-Damien-Riviere\config\database.php
+    
+Il faudra remplacer les informations présentes par les vôtres comme ceci : 
+
+    "dsn" => 'mysql:host=127.0.0.1',
+    "dbname" => 'votre_base_de_donnee',
+    "user" => 'votre_utilisateur',
+    "password" => 'votre_mot_de_passe'
+        
+Une fois ceci fait vous pourrez accéder au projet en local.
+
 # Créez votre premier blog en PHP
 
 ## Contexte
@@ -10,18 +48,18 @@
 
 Le projet est donc de développer votre blog professionnel. Ce site web se décompose en deux grands groupes de pages :
 
-- les pages utiles à tous les visiteurs ;
-- les pages permettant d’administrer votre blog.
+    - les pages utiles à tous les visiteurs ;
+    - les pages permettant d’administrer votre blog.
 
 Voici la liste des pages qui devront être accessibles depuis votre site web :
 
-- la page d'accueil ;
-- la page listant l’ensemble des blogs posts ;
-- la page affichant un blog post ;
-- la page permettant d’ajouter un blog post ;
-- la page permettant de modifier un blog post.
-- les pages permettant de modifier/supprimer un blog post ;
-- les pages de connexion/enregistrement des utilisateurs.
+    - la page d'accueil ;
+    - la page listant l’ensemble des blogs posts ;
+    - la page affichant un blog post ;
+    - la page permettant d’ajouter un blog post ;
+    - la page permettant de modifier un blog post.
+    - les pages permettant de modifier/supprimer un blog post ;
+    - les pages de connexion/enregistrement des utilisateurs.
 
 Vous développerez une partie administration qui devra être accessible uniquement aux utilisateurs inscrits et validés.
 
@@ -31,33 +69,33 @@ Commençons par les pages utiles à tous les internautes.
 
 Sur la page d’accueil il faudra présenter les informations suivantes :
 
-- Votre nom et prénom ;
-- Une photo et/ou un logo ;
-- Une phrase d’accroche qui vous ressemble ( exemple : “Martin Durand, le développeur qu’il vous faut !”) ;
-- Un menu permettant de naviguer parmi l’ensemble des pages de votre site web ;
-- Un formulaire de contact (à la soumission de ce formulaire, un email avec toutes ces informations vous serons envoyé) avec les champs   suivants :
-              - nom/prénom
-              - email de contact
-              - message
-- un lien vers votre CV au format pdf ;
-- et l’ensemble des liens vers les réseaux sociaux où l’on peut vous suivre (Github, LinkedIn, Twitter…).
+    - Votre nom et prénom ;
+    - Une photo et/ou un logo ;
+    - Une phrase d’accroche qui vous ressemble ( exemple : “Martin Durand, le développeur qu’il vous faut !”) ;
+    - Un menu permettant de naviguer parmi l’ensemble des pages de votre site web ;
+    - Un formulaire de contact (à la soumission de ce formulaire, un email avec toutes ces informations vous serons envoyé) avec les champs   suivants :
+                  - nom/prénom
+                  - email de contact
+                  - message
+    - un lien vers votre CV au format pdf ;
+    - et l’ensemble des liens vers les réseaux sociaux où l’on peut vous suivre (Github, LinkedIn, Twitter…).
 
 Sur la page listant tous les blogs posts (du plus récent au plus ancien), il faut afficher les informations suivantes pour chaque blog post :
 
-- le titre ;
-- la date de dernière modification ;
-- le châpo ;
-- et un lien vers le blog post.
+    - le titre ;
+    - la date de dernière modification ;
+    - le châpo ;
+    - et un lien vers le blog post.
 
 Sur la page présentant le détail d’un blog post, il faut afficher les informations suivantes :
 
-- le titre ;
-- le chapô ;
-- le contenu ;
-- l’auteur ;
-- la date de dernière mise à jour ;
-- le formulaire permettant d’ajouter un commentaire (soumis pour validation) ;
-- les listes des commentaires validés et publiés.
+    - le titre ;
+    - le chapô ;
+    - le contenu ;
+    - l’auteur ;
+    - la date de dernière mise à jour ;
+    - le formulaire permettant d’ajouter un commentaire (soumis pour validation) ;
+    - les listes des commentaires validés et publiés.
 
 Sur la page permettant de modifier un blog post, l’utilisateur a la possibilité de modifier les champs titre, chapô, auteur et contenu.
 

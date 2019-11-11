@@ -14,7 +14,7 @@ class AdminRoleController extends Controller
 
     public function __construct()
     {
-        $this->checkSession();
+        $this->checkRole();
         $this->roleRepo = new RoleRepository();
         $this->roleHelpers = new RoleHelpers();
         parent::__construct();

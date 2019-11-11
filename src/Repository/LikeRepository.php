@@ -27,7 +27,7 @@ class LikeRepository extends Repository
      */
     public function findLike(int $postId)
     {
-        if ($this->session() != null) {
+        if ($this->session->getSession() != null) {
             $query = self::getDb()->prepare('
 				SELECT post_id, user_id 
 				FROM post_like 
@@ -56,7 +56,7 @@ class LikeRepository extends Repository
 		');
         $query->execute([
             ':post_id' => $postId,
-            ':user_id' => $this->session()['id']
+            ':user_id' => $this->session->getItem("id")
         ]);
     }
 }

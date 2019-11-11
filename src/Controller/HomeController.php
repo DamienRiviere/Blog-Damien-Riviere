@@ -22,10 +22,10 @@ class HomeController extends Controller
         ]);
     }
 
-    public function email(array $data): void
+    public function email(): void
     {
         $mail = new Mail();
-        $mail->setInformations($data['name'], $data['email'], $data['subject'], $data['message']);
+        $mail->setInformations($this->data->getData());
         $mail->sendEmail();
 
         header('Location: /');

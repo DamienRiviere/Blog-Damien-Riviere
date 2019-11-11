@@ -80,7 +80,7 @@ class PostController extends Controller
         $comment = $this->comment->find($idComment);
 
         if ($comment->getUserId() != $this->session->getItem('id')) {
-            header('Location: /login?forbidden=1');
+            return header('Location: /login?forbidden=1');
         }
 
         $this->twig->display('post/edit_comment.html.twig', [
@@ -105,20 +105,20 @@ class PostController extends Controller
      */
     public function reported(int $id, string $slug, int $idComment)
     {
-        if ($this->session->getItem("id") == null) {
-            header('Location: /login?forbidden=1');
+        if ($this->session->getItem("id") === null) {
+            return header('Location: /login?forbidden=1');
         }
 
         $comment = $this->comment->find($idComment);
         $comment->setStatusId(3);
         $this->comment->updateStatus($comment, $idComment);
-        header('Location: /post/' . $id . '/' . $slug . '?reported=1');
+        return header('Location: /post/' . $id . '/' . $slug . '?reported=1');
     }
 
     public function like()
     {
-        if ($this->session->getItem("id") == null) {
-            header('Location: /login?forbidden=1');
+        if ($this->session->getItem("id") === null) {
+            return header('Location: /login?forbidden=1');
         }
 
         $like = new Like();
@@ -131,8 +131,8 @@ class PostController extends Controller
 
     public function unlike($id)
     {
-        if ($this->session->getItem("id") == null) {
-            header('Location: /login?forbidden=1');
+        if ($this->session->getItem("id") === null) {
+            return header('Location: /login?forbidden=1');
         }
 
         $this->like->deleteLike($id);

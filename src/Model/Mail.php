@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use App\Helpers\Data;
+use App\Helpers\Session;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class Mail
@@ -15,6 +17,16 @@ class Mail
     private $message;
 
     private $check = false;
+
+    private $session;
+
+    private $data;
+
+    public function __construct()
+    {
+        $this->session = new Session();
+        $this->data = new Data();
+    }
 
     public function setName(string $name): void
     {
@@ -30,10 +42,13 @@ class Mail
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->email = htmlspecialchars($email);
-        } else {
-            $this->check = false;
-            $_SESSION['email_error'] = "Votre adresse email n'est pas valide !";
         }
+
+        $this->check = false;
+        $this->session->setSession(
+            "email_error",
+            "Votre adresse email n'est pas valide !"
+        );
     }
 
     public function getEmail(): ?string
@@ -56,18 +71,22 @@ class Mail
         $this->message = htmlspecialchars($message);
     }
 
-    public function setInformations($name, $email, $subject, $message)
+    public function setInformations(array $data)
     {
-        if (!empty($name) and !empty($email) and !empty($subject) and !empty($message)) {
+        if (
+            !empty($data['name'])
+            and !empty($data['email'])
+            and !empty($data['subject'])
+            and !empty($data['message'])
+        ) {
             $this->check = true;
-            $this->setName($_POST['name']);
-            $this->setEmail($_POST['email']);
-            $this->setSubject($_POST['subject']);
-            $this->setMessage($_POST['message']);
+            $this->setName($data['name']);
+            $this->setEmail($data['email']);
+            $this->setSubject($data['subject']);
+            $this->setMessage($data['message']);
         }
 
-        $this->check = false;
-        $_SESSION['email_error'] = "Veuillez remplir tous les champs du formulaire !";
+        $this->session->setSession("email_error", "Veuillez remplir tous les champs du formulaire !");
     }
 
     public function sendEmail()
@@ -76,9 +95,9 @@ class Mail
             //Create a new PHPMailer instance
             $mail = new PHPMailer();
             $mail->CharSet = 'UTF-8';
-            $mail->setFrom($this->email, $this->name); // Adresse de l'expéditeur
-            $mail->addAddress('damien@d-riviere.fr', 'Damien RIVIERE'); // Adresse du destinataire
-            $mail->addReplyTo('damien@d-riviere.fr', 'Damien RIVIERE'); // Adresse pour réponse par défaut
+            $mail->setFrom($this->email, $this->name);
+            $mail->addAddress('damien@d-riviere.fr', 'Damien RIVIERE');
+            $mail->addReplyTo('damien@d-riviere.fr', 'Damien RIVIERE');
 
             // Content
             $mail->isHTML(true); // Set email format to HTML
@@ -93,8 +112,11 @@ class Mail
             ;
 
             // Send the message, check for errors
-            !$mail->send() ? $_SESSION['email_error'] =
-                $mail->ErrorInfo : $_SESSION['email_success'] = "Votre email vient d'être envoyé !";
+            !$mail->send() ?
+                $this->session->setSession("email_error", $mail->ErrorInfo)
+                :
+                $this->session->setSession("email_success", "Votre email vient d'être envoyé !");
+            ;
 
             unset($this->name, $this->email, $this->subject, $this->message);
         }

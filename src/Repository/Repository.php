@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Helpers\Session;
 use PDO;
 
 abstract class Repository
@@ -14,6 +15,8 @@ abstract class Repository
 
     protected $class = null;
 
+    protected $session;
+
     public function __construct()
     {
         if ($this->repository === null) {
@@ -22,6 +25,7 @@ abstract class Repository
         if ($this->class === null) {
             throw new \Exception("La class " . get_class($this) . " n'a pas de propriété \$class");
         }
+        $this->session = new Session();
     }
 
     public static function getDb()
@@ -119,10 +123,5 @@ abstract class Repository
         $hydrate = $query->fetch();
 
         $item->$add($hydrate);
-    }
-
-    public function session()
-    {
-        return $_SESSION;
     }
 }

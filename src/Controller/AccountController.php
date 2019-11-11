@@ -42,7 +42,7 @@ class AccountController extends Controller
     public function showEditEmail()
     {
         $this->twig->display('user/edit_email.html.twig', [
-            'email' => $_SESSION['email'],
+            'email' => $this->session->getItem("email"),
             'countComments' => $this->commentRepo->findCountCommentsByUser($this->session->getItem('id')),
             'countPosts' => $this->postRepo->findCountPostsByUser($this->session->getItem('id')),
             'posts' => $this->postRepo->findPostsLikeByUser($this->session->getItem('id'))[0],
