@@ -42,13 +42,13 @@ class Mail
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->email = htmlspecialchars($email);
+        } else {
+            $this->check = false;
+            $this->session->setSession(
+                "email_error",
+                "Votre adresse email n'est pas valide !"
+            );
         }
-
-        $this->check = false;
-        $this->session->setSession(
-            "email_error",
-            "Votre adresse email n'est pas valide !"
-        );
     }
 
     public function getEmail(): ?string
@@ -84,9 +84,9 @@ class Mail
             $this->setEmail($data['email']);
             $this->setSubject($data['subject']);
             $this->setMessage($data['message']);
+        } else {
+            $this->session->setSession("email_error", "Veuillez remplir tous les champs du formulaire !");
         }
-
-        $this->session->setSession("email_error", "Veuillez remplir tous les champs du formulaire !");
     }
 
     public function sendEmail()
@@ -119,6 +119,7 @@ class Mail
             ;
 
             unset($this->name, $this->email, $this->subject, $this->message);
+            $this->session->deleteItem("email_error");
         }
     }
 }
