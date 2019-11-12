@@ -25,14 +25,14 @@
 
     function makeRequest()
     {
-        let slug = document.getElementById(link.getAttribute('id')).getAttribute("data-slug");
-        let postId = document.getElementById(link.getAttribute('id')).getAttribute("data-post-id");
-        let userId = document.getElementById(link.getAttribute('id')).getAttribute("data-user-id");
+        let slug = document.getElementById(link.getAttribute("id")).getAttribute("data-slug");
+        let postId = document.getElementById(link.getAttribute("id")).getAttribute("data-post-id");
+        let userId = document.getElementById(link.getAttribute("id")).getAttribute("data-user-id");
 
         req = new XMLHttpRequest();
 
         if (!req) {
-            alert('Abandon :( Impossible de créer une instance de XMLHTTP');
+            alert("Abandon :( Impossible de créer une instance de XMLHTTP");
             return false;
         }
         req.onreadystatechange = alertContents;

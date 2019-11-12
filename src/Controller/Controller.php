@@ -55,20 +55,18 @@ abstract class Controller
 
     /**
      * Check if the user in session is an admin
-     *
-     * @return void
      */
-    public function checkRole(): void
+    public function checkRole()
     {
         if (empty($_SESSION) or $_SESSION['role_id'] != 1) {
-            header('Location: /login?forbidden=1');
+            return header('Location: /login?forbidden=1');
         }
     }
 
-    public function checkSession(): void
+    public function checkSession()
     {
         if ($_SESSION['id'] === null) {
-            header('Location: /login?forbidden=1');
+            return header('Location: /login?forbidden=1');
         }
     }
 }
