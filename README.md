@@ -127,3 +127,16 @@ Votre projet devra être suivi via SensioLabsInsight pour la qualité du code, v
 Si vous n’arrivez pas à vous décider sur le thème Bootstrap, en voici un qui pourrait vous convenir http://bit.ly/2emOTxY (source : startbootstrap.com).
 
 Dans le cas où une fonctionnalité vous semblerait mal expliquée ou manquante, parlez-en avec votre mentor afin de prendre une décision ensemble sur les choix que vous souhaiteriez prendre. Ce qui doit prévaloir doit être les délais.
+
+## Compétences évaluées
+
+    - Estimer une tâche et tenir les délais
+    - Gérer ses données avec une base de données
+    - Proposer un code propre et facilement évolutif
+    - Assurer le suivi qualité d’un projet
+    - Choisir une solution technique adaptée parmi les solutions existantes si cela est pertinent
+    - Créer et maintenir l’architecture technique du site
+    - Analyser un cahier des charges
+    - Créer une page web permettant de recueillir les informations saisies par un internaute
+    - Conceptualiser l'ensemble de son application en décrivant sa structure (Entités / Domain Objects)
+    - Rédiger les spécifications détaillées du projet
