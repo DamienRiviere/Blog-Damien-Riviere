@@ -1,5 +1,3 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e3c19937c43a4f63ab0948f770ac6f01)](https://www.codacy.com/manual/DamienRiviere/Blog-Damien-Riviere?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DamienRiviere/Blog-Damien-Riviere&amp;utm_campaign=Badge_Grade)
-
 # Installation du projet
 
 ## Choix et installation du serveur
